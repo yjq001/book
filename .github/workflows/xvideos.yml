@@ -2,7 +2,7 @@ name: XVideos Crawler
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # 每天凌晨3点运行
+    - cron: '0 */4 * * *'  # 每4小时运行一次
   workflow_dispatch:
     inputs:
       command:
