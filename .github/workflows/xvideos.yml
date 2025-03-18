@@ -23,7 +23,7 @@ on:
       end_page:
         description: '结束页码'
         required: false
-        default: '100'
+        default: '20'
         type: string
       url:
         description: '视频URL'
