@@ -1,0 +1,131 @@
+name: Pornhub Crawler
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 每天凌晨2点运行
+  workflow_dispatch:      # 允许手动触发
+    inputs:
+      mode:
+        description: '爬取模式 (full, incremental, retry)'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - incremental
+          - retry
+      start_page:
+        description: '起始页码（仅用于全量爬取）'
+        required: false
+        default: '1'
+        type: string
+      end_page:
+        description: '结束页码（仅用于全量爬取，可选）'
+        required: false
+        default: '20'
+        type: string
+      pages:
+        description: '增量爬取时检查的页数（默认：10）'
+        required: false
+        default: '10'
+        type: string
+      error_file:
+        description: '包含失败URL的文件（仅用于retry模式）'
+        required: false
+        default: 'error_urls.txt'
+        type: string
+      proxy:
+        description: '代理服务器地址'
+        required: false
+        type: string
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Checkout private repository
+      uses: actions/checkout@v4
+      with:
+        repository: yjq001/sex-robot
+        path: ./sex-robot
+        token: ${{ secrets.PAT_TOKEN }}
+        ref: master
+        fetch-depth: 1
+        persist-credentials: false
+
+    - name: Copy files from private repository
+      run: |
+        cp -r ./sex-robot/* ./
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Setup and start Selenium container
+      run: |
+        docker run -d --name selenium -p 4444:4444 --shm-size=2g selenium/standalone-chrome:latest
+        # Wait for Selenium container to start
+        sleep 5
+        
+    - name: Run crawler
+      env:
+        PYTHONUNBUFFERED: 1
+        SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+        WDM_LOG_LEVEL: 0
+        WDM_LOCAL: 1
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        HTTP_PROXY: ${{ secrets.HTTP_PROXY }}
+        HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
+      run: |
+        # 确保脚本可执行
+        chmod +x *.py
+        
+        # 查看脚本帮助信息
+        python ./pornhub_crawler.py --help
+        
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          # 手动触发时使用输入的参数
+          MODE="${{ github.event.inputs.mode }}"
+          
+          case $MODE in
+            full)
+              python ./pornhub_crawler.py full --start-page ${{ github.event.inputs.start_page }} --end-page ${{ github.event.inputs.end_page }} $([ -n "${{ github.event.inputs.proxy }}" ] && echo "--proxy ${{ github.event.inputs.proxy }}")
+              ;;
+            incremental)
+              python ./pornhub_crawler.py incremental --pages ${{ github.event.inputs.pages }} $([ -n "${{ github.event.inputs.proxy }}" ] && echo "--proxy ${{ github.event.inputs.proxy }}")
+              ;;
+            retry)
+              python ./pornhub_crawler.py retry --error-file ${{ github.event.inputs.error_file }} $([ -n "${{ github.event.inputs.proxy }}" ] && echo "--proxy ${{ github.event.inputs.proxy }}")
+              ;;
+            *)
+              echo "未知模式: $MODE"
+              exit 1
+              ;;
+          esac
+        else
+          # 自动触发时使用默认参数
+          python ./pornhub_crawler.py full --start-page 1 --end-page 100
+        fi
+        
+    - name: Upload error logs
+      if: always()  # 即使任务失败也上传日志
+      uses: actions/upload-artifact@v4
+      with:
+        name: error-logs
+        path: |
+          crawler.log
+          error_urls_*.txt 
