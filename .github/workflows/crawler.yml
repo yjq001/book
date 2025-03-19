@@ -2,7 +2,7 @@ name: Pornhub Crawler
 
 on:
   schedule:
-    - cron: '0 */4 * * *'  # 每4小时运行一次
+    - cron: '0 1/4 * * *'  # 从凌晨1点开始，每4小时运行一次
   workflow_dispatch:      # 允许手动触发
     inputs:
       mode:
@@ -118,7 +118,7 @@ jobs:
           esac
         else
           # 自动触发时使用默认参数
-          python ./pornhub_crawler.py full --start-page 1 --end-page 100
+          python ./pornhub_crawler.py full --start-page 1 --end-page 20
         fi
         
     - name: Upload error logs

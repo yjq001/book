@@ -2,7 +2,7 @@ name: XVideos Crawler
 
 on:
   schedule:
-    - cron: '0 */4 * * *'  # 每4小时运行一次
+    - cron: '0 1/4 * * *'  # 从凌晨1点开始，每4小时运行一次
   workflow_dispatch:
     inputs:
       command:
@@ -118,7 +118,7 @@ jobs:
           fi
         else
           # 自动触发时使用默认参数
-          python ./xvideos_crawler.py --headless full --start-page 1 --end-page 100
+          python ./xvideos_crawler.py --headless full --start-page 1 --end-page 20
         fi
       
     - name: 上传错误日志
