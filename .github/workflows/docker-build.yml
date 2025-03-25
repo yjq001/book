@@ -47,6 +47,30 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 1
       
+      # 检查和验证文件
+      - name: Verify files
+        run: |
+          echo "检查工作目录..."
+          ls -la
+          
+          echo "检查 Dockerfile..."
+          if [ -f "Dockerfile" ]; then
+            echo "✓ Dockerfile 存在"
+            cat Dockerfile
+          else
+            echo "✗ Dockerfile 不存在!"
+            exit 1
+          fi
+          
+          echo "检查 .dockerignore..."
+          if [ -f ".dockerignore" ]; then
+            echo "✓ .dockerignore 存在"
+            cat .dockerignore
+          else
+            echo "✗ .dockerignore 不存在，创建一个空文件"
+            touch .dockerignore
+          fi
+      
       # 显示Docker信息
       - name: Docker info
         run: |
@@ -83,7 +107,7 @@ jobs:
           echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }}"
           
           # 构建镜像
-          docker build -t ${{ steps.docker_tags.outputs.image }} .
+          docker build --no-cache -t ${{ steps.docker_tags.outputs.image }} .
           
           # 显示构建的镜像
           docker images
