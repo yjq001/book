@@ -40,6 +40,7 @@ jobs:
         with:
           repository: ${{ env.SOURCE_REPO }}
           ref: ${{ github.event.inputs.ref || github.ref }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Verify checkout
         run: |
