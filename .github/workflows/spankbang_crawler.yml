@@ -1,8 +1,6 @@
-name: SpankBang Crawler
+name: Crawler Workflow
 
 on:
-  schedule:
-    - cron: '0 2/4 * * *'  # 从凌晨2点开始，每4小时运行一次
   workflow_dispatch:
     inputs:
       command:
@@ -101,20 +99,14 @@ jobs:
         python ./spankbang_crawler.py --help
         
         # 根据输入参数运行爬虫
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          # 手动触发时使用输入参数
-          if [ "${{ github.event.inputs.command }}" = "full" ]; then
-            python ./spankbang_crawler.py --headless full --start-page ${{ github.event.inputs.start_page }} --end-page ${{ github.event.inputs.end_page }}
-          elif [ "${{ github.event.inputs.command }}" = "video" ]; then
-            python ./spankbang_crawler.py --headless video "${{ github.event.inputs.url }}"
-          elif [ "${{ github.event.inputs.command }}" = "search" ]; then
-            python ./spankbang_crawler.py --headless search "${{ github.event.inputs.query }}" --pages ${{ github.event.inputs.pages }}
-          elif [ "${{ github.event.inputs.command }}" = "batch" ]; then
-            python ./spankbang_crawler.py --headless batch --file ${{ github.event.inputs.file }}
-          fi
-        else
-          # 自动触发时使用默认参数
-          python ./spankbang_crawler.py --headless full --start-page 1 --end-page 20
+        if [ "${{ github.event.inputs.command }}" = "full" ]; then
+          python ./spankbang_crawler.py --headless full --start-page ${{ github.event.inputs.start_page }} --end-page ${{ github.event.inputs.end_page }}
+        elif [ "${{ github.event.inputs.command }}" = "video" ]; then
+          python ./spankbang_crawler.py --headless video "${{ github.event.inputs.url }}"
+        elif [ "${{ github.event.inputs.command }}" = "search" ]; then
+          python ./spankbang_crawler.py --headless search "${{ github.event.inputs.query }}" --pages ${{ github.event.inputs.pages }}
+        elif [ "${{ github.event.inputs.command }}" = "batch" ]; then
+          python ./spankbang_crawler.py --headless batch --file ${{ github.event.inputs.file }}
         fi
       
     - name: 上传错误日志
