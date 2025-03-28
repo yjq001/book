@@ -30,10 +30,10 @@ jobs:
           
       - name: Prepare Claude Extension
         run: |
-          # 检查claude-dev-3.7.1.vsix是否存在，如果不存在则创建一个空文件
-          if [ ! -f "claude-dev-3.7.1.vsix" ]; then
-            echo "WARNING: claude-dev-3.7.1.vsix not found. Creating a placeholder."
-            echo "Please replace this with the actual extension file." > claude-dev-3.7.1.vsix
+          # 检查claude.vsix是否存在，如果不存在则创建一个空文件
+          if [ ! -f "claude.vsix" ]; then
+            echo "WARNING: claude.vsix not found. Creating a placeholder."
+            echo "Please replace this with the actual extension file." > claude.vsix
           fi
       
       - name: Build and push Docker image
