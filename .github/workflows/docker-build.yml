@@ -22,6 +22,11 @@ on:
         required: false
         default: 'latest'
         type: string
+      platform:
+        description: '构建平台 (amd64, arm64, 或 all)'
+        required: false
+        default: 'amd64'
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -71,17 +76,33 @@ jobs:
             touch .dockerignore
           fi
       
+      # 设置平台参数
+      - name: Set platform parameter
+        id: set_platform
+        run: |
+          if [ "${{ inputs.platform }}" = "amd64" ]; then
+            echo "platforms=linux/amd64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=amd64" >> $GITHUB_OUTPUT
+          elif [ "${{ inputs.platform }}" = "arm64" ]; then
+            echo "platforms=linux/arm64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=arm64" >> $GITHUB_OUTPUT
+          else
+            echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=arm64,amd64" >> $GITHUB_OUTPUT
+          fi
+          echo "使用平台: ${{ steps.set_platform.outputs.platforms }}"
+      
       # 设置QEMU，支持多架构构建
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
-          platforms: 'arm64,amd64'
+          platforms: ${{ steps.set_platform.outputs.qemu_platforms }}
       
       # 设置Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ steps.set_platform.outputs.platforms }}
 
       # 显示Docker信息
       - name: Docker info
@@ -115,21 +136,21 @@ jobs:
           echo "image=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
 
       # 使用Docker Buildx构建多架构镜像并推送
-      - name: Build and push multi-architecture Docker image
+      - name: Build and push Docker image
         run: |
-          echo "开始构建多架构镜像: ${{ steps.docker_tags.outputs.image }}"
+          echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }} 平台: ${{ steps.set_platform.outputs.platforms }}"
           
-          # 使用buildx构建多架构镜像
+          # 使用buildx构建镜像
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             # 构建并推送
-            docker buildx build --platform linux/amd64,linux/arm64 \
+            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
               --push \
               --tag ${{ steps.docker_tags.outputs.image }} \
               .
-            echo "已推送多架构镜像到 ${{ env.REGISTRY }}"
+            echo "已推送镜像到 ${{ env.REGISTRY }}"
           else
             # 仅构建，不推送
-            docker buildx build --platform linux/amd64,linux/arm64 \
+            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
               --tag ${{ steps.docker_tags.outputs.image }} \
               --load \
               .
@@ -143,6 +164,6 @@ jobs:
       - name: Image info
         if: success()
         run: |
-          echo "多架构构建成功!"
+          echo "构建成功!"
           echo "镜像: ${{ steps.docker_tags.outputs.image }}"
-          echo "支持的架构: linux/amd64, linux/arm64" 
+          echo "支持的架构: ${{ steps.set_platform.outputs.platforms }}" 
