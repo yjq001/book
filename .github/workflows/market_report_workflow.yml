@@ -66,7 +66,14 @@ jobs:
       
       - name: Get current date
         id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: |
+          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "date_compact=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+      
+      - name: List all generated files
+        run: |
+          echo "Generated files:"
+          find infos/reports -type f | sort
       
       - name: Send email with reports
         uses: dawidd6/action-send-mail@v3
@@ -85,11 +92,11 @@ jobs:
           body: |
             您好，
             
-            附件是 ${{ steps.date.outputs.date }} 的每日市场简报（中英文版本）。
+            附件是 ${{ steps.date.outputs.date }} 的每日市场简报（中英文版本及长图）。
             
             您也可以通过以下链接在线查看报告：
-            中文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/${{ steps.date.outputs.date }}_market_report_zh.html
-            英文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/${{ steps.date.outputs.date }}_market_report_en.html
+            中文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_zh.html
+            英文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_en.html
             
             此邮件由自动化系统发送，请勿回复。
           attachments: |
