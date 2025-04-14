@@ -80,7 +80,11 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 每日市场简报 - ${{ steps.date.outputs.date }}
           to: 471197995@qq.com
-          from: 市场简报自动生成器
+          from: 市场简报自动生成器 <${{ secrets.EMAIL_USERNAME }}>
+          secure: true
+          ignore_cert: true
+          convert_markdown: true
+          priority: high
           body: |
             您好，
             
