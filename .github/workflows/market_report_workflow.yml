@@ -64,15 +64,19 @@ jobs:
           path: |
             infos/reports/*.html
             infos/reports/images/*.png
+            infos/reports/charts/*.png
           retention-days: 7
       
-      - name: Deploy to GitHub Pages (optional)
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./infos/reports
           keep_files: true
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy market report: ${{ steps.date.outputs.date }}'
       
       - name: Get current date
         id: date
