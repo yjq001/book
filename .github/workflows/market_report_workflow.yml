@@ -1,17 +1,17 @@
-name: Daily Market Report Generator
+name: Generate Market Report
 
 on:
   schedule:
-    # Run at 7:00 AM UTC (15:00 Beijing Time) every weekday (Monday to Friday)
-    - cron: '0 7 * * 1-5'
+    # 美东时间早上8点 = UTC-4 12:00 = UTC 12:00
+    - cron: '0 12 * * 1-5'  # 周一到周五
   
   # Allow manual trigger
   workflow_dispatch:
     inputs:
       model:
-        description: 'GPT模型名称 (默认: google/gemini-flash-1.5-8b-exp)'
+        description: 'GPT模型名称'
         required: false
-        default: 'google/gemini-flash-1.5-8b-exp'
+        default: 'meta-llama/llama-4-scout:free'
         type: string
 
 jobs:
@@ -62,7 +62,7 @@ jobs:
         run: |
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'google/gemini-flash-1.5-8b-exp' }}"
+          python market_report_generator.py --model "${{ github.event.inputs.model || 'meta-llama/llama-4-scout:free' }}"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
