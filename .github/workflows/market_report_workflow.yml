@@ -71,6 +71,7 @@ jobs:
             infos/reports/*.html
             infos/reports/images/*.png
             infos/reports/charts/*.png
+            infos/qrcode.jpg
           retention-days: 7
       
       - name: Deploy to GitHub Pages
