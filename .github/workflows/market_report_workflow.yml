@@ -71,7 +71,7 @@ jobs:
             infos/reports/*.html
             infos/reports/*.png
             infos/reports/charts/*.png
-            infos/qrcode.jpg
+            infos/reports/qrcode.jpg
           retention-days: 7
       
       - name: Deploy to GitHub Pages
@@ -124,5 +124,5 @@ jobs:
             此邮件由自动化系统发送，请勿回复。
           attachments: |
             infos/reports/*.html
-            infos/reports/images/*.png
+            infos/reports/*.png
           content_type: text/html
