@@ -69,7 +69,7 @@ jobs:
           name: market-reports
           path: |
             infos/reports/*.html
-            infos/reports/images/*.png
+            infos/reports/*.png
             infos/reports/charts/*.png
             infos/qrcode.jpg
           retention-days: 7
