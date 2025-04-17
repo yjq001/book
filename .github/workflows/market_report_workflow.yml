@@ -13,6 +13,11 @@ on:
         required: false
         default: 'meta-llama/llama-4-scout:free'
         type: string
+      gpt_base_url:
+        description: 'OpenAI API Base URL'
+        required: false
+        default: 'https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter'
+        type: string
 
 jobs:
   generate_market_report:
@@ -59,7 +64,13 @@ jobs:
           pip install -r infos/requirements.txt
       
       - name: Run market report generator
+        env:
+          GPT_BASE_URL: ${{ github.event.inputs.gpt_base_url }}
         run: |
+          # 更新配置文件中的GPT base URL
+          if [ ! -z "$GPT_BASE_URL" ]; then
+            sed -i "s|API_BASE_URL = .*|API_BASE_URL = $GPT_BASE_URL|" infos/config.ini
+          fi
           # Run the report generator
           cd infos
           python market_report_generator.py --model "${{ github.event.inputs.model || 'meta-llama/llama-4-scout:free' }}"
