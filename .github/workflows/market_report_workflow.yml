@@ -106,7 +106,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 每日市场简报 - ${{ steps.date.outputs.date }}
+          subject: ${{ steps.date.outputs.date }} 美股市场简报
           to: 471197995@qq.com
           from: 市场简报自动生成器 <${{ secrets.EMAIL_USERNAME }}>
           secure: true
@@ -114,16 +114,19 @@ jobs:
           convert_markdown: true
           priority: high
           body: |
-            您好，
-            
-            附件是 ${{ steps.date.outputs.date }} 的每日市场简报（中英文版本及长图）。
-            
-            您也可以通过以下链接在线查看报告：
-            中文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_zh.html
-            英文版：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_en.html
-            
-            此邮件由自动化系统发送，请勿回复。
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+              <p>您好，</p>
+              
+              <p>附件是 ${{ steps.date.outputs.date }} 的美股市场简报（中英文版本及长图）。</p>
+              
+              <p>您也可以通过以下链接在线查看报告：</p>
+              <p>
+                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_zh.html" style="color: #007bff; text-decoration: none; margin-right: 20px;">📊 中文版报告</a>
+                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_en.html" style="color: #007bff; text-decoration: none;">📈 英文版报告</a>
+              </p>
+              
+              <p style="color: #666; font-size: 12px; margin-top: 30px;">此邮件由自动化系统发送，请勿回复。</p>
+            </div>
           attachments: |
-            infos/reports/*.html
             infos/reports/*.png
           content_type: text/html
