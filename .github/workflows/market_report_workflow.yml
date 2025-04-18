@@ -3,7 +3,7 @@ name: Generate Market Report
 on:
   schedule:
     # 美东时间早上8点 = UTC-4 12:00 = UTC 12:00
-    - cron: '0 12 * * 1-5'  # 周一到周五
+    - cron: '0 11 * * 1-5'  # 周一到周五
   
   # Allow manual trigger
   workflow_dispatch:
