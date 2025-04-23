@@ -2,8 +2,8 @@ name: Generate Market Report
 
 on:
   schedule:
-    # 美东时间早上8点 = UTC-4 12:00 = UTC 12:00
-    - cron: '0 22 * * 1-5'  # 周一到周五
+    # 北京时间早上6点 = UTC+8 6:00 = UTC 22:00 (前一天)
+    - cron: '0 22 * * 0-4'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
   
   # Allow manual trigger
   workflow_dispatch:
@@ -86,29 +86,47 @@ jobs:
             infos/reports/qrcode.jpg
           retention-days: 7
       
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.PAT_TOKEN }}
-          publish_dir: ./infos/reports
-          destination_dir: ./
-          keep_files: true
-          force_orphan: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'Deploy market report: ${{ steps.date.outputs.date }}'
-          cname: ${{ github.repository_owner }}.github.io
-      
       - name: Get current date
         id: date
         run: |
-          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-          echo "date_compact=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+          # 获取北京时间（UTC+8）的日期
+          echo "date=$(TZ='Asia/Shanghai' date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "date_compact=$(TZ='Asia/Shanghai' date +'%Y%m%d')" >> $GITHUB_OUTPUT
+      
+      - name: Prepare files for GitHub Pages
+        run: |
+          # 创建日期目录
+          mkdir -p ./gh-pages-deploy/${{ steps.date.outputs.date_compact }}
+          
+          # 复制报告文件到日期目录
+          cp -r ./infos/reports/* ./gh-pages-deploy/${{ steps.date.outputs.date_compact }}/
+          
+          # 同时复制到根目录以保持兼容性
+          cp -r ./infos/reports/* ./gh-pages-deploy/
+          
+          # 查找并删除90天前的旧文件夹
+          find ./gh-pages-deploy -maxdepth 1 -type d -name "20[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" -mtime +90 -exec rm -rf {} \;
+          
+          echo "准备完成，将部署以下文件："
+          find ./gh-pages-deploy -type f | sort
       
       - name: List all generated files
         run: |
           echo "Generated files:"
           find infos/reports -type f | sort
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PAT_TOKEN }}
+          publish_dir: ./gh-pages-deploy
+          destination_dir: ./
+          keep_files: true
+          force_orphan: false
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy market report: ${{ steps.date.outputs.date }}'
+          cname: ${{ github.repository_owner }}.github.io
       
       - name: Send email with reports
         uses: dawidd6/action-send-mail@v3
@@ -132,8 +150,13 @@ jobs:
               
               <p>您也可以通过以下链接在线查看报告：</p>
               <p>
-                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_zh.html" style="color: #007bff; text-decoration: none; margin-right: 20px;">📊 中文版报告</a>
-                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market_report_${{ steps.date.outputs.date_compact }}_en.html" style="color: #007bff; text-decoration: none;">📈 英文版报告</a>
+                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.date.outputs.date_compact }}/market_report_${{ steps.date.outputs.date_compact }}_zh.html" style="color: #007bff; text-decoration: none; margin-right: 20px;">📊 中文版报告</a>
+                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.date.outputs.date_compact }}/market_report_${{ steps.date.outputs.date_compact }}_en.html" style="color: #007bff; text-decoration: none;">📈 英文版报告</a>
+              </p>
+              
+              <p>历史报告：</p>
+              <p>
+                <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" style="color: #007bff; text-decoration: none;">📚 查看所有历史报告</a>
               </p>
               
               <p style="color: #666; font-size: 12px; margin-top: 30px;">此邮件由自动化系统发送，请勿回复。</p>
