@@ -1,8 +1,8 @@
-name: 五分钟Finnhub资讯采集器
+name: 十分钟Finnhub资讯采集器
 
 on:
   schedule:
-    # 每5分钟运行一次
+    # 每10分钟运行一次
     - cron: '*/10 * * * *'
   
   # 允许手动触发
@@ -21,7 +21,7 @@ jobs:
     
     steps:
       - name: 检出代码库
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: 设置Python
         uses: actions/setup-python@v4
@@ -42,7 +42,7 @@ jobs:
       
       - name: 上传日志
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: finnhub-collector-logs
           path: infos/finnhub_collector.log
