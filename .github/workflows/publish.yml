@@ -36,15 +36,34 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build twine
+        pip install build twine setuptools wheel
+
+    - name: Prepare package files
+      run: |
+        # 创建临时目录用于构建
+        mkdir -p ./build_temp
+        
+        # 复制 mymcp 目录
+        cp -r ./mymcp ./build_temp/
+        
+        # 复制必要的项目文件
+        cp pyproject.toml ./build_temp/
+        cp setup.py ./build_temp/
+        cp README.md ./build_temp/ || echo "README.md not found"
+        
+        # 切换到临时目录构建
+        cd ./build_temp
 
     - name: Build package
-      run: python -m build
+      run: |
+        cd ./build_temp
+        python -m build
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+        packages-dir: ./build_temp/dist
         skip_existing: true
         verbose: true 
