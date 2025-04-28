@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Market Briefing - April 28, 2025</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #5f6368;
+            --background-color: #ffffff;
+            --card-background: #f8f9fa;
+            --positive-color: #34a853;
+            --negative-color: #ea4335;
+            --border-color: #dadce0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "WenQuanYi Micro Hei", "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: #202124;
+            line-height: 1.6;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        header .date {
+            color: var(--light-text);
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .market-summary {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .index-card {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .index-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .index-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .index-change {
+            font-weight: bold;
+        }
+        
+        .positive {
+            color: var(--positive-color);
+        }
+        
+        .negative {
+            color: var(--negative-color);
+        }
+        
+        .chart-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .analysis {
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .news-container {
+            margin-top: 20px;
+        }
+        
+        .news-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .news-title a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .news-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .news-meta {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .news-summary {
+            line-height: 1.6;
+        }
+        
+        .economic-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .indicator-card {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .indicator-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-value-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-current-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .indicator-change {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .indicator-positive {
+            color: var(--positive-color);
+            background-color: rgba(15, 157, 88, 0.1);
+        }
+        
+        .indicator-negative {
+            color: var(--negative-color);
+            background-color: rgba(234, 67, 53, 0.1);
+        }
+        
+        .indicator-previous-value {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-date {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+        
+        .indicator-next-release {
+            color: var(--light-text);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .economic-indicators-group {
+            margin-bottom: 25px;
+        }
+        
+        .economic-indicators-group h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: var(--light-text);
+        }
+        
+        .language-switch {
+            display: none;
+        }
+        
+        .language-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        
+        .comparison-type {
+            font-size: 0.9em;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+        
+        .hot-stocks {
+            margin-top: 20px;
+        }
+        
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .stock-table th, .stock-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .stock-table th {
+            background-color: var(--card-background);
+        }
+        
+        .qrcode-section {
+            text-align: center;
+        }
+        
+        .qrcode-container {
+            display: inline-block;
+            text-align: left;
+        }
+        
+        .qrcode-image {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+        }
+        
+        .qrcode-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Market Briefing</h1>
+            <div class="date">April 28, 2025</div>
+            <div class="company">StockGate 美股通</div>
+        </header>
+        
+        <div class="section">
+            <h2>Market Overview</h2>
+            <div class="market-summary">
+                
+                <div class="index-card">
+                    <div class="index-name">NASDAQ Composite</div>
+                    <div class="index-value">17366.13</div>
+                    <div class="index-change negative">
+                        -16.81 (-0.1%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/IXIC_chart.png" alt="NASDAQ Composite Chart">
+                    </div>
+                    
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">Dow Jones Industrial Average</div>
+                    <div class="index-value">40227.59</div>
+                    <div class="index-change positive">
+                        +114.09 (+0.28%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/DJI_chart.png" alt="Dow Jones Industrial Average Chart">
+                    </div>
+                    
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">S&P 500</div>
+                    <div class="index-value">5528.75</div>
+                    <div class="index-change positive">
+                        +3.54 (+0.06%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/GSPC_chart.png" alt="S&P 500 Chart">
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="analysis">
+                <h3>Market Analysis</h3>
+                <p><p><strong>市场概述</strong></p>
+<p>昨日，美股市场呈现出分化的走势，主要指数涨跌互现。纳斯达克综合指数（NASDAQ Composite）小幅下跌0.1%，收于17366.13点，而道琼斯工业平均指数（Dow Jones Industrial Average）则上涨0.28%，收于40227.59点。标准普尔500指数（S&amp;P 500）几乎持平，上涨0.06%，收于5528.75点。</p>
+<p><strong>主要趋势与原因</strong></p>
+<p>纳斯达克综合指数的下跌可能受到科技股回调的影响，近期该板块的涨势较为迅猛，部分投资者可能选择获利了结。此外，投资者对未来经济和利率政策的担忧也可能导致市场的波动。</p>
+<p>另一方面，道琼斯工业平均指数的上涨可能受到其成分股中权重较大的蓝筹股表现强劲的推动。这些公司通常具有稳定的盈利能力和较低的波动性，在市场不确定性增加时吸引投资者。</p>
+<p><strong>市场情绪</strong></p>
+<p>当前市场情绪较为谨慎，投资者正在密切关注经济数据、公司财报和货币政策的变化。虽然整体市场表现相对平稳，但个股和板块间的分化较为明显，表明市场存在一定的不确定性。</p>
+<p><strong>建议</strong></p>
+<p>在当前市场环境下，投资者应保持谨慎乐观的态度，关注具有稳定盈利能力和增长潜力的公司，同时也要注意分散投资以降低风险。此外，持续关注宏观经济和政策面的变化，及时调整投资策略以应对市场波动。</p></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Today's Headlines</h2>
+            <div class="analysis">
+                <h3>News Analysis</h3>
+                <p><h2><strong>市场焦点与趋势分析</strong></h2>
+<h3><strong>今日市场关注点（3-5点）</strong></h3>
+<ol>
+<li><strong>消费者信心下降</strong>：近期消费者预期创下自1990年以来最大跌幅，或对经济增长产生不利影响。  </li>
+<li><strong>企业债务与投资动态</strong>：WeightWatchers可能通过债务谈判策略缓解财务压力，而IBM计划投资1500亿美元，或影响相关行业竞争格局。  </li>
+<li><strong>科技股走势</strong>：苹果、波音、英伟达等个股表现引人关注，市场分析师对后市持乐观态度。  </li>
+</ol>
+<h3><strong>潜在市场影响因素</strong></h3>
+<ul>
+<li><strong>经济数据与政策预期</strong>：消费者信心下降可能引发更严格的货币政策或政府干预。  </li>
+<li><strong>行业竞争与整合</strong>：流媒体服务可能转向类似有线电视的捆绑模式，科技巨头在AI领域的竞争加剧。  </li>
+<li><strong>全球经济与贸易动态</strong>：中美科技竞争持续，华为新AI芯片的推出对全球市场的影响有限，但需关注长期战略布局。  </li>
+</ul>
+<h3><strong>值得注意的行业趋势</strong></h3>
+<ol>
+<li><strong>流媒体市场变化</strong>：流媒体服务增长潜力减弱，或将采取类似有线电视的捆绑策略以提升竞争力。  </li>
+<li><strong>人工智能与芯片技术</strong>：英伟达在AI领域的优势地位短期内难以撼动，但需关注华为等竞争对手的长期发展。  </li>
+<li><strong>航空与基建投资</strong>：波音获得市场乐观预期，华盛顿指挥官以37亿美元达成体育场合作，基建投资或成市场亮点。  </li>
+</ol>
+<p><strong>总结</strong>：当前市场关注消费者信心、企业债务、科技投资等焦点，潜在影响因素包括经济政策、行业竞争及全球贸易。值得注意的趋势包括流媒体市场变化、AI技术竞争及基建投资机会。</p></p>
+            </div>
+            
+            <div class="news-container">
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/consumers-feel-like-theyre-on-a-very-scary-roller-coaster-thats-bad-news-for-trumps-economy-7edd6b2b" target="_blank">Consumers feel like they’re on ‘a very scary roller coaster.’ That’s bad news for Trump’s economy.</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 21:20:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Trump’s first months in office have seen the steepest drop in consumer expectations since the 1990 recession
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/weightwatchers-bankruptcy-chatter-may-be-a-debt-negotiating-tactic-activist-investor-says-130eb3f0" target="_blank">WeightWatchers bankruptcy chatter may be a debt-negotiating tactic, activist investor says</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 21:07:00</span>
+                    </div>
+                    <div class="news-summary">
+                        “WeightWatchers is a huge brand now. It’s got millions and millions of members,” said Bruce Galloway, chief investment officer at Galloway Capital Partners.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/ibm-takes-a-cue-from-apple-with-150-billion-investment-but-heres-the-twist-8de9f2bb" target="_blank">IBM takes a cue from Apple with $150 billion investment — but here’s the twist</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 20:37:00</span>
+                    </div>
+                    <div class="news-summary">
+                        IBM doesn’t do much overseas manufacturing but may be trying to protect some of its consulting contracts with the U.S. government.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/cramer-becomes-increasingly-bullish-on-boeing-after-adding-the-stock-to-the-bullpen.html" target="_blank">Cramer becomes increasingly bullish on Boeing after adding the stock to the Bullpen</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 20:15:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Boeing shares should soar "higher and higher," Jim Cramer said Monday.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/are-the-storm-clouds-finally-starting-to-part-for-portfolio-stock-apple.html" target="_blank">Are the storm clouds finally starting to part for portfolio stock Apple?</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 19:41:09</span>
+                    </div>
+                    <div class="news-summary">
+                        The latest commentary from White House officials and Wall Street analysts suggests a path forward for the iPhone-maker.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/why-nvidia-investors-shouldnt-worry-about-huaweis-new-ai-chip-69f33b81" target="_blank">Why Nvidia investors shouldn’t worry about Huawei’s new AI chip</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 19:41:00</span>
+                    </div>
+                    <div class="news-summary">
+                        An analyst notes that Huawei’s new chip isn’t likely to hold much appeal outside of China.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/our-first-move-in-overbought-market-plus-palo-alto-makes-a-small-buy.html" target="_blank">Our first move in this overbought market — plus Palo Alto makes a small buy</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 18:28:35</span>
+                    </div>
+                    <div class="news-summary">
+                        Every weekday, the Investing Club releases the Homestretch; an actionable afternoon update just in time for the last hour of trading.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/the-future-of-streaming-television-is-starting-to-look-an-awful-lot-like-cable-tv-78de704a" target="_blank">The future of streaming television is starting to look an awful lot like cable TV</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 18:11:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Streaming’s à la carte choices are starting to deliver less growth potential — and the best way forward may be to bundle programming like cable does, a TD Cowen analyst said.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/gen-z-workers-want-to-make-100-000-in-their-first-job-out-of-college-four-tips-from-experts-on-how-to-get-there-4030fb49" target="_blank">Gen Z workers want to make $100,000 in their first job out of college. Four tips from experts on how to get there.</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 18:04:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Salary negotiation is an important and often overlooked part of a person’s first job out of college
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/nfl-washington-commanders-return-to-dc-in-3point7-billion-deal.html" target="_blank">NFL's Washington Commanders return to D.C. in $3.7 billion stadium deal</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 18:02:21</span>
+                    </div>
+                    <div class="news-summary">
+                        The Washington Commanders will return to the District of Columbia and redevelop their former RFK Stadium campus, the team announced.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/how-high-yield-bond-funds-like-these-can-lower-your-investment-risk-24385288" target="_blank">How high-yield bond funds like these can lower your investment risk</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 17:55:00</span>
+                    </div>
+                    <div class="news-summary">
+                        This year’s seesaw action in the stock market has emphasized two important concepts for investors: Diversification can lower your day-to-day risk, and income-producing investments can help you remain disciplined and avoid selling into a declining market.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/you-may-get-more-in-social-security-with-trumps-proposed-tax-cuts-but-in-10-years-you-might-get-less-c0eeda25" target="_blank">You may get more in Social Security with Trump’s proposed tax cuts — but in 10 years, you might get less</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 17:44:00</span>
+                    </div>
+                    <div class="news-summary">
+                        For years, policymakers in both parties have raised questions about taxes on Social Security. Still, eliminating them could create problems for future beneficiaries.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/starbucks-big-bet-on-china-was-going-sideways-then-came-trump-2point0.html" target="_blank">Starbucks' big bet on China was already going sideways. Then came Trump 2.0</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 17:26:57</span>
+                    </div>
+                    <div class="news-summary">
+                        A deepening "buy China, avoid the U.S." sentiment is hitting profits and the company's stock.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/jim-cramer-says-he-is-thinking-about-buying-this-energy-stock-heres-the-bull-case.html" target="_blank">Jim Cramer says he is thinking about buying this energy stock. Here's the bull case</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 17:04:32</span>
+                    </div>
+                    <div class="news-summary">
+                        The Investing Club holds its "Morning Meeting" every weekday at 10:20 a.m. ET.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/this-technical-indicator-predicts-a-higher-stock-market-but-dont-get-too-excited-66cce9d7" target="_blank">This technical indicator predicts a higher stock market — but don’t get too excited</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 17:03:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Putting the Zweig Breadth Thrust buy signal in perspective
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/wave-of-u-s-data-this-week-may-give-tariff-weary-investors-more-to-worry-about-01aae5bc" target="_blank">Wave of U.S. data this week may give tariff-weary investors more to worry about</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 16:57:00</span>
+                    </div>
+                    <div class="news-summary">
+                        The week ahead is set to bring a deluge of economic data that has the potential to come in far below expectations and rattle financial-market participants, who have already been through weeks of tariff-driven volatility.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/americans-are-betting-too-much-of-their-retirement-on-the-u-s-stock-market-74a937e5" target="_blank">Americans are betting too much of their retirement on the U.S. stock market</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 16:52:00</span>
+                    </div>
+                    <div class="news-summary">
+                        The first 100 days of Trump’s second term show how diversification can benefit your 401(k).
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/were-trimming-our-position-in-a-tech-stock-that-surged-13percent-last-week-alone.html" target="_blank">We're trimming our position in a tech stock that surged 13% last week alone</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 16:09:31</span>
+                    </div>
+                    <div class="news-summary">
+                        We most recently added to our position in the stock in early March.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2025/04/28/uber-ceo-ive-gotten-lucky-in-my-career-due-to-this-character-trait.html" target="_blank">Uber CEO: I've gotten 'unbelievably lucky in my career' because of this 1 character trait—it ‘opens you up to opportunity’</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2025-04-28 15:50:57</span>
+                    </div>
+                    <div class="news-summary">
+                        Uber CEO Dara Khosrowshahi says the character trait that helped him build a successful career is simple: He's always willing to explore new interests or meet new people.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.marketwatch.com/story/boeing-is-getting-back-to-2023-analyst-says-investors-can-buy-the-stock-again-2c8dfcea" target="_blank">Boeing is getting back to 2023, analyst says. Investors can buy the stock again.</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">MarketWatch</span> | 
+                        <span class="news-date">2025-04-28 15:37:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Bernstein sees Boeing making progress toward achieving the growth that was expected before the Alaska Air door incident in January 2024.
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="section">
+            <h2>Economic Indicators</h2>
+            <div class="economic-indicators-container">
+                <!-- Inflation Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Inflation Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Consumer Price Index (CPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">2.4%</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +-0.4个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 2.8%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Personal Consumption Expenditures Price Index (PCE)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">2.5%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.0个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 2.5%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-02-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Core PCE Price Index</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">2.8%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 2.7%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-02-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Producer Price Index (PPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">2.8%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        -0.5个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 3.2%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-11</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- Employment Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Employment Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type"></div>
+                                <div class="indicator-name">Nonfarm Payrolls</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">159398.0</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +228.0
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 159170.0</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-02</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type"></div>
+                                <div class="indicator-name">Unemployment Rate</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">4.2%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 4.1%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-02</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- Consumer Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Consumer Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">MoM</div>
+                                <div class="indicator-name">Retail Sales (MoM Change)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">1.5%</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +1.4个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 0.0%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-15</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">MoM</div>
+                                <div class="indicator-name">Personal Consumption Expenditures (MoM Change)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">0.4%</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +0.7个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: -0.3%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2025-02-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2025-05-28</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="section">
+            <h2>Community Hot Stocks</h2>
+            <div class="hot-stocks">
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Symbol</th>
+                            <th>Mentions</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>1</td>
+                            <td>TSLA</td>
+                            <td>72</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>2</td>
+                            <td>CARE</td>
+                            <td>53</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3</td>
+                            <td>NVDA</td>
+                            <td>47</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>4</td>
+                            <td>HIT</td>
+                            <td>44</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>5</td>
+                            <td>TALK</td>
+                            <td>39</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>6</td>
+                            <td>MIND</td>
+                            <td>37</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>7</td>
+                            <td>GROW</td>
+                            <td>32</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>8</td>
+                            <td>SELF</td>
+                            <td>31</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>9</td>
+                            <td>KIDS</td>
+                            <td>29</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>10</td>
+                            <td>EDIT</td>
+                            <td>27</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>11</td>
+                            <td>ACT</td>
+                            <td>26</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>12</td>
+                            <td>LAND</td>
+                            <td>25</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>13</td>
+                            <td>FOX</td>
+                            <td>23</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>14</td>
+                            <td>FARM</td>
+                            <td>23</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>15</td>
+                            <td>SOFI</td>
+                            <td>22</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>16</td>
+                            <td>FAST</td>
+                            <td>20</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>17</td>
+                            <td>FORM</td>
+                            <td>19</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>18</td>
+                            <td>STEP</td>
+                            <td>18</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>19</td>
+                            <td>LINK</td>
+                            <td>18</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>20</td>
+                            <td>HOOD</td>
+                            <td>17</td>
+                            <td></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Market Outlook</h2>
+            <div class="analysis">
+                <p><p><strong>市场展望</strong></p>
+<p>基于最近一个交易日的收盘数据，我们可以看到美股市场呈现出分化走势，纳斯达克综合指数小幅下跌，而道琼斯工业平均指数和标普500指数则小幅上涨。市场波动性仍然较高，投资者需谨慎应对。</p>
+<p><strong>可能市场方向</strong></p>
+<p>短期内，市场可能会呈现出震荡整理的走势，投资者需关注经济数据和企业财报的发布。当前市场对经济增长的担忧仍存，消费者的信心指数下降可能对经济产生负面影响。同时，一些个股的异动，如IBM的大额投资和WeightWatchers的债务谈判，可能会带来局部市场的波动。</p>
+<p><strong>风险因素</strong></p>
+<p>投资者需关注以下风险因素：</p>
+<ul>
+<li>经济增长的放缓：消费者的信心下降可能对经济增长产生负面影响。</li>
+<li>企业财报的不确定性：部分企业的财报表现不佳可能会对市场产生负面影响。</li>
+<li>债务谈判的风险：WeightWatchers的债务谈判可能会对相关企业产生影响。</li>
+</ul>
+<p><strong>关键关注点</strong></p>
+<p>投资者需关注以下关键点：</p>
+<ul>
+<li>经济数据的发布：关注消费者信心指数、GDP增长率等经济数据的发布。</li>
+<li>企业财报的发布：关注重点企业的财报表现，特别是科技和消费品行业。</li>
+<li>个股的异动：关注IBM、WeightWatchers、Boeing和Apple等个股的走势。</li>
+</ul>
+<p>总体而言，短期内市场可能会呈现出震荡整理的走势，投资者需谨慎应对，关注经济数据和企业财报的发布，同时需警惕潜在的风险因素。</p></p>
+            </div>
+        </div>
+        
+        <div class="section qrcode-section">
+            <h2>Follow Us</h2>
+            <div class="qrcode-container">
+                <img src="qrcode.jpg" alt="StockGate WeChat Official Account QR Code" class="qrcode-image">
+                <p class="qrcode-text">Scan to follow StockGate<br>For more US stock market insights</p>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Daily Market Briefing - April 28, 2025</p>
+            <p>StockGate 美股通 - This report is for reference only and does not constitute investment advice</p>
+            <p>Data sources: Yahoo Finance, Finnhub, Alpha Vantage</p>
+        </footer>
+    </div>
+</body>
+</html>
