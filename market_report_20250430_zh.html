@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>美股市场简报 - 2025年05月01日</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #4285f4;
+            --accent-color: #fbbc05;
+            --text-color: #202124;
+            --light-text: #5f6368;
+            --background-color: #ffffff;
+            --card-background: #f8f9fa;
+            --positive-color: #D2042D;  /* 红色表示上涨（中国市场惯例） */
+            --negative-color: #2E8B57;  /* 绿色表示下跌（中国市场惯例） */
+            --border-radius: 12px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --transition-normal: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "WenQuanYi Micro Hei", "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        
+        body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        header h1 {
+            margin: 0 0 15px 0;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        header .date {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        header .company {
+            margin-top: 10px;
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        .section {
+            margin-bottom: 10px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+        }
+        
+        .section:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .section > h2 {
+            color: var(--primary-color);
+            font-size: 1.8em;
+            margin: 0 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+            position: relative;
+        }
+        
+        .section > h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .market-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin: 10px 0;
+        }
+        
+        .index-card {
+            background: linear-gradient(135deg, var(--card-background), white);
+            padding: 8px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100px;
+        }
+        
+        .index-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .index-name {
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--primary-color);
+        }
+        
+        .index-value-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin: 3px 0 1px 0;
+            width: 100%;
+        }
+        
+        .index-value {
+            font-size: 1.26em;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+            display: block;
+        }
+        
+        .index-change {
+            font-size: 0.87em;
+            font-weight: 600;
+            padding: 1px 3px;
+            border-radius: 2px;
+            white-space: nowrap;
+            line-height: 1;
+            display: block;
+        }
+        
+        .index-extra-info {
+            font-size: 0.8em;
+            color: var(--light-text);
+            margin-top: 3px;
+        }
+        
+        .index-time {
+            font-size: 0.75em;
+            color: var(--light-text);
+            margin-top: auto;
+            opacity: 0.7;
+        }
+        
+        .chart-container {
+            margin: 2px 0 2px 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            background: white;
+            padding: 5px;
+        }
+        
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            border-radius: calc(var(--border-radius) - 4px);
+            transition: var(--transition-normal);
+        }
+        
+        .chart-container:hover img {
+            transform: scale(1.02);
+        }
+        
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .news-item {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .news-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .news-title a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition-normal);
+        }
+        
+        .news-title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .news-meta {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .news-summary {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        
+        .economic-indicators-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .economic-indicators-group {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        
+        .economic-indicators-group h3 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            margin: 0 0 8px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .economic-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+        }
+        
+        .indicator-card {
+            background: var(--card-background);
+            padding: 6px;
+            border-radius: 8px;
+            transition: var(--transition-normal);
+        }
+        
+        .indicator-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .indicator-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-color);
+        }
+
+        .indicator-value-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin: 4px 0;
+        }
+
+        .indicator-current-value {
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .indicator-change {
+            font-size: 1em;
+            font-weight: 600;
+            padding: 2px 3px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .indicator-previous-value,
+        .indicator-date,
+        .indicator-next-release {
+            font-size: 0.9em;
+            color: var(--light-text);
+            margin-top: 3px;
+        }
+        
+        /* 社区热股样式 */
+        .hot-stocks-list {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 6px;
+        }
+        
+        .stock-item {
+            position: relative;
+            padding: 3px 5px;
+            margin-bottom: 3px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        
+        .stock-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        
+        .stock-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stock-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stock-left {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stock-symbol {
+            font-weight: bold;
+            font-size: 11.9px;  
+            min-width: 42px;
+        }
+        
+        .stock-price {
+            font-size: 11.05px;  
+        }
+        
+        .change-percent {
+            font-size: 11.05px;  
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+        
+        .mentions {
+            font-size: 10.2px;  
+            color: #666;
+            background: #ffd700;
+            padding: 1px 4px;
+            border-radius: 8px;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .heat-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(255, 215, 0, 0.1);
+            z-index: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .positive {
+            color: #e4393c;
+            background: rgba(228, 57, 60, 0.1);
+        }
+        
+        .negative {
+            color: #2fb344;
+            background: rgba(47, 179, 68, 0.1);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            color: var(--light-text);
+        }
+        
+        .footer p {
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+        
+        .market-content {
+            padding: 20px;
+        }
+        
+        .qrcode-section {
+            text-align: center;
+        }
+        
+        .qrcode-container {
+            display: inline-block;
+            margin: 20px;
+        }
+        
+        .qrcode-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .qrcode-text {
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .market-summary {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+            
+            .index-card {
+                padding: 6px;
+                min-height: 90px;
+            }
+            
+            .index-name {
+                font-size: 0.85em;
+                margin-bottom: 2px;
+            }
+            
+            .index-value {
+                font-size: 1.1em;
+            }
+            
+            .index-change {
+                font-size: 0.8em;
+            }
+            
+            .chart-container {
+                margin: 1px 0;
+            }
+            
+            .index-time, .index-extra-info {
+                font-size: 0.7em;
+            }
+            
+            .hot-stocks-list {
+                flex-direction: column;
+            }
+            
+            .stock-symbol {
+                font-size: 11.05px;  /* 原1.2em的85%左右 */
+            }
+            
+            .stock-price {
+                font-size: 0.85em;  /* 原1em的85% */
+            }
+            
+            .change-percent {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>美股市场简报</h1>
+            <div class="date">2025年05月01日</div>
+            <div class="company">StockGate 美股通</div>
+        </header>
+        
+        <div class="section">
+            <h2>市场概览</h2>
+            <div class="market-summary">
+                
+                <div class="index-card">
+                    <div class="index-name">纳斯达克指数</div>
+                    <div class="index-value-container">
+                        <div class="index-value negative">17446.34</div>
+                        <div class="index-change negative">
+                            -14.98 (-0.09%)
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/IXIC_chart.png" alt="纳斯达克指数 Chart" class="index-chart">
+                    </div>
+                    
+                    <div class="index-extra-info"></div>
+                    <div class="index-time"></div>
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">道琼斯指数</div>
+                    <div class="index-value-container">
+                        <div class="index-value positive">40669.36</div>
+                        <div class="index-change positive">
+                            +141.74 (+0.35%)
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/DJI_chart.png" alt="道琼斯指数 Chart" class="index-chart">
+                    </div>
+                    
+                    <div class="index-extra-info"></div>
+                    <div class="index-time"></div>
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">标普500指数</div>
+                    <div class="index-value-container">
+                        <div class="index-value positive">5569.06</div>
+                        <div class="index-change positive">
+                            +8.23 (+0.15%)
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/GSPC_chart.png" alt="标普500指数 Chart" class="index-chart">
+                    </div>
+                    
+                    <div class="index-extra-info"></div>
+                    <div class="index-time"></div>
+                </div>
+                
+            </div>
+            <div class="market-content"><h3><strong>市场概述</strong></h3>
+<p>昨日，美股市场呈现<strong>分化走势</strong>，主要指数表现如下：  </p>
+<ul>
+<li><strong>纳斯达克指数</strong>下跌 0.09%，收于 17446.34；  </li>
+<li><strong>道琼斯指数</strong>上涨 0.35%，收于 40669.36；  </li>
+<li><strong>标普 500 指数</strong>微涨 0.15%，报 5569.06。  </li>
+</ul>
+<p><strong>主要趋势与原因</strong>：<br />
+- <strong>科技股承压</strong>：纳斯达克指数小幅下跌，主要受科技板块回调影响。近期部分科技巨头财报不及预期，市场对高估值板块的担忧仍存。<br />
+- <strong>大盘价值股支撑市场</strong>：道琼斯指数上涨，主要受益于金融、工业等大盘价值股的走强。投资者在经济复苏预期下倾向于配置低估值板块。<br />
+- <strong>市场波动性上升</strong>：近期地缘政治不确定性及部分经济数据波动，对市场情绪形成扰动。  </p>
+<p><strong>市场情绪</strong>：<br />
+当前市场处于<strong>谨慎乐观</strong>状态。一方面，投资者对经济复苏及企业盈利持积极态度；另一方面，利率前景及部分行业景气度的不确定性，使市场整体偏向<strong>防御性配置</strong>。  </p>
+<p><strong>短期展望</strong>：<br />
+预计市场将继续在<strong>经济数据、货币政策及企业财报</strong>的扰动中波动。建议关注<strong>防御性板块</strong>（如消费、医疗）和具有<strong>高分红能力</strong>的价值股，同时在科技股回调后寻找<strong>低估布局机会</strong>。  </p>
+<p>总体来看，市场短期或维持<strong>震荡走势</strong>，关注宏观及微观基本面变化，寻找结构性机会。</p></div>
+        </div>
+        
+        <div class="section">
+            <h2>今日要闻</h2>
+            <div><h2><strong>市场分析报告</strong></h2>
+<h3><strong>今日市场主要关注点</strong></h3>
+<ol>
+<li><strong>股市波动性</strong>：近期市场波动较大，投资者需关注市场稳定性及潜在的回调风险。</li>
+<li><strong>科技行业动态</strong>：Epic Systems 扩大了其在电子健康记录（EHR）市场的份额，而 Meta 的 Reality Labs 亏损 4.2 亿美元。</li>
+<li><strong>经济衰退风险</strong>：GDP 下降和铜价下跌引发了市场对经济衰退的担忧。</li>
+</ol>
+<h3><strong>潜在市场影响因素</strong></h3>
+<ol>
+<li><strong>经济数据</strong>：GDP 增长放缓可能影响市场信心，需关注后续经济数据表现。</li>
+<li><strong>政策变化</strong>：关税政策的不确定性可能影响企业盈利和市场表现。</li>
+<li><strong>市场情绪</strong>：投资者需警惕市场恐慌情绪的蔓延。</li>
+</ol>
+<h3><strong>值得关注的行业动向</strong></h3>
+<ol>
+<li><strong>科技医疗</strong>：Epic Systems 扩大市场份额，显示出其在 EHR 领域的竞争优势。</li>
+<li><strong>半导体</strong>：Qualcomm 交出了稳健的财报，表明其抗风险能力较强。</li>
+<li><strong>零售交易</strong>：Robinhood 收入激增，反映出市场对交易和投资的活跃需求。</li>
+</ol>
+<h3><strong>总结</strong></h3>
+<p>市场波动性、经济衰退风险和行业动态是当前的主要关注点。投资者需关注经济数据、政策变化和市场情绪，以制定合理的投资策略。</p></div>
+        </div>
+        
+        
+        <div class="section">
+            <h2>宏观经济数据</h2>
+            <div class="economic-indicators-container">
+                <!-- 利率与货币政策指标 -->
+                <div class="economic-indicators-group">
+                    <h3>利率与货币政策</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">联邦基金利率</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value negative">4.3%</div>
+                                    
+                                    <div class="indicator-change negative">
+                                        0.0个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 4.3%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-07</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">10年期国债收益率</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value negative">4.2%</div>
+                                    
+                                    <div class="indicator-change negative">
+                                        -0.0个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 4.2%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-04-29</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-01</div>
+                                
+                            </div>
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- 通胀指标 -->
+                <div class="economic-indicators-group">
+                    <h3>通胀指标</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">消费者物价指数(CPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">2.4%</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        -0.4个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 2.8%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">PCE物价指数</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">2.3%</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        -0.4个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 2.7%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">核心PCE物价指数</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">2.6%</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        -0.3个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 3.0%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">生产者物价指数(PPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value negative">2.8%</div>
+                                    
+                                    <div class="indicator-change negative">
+                                        -0.5个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 3.2%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-11</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- 就业指标 -->
+                <div class="economic-indicators-group">
+                    <h3>就业指标</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">非农就业人数变化</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">159398.0</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        +228.0
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 159170.0</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-02</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">失业率</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value negative">4.2%</div>
+                                    
+                                    <div class="indicator-change negative">
+                                        +0.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 4.1%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-02</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- 消费者指标 -->
+                <div class="economic-indicators-group">
+                    <h3>消费者指标</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">零售销售月度变化</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">1.5%</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        +1.4个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 0.0%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-15</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">个人消费支出月度变化</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value positive">0.7%</div>
+                                    
+                                    <div class="indicator-change positive">
+                                        +0.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">前值: 0.5%</div>
+                                
+                                <div class="indicator-date">观察日期: 2025-03-01</div>
+                                
+                                <div class="indicator-next-release">下次公布: 2025-05-28</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="section">
+            <h2 class="section-title">社区热股</h2>
+            <div class="hot-stocks-list">
+                
+                <div class="stock-item" data-mentions="142" style="--heat: 100.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">META</span>
+                            <span class="stock-price">$549</span>
+                            <span class="change-percent negative">
+                                -0.98%
+                            </span>
+                        </div>
+                        <div class="mentions">142次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="128" style="--heat: 90.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">HIT</span>
+                            <span class="stock-price">$0.61</span>
+                            <span class="change-percent negative">
+                                -2.02%
+                            </span>
+                        </div>
+                        <div class="mentions">128次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="112" style="--heat: 79.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">TSLA</span>
+                            <span class="stock-price">$282.16</span>
+                            <span class="change-percent negative">
+                                -3.38%
+                            </span>
+                        </div>
+                        <div class="mentions">112次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="95" style="--heat: 67.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">CARE</span>
+                            <span class="stock-price">$15.31</span>
+                            <span class="change-percent negative">
+                                -1.67%
+                            </span>
+                        </div>
+                        <div class="mentions">95次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="89" style="--heat: 63.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">BOOM</span>
+                            <span class="stock-price">$6.49</span>
+                            <span class="change-percent negative">
+                                -4.56%
+                            </span>
+                        </div>
+                        <div class="mentions">89次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="74" style="--heat: 52.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">BEAT</span>
+                            <span class="stock-price">$1.75</span>
+                            <span class="change-percent negative">
+                                -3.31%
+                            </span>
+                        </div>
+                        <div class="mentions">74次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="72" style="--heat: 51.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">SELF</span>
+                            <span class="stock-price">$5.22</span>
+                            <span class="change-percent positive">
+                                +0.31%
+                            </span>
+                        </div>
+                        <div class="mentions">72次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="70" style="--heat: 49.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">MSFT</span>
+                            <span class="stock-price">$395.26</span>
+                            <span class="change-percent positive">
+                                +0.31%
+                            </span>
+                        </div>
+                        <div class="mentions">70次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="61" style="--heat: 43.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">NVDA</span>
+                            <span class="stock-price">$108.92</span>
+                            <span class="change-percent negative">
+                                -0.09%
+                            </span>
+                        </div>
+                        <div class="mentions">61次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="58" style="--heat: 41.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">TALK</span>
+                            <span class="stock-price">$3.07</span>
+                            <span class="change-percent negative">
+                                -2.85%
+                            </span>
+                        </div>
+                        <div class="mentions">58次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="55" style="--heat: 39.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">EDIT</span>
+                            <span class="stock-price">$1.65</span>
+                            <span class="change-percent positive">
+                                +6.45%
+                            </span>
+                        </div>
+                        <div class="mentions">55次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="53" style="--heat: 37.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">ACT</span>
+                            <span class="stock-price">$35.79</span>
+                            <span class="change-percent positive">
+                                +0.82%
+                            </span>
+                        </div>
+                        <div class="mentions">53次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="51" style="--heat: 36.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">MIND</span>
+                            <span class="stock-price">$6.71</span>
+                            <span class="change-percent positive">
+                                +5.01%
+                            </span>
+                        </div>
+                        <div class="mentions">51次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="49" style="--heat: 35.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">PLUS</span>
+                            <span class="stock-price">$62.36</span>
+                            <span class="change-percent negative">
+                                -0.83%
+                            </span>
+                        </div>
+                        <div class="mentions">49次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="47" style="--heat: 33.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">KIDS</span>
+                            <span class="stock-price">$20.82</span>
+                            <span class="change-percent negative">
+                                -3.39%
+                            </span>
+                        </div>
+                        <div class="mentions">47次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="47" style="--heat: 33.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">APP</span>
+                            <span class="stock-price">$269.31</span>
+                            <span class="change-percent negative">
+                                -6.77%
+                            </span>
+                        </div>
+                        <div class="mentions">47次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="42" style="--heat: 30.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">HOOD</span>
+                            <span class="stock-price">$49.11</span>
+                            <span class="change-percent negative">
+                                -0.53%
+                            </span>
+                        </div>
+                        <div class="mentions">42次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="42" style="--heat: 30.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">FAST</span>
+                            <span class="stock-price">$80.97</span>
+                            <span class="change-percent positive">
+                                +0.86%
+                            </span>
+                        </div>
+                        <div class="mentions">42次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="36" style="--heat: 25.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">BASE</span>
+                            <span class="stock-price">$17.64</span>
+                            <span class="change-percent positive">
+                                +3.1%
+                            </span>
+                        </div>
+                        <div class="mentions">36次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+                <div class="stock-item" data-mentions="33" style="--heat: 23.0%">
+                    <div class="stock-main">
+                        <div class="stock-left">
+                            <span class="stock-symbol">PLTR</span>
+                            <span class="stock-price">$118.44</span>
+                            <span class="change-percent positive">
+                                +2.03%
+                            </span>
+                        </div>
+                        <div class="mentions">33次</div>
+                    </div>
+                    <div class="heat-bar" style="width: var(--heat)"></div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>市场展望</h2>
+            <div class="market-content"><h3><strong>市场展望</strong></h3>
+<p>近期市场表现出了 <strong>窄幅震荡</strong> 的特征，主要指数涨跌互现：<br />
+- <strong>纳斯达克指数</strong> 小幅下跌 <strong>0.09%</strong>，报 <strong>17446.34</strong>，显示科技股有一定调整压力。<br />
+- <strong>道琼斯指数</strong> 上涨 <strong>0.35%</strong>，报 <strong>40669.36</strong>，表明部分资金可能在低位流入蓝筹股。<br />
+- <strong>标普 500 指数</strong> 微涨 <strong>0.15%</strong>，报 <strong>5569.06</strong>，整体市场仍在寻求方向。  </p>
+<p>从技术面看，美股短期可能面临 <strong>区间震荡</strong>，市场缺乏明确的趋势信号。部分分析认为，若市场无法形成突破，可能进入 <strong>横盘整理</strong> 或 <strong>短暂回调</strong>。  </p>
+<h3><strong>需要关注的风险因素</strong></h3>
+<ol>
+<li><strong>经济数据不确定性</strong>：当前部分经济指标显示 <strong>经济增长放缓</strong>，可能对企业盈利和市场信心构成压力。  </li>
+<li><strong>市场波动性加剧</strong>：部分报告警告 <strong>长期熊市</strong> 的可能性，投资者需关注市场情绪变化。  </li>
+<li><strong>政策不确定性</strong>：美国大选临近，相关政策预期可能影响市场走势。  </li>
+</ol>
+<h3><strong>投资者应该关注的要点</strong></h3>
+<ol>
+<li><strong>防御性配置</strong>：适当增加 <strong>消费、医药、公用事业</strong> 等防御性板块的配置，降低市场波动风险。  </li>
+<li><strong>关注科技龙头</strong>：如 <strong>Epic Systems</strong> 等在细分领域表现强劲的科技股，可能会提供结构性机会。  </li>
+<li><strong>优化资产配置</strong>：在 <strong>股票、债券、现金</strong> 之间均衡配置，防范市场不确定性。  </li>
+<li><strong>关注经济数据</strong>：重点关注 <strong>通胀、就业、GDP</strong> 等关键数据，寻找市场趋势线索。  </li>
+</ol>
+<h3><strong>总结</strong></h3>
+<p>短期市场可能呈现 <strong>震荡整理</strong> 态势，投资者需关注 <strong>政策变化、经济数据、市场情绪</strong>，并采取 <strong>均衡配置</strong> 策略，防范潜在波动风险。在不确定性中寻找结构性机会，做好 <strong>风险管理</strong> 是关键。</p></div>
+        </div>
+        
+        <div class="section qrcode-section">
+            <h2>关注我们</h2>
+            <div class="qrcode-container">
+                <img src="qrcode.jpg" alt="StockGate 美股通公众号二维码" class="qrcode-image">
+                <p class="qrcode-text">扫码关注 StockGate 美股通<br>获取您的AI投资助手</p>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>美股市场简报 - 2025年05月01日</p>
+            <p>StockGate 美股通 - 本报告仅供参考，不构成投资建议</p>
+            <p>数据来源: Yahoo Finance, Finnhub, Alpha Vantage, FRED, Reddit</p>
+            <p>报告生成时间: 2025-05-01 06:09</p>
+        </footer>
+    </div>
+</body>
+</html>
