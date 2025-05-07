@@ -62,6 +62,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade pip setuptools wheel
+          pip install pandas
           pip install -r infos/requirements.txt
       
       - name: Run market report generator
