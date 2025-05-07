@@ -30,7 +30,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  SOURCE_REPO: yjq001/sexy-robot
+  SOURCE_REPO: yjq001/sex-robot
   IMAGE_NAME: mymcp
   IMAGE_OWNER: yjq001
 
