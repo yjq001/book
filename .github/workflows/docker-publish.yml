@@ -1,0 +1,169 @@
+name: Docker Build mymcp and Push
+
+# 触发条件：推送到main分支、打标签或手动触发
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: '要检出的分支、标签或提交SHA'
+        required: true
+        default: 'master'
+        type: string
+      version:
+        description: 'Docker镜像版本标签'
+        required: false
+        default: 'latest'
+        type: string
+      platform:
+        description: '构建平台 (amd64, arm64, 或 all)'
+        required: false
+        default: 'amd64'
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  SOURCE_REPO: yjq001/sexy-robot
+  IMAGE_NAME: mymcp
+  IMAGE_OWNER: yjq001
+
+jobs:
+  build-and-push:
+    # 使用Ubuntu 22.04 LTS，因为20.04已于2025-04-15停止支持
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # 第1步：从指定仓库检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: ${{ inputs.ref || 'master' }}
+          token: ${{ secrets.PAT_TOKEN }}
+          fetch-depth: 1
+      
+      # 检查和验证文件
+      - name: Verify files
+        run: |
+          echo "检查工作目录..."
+          ls -la
+          
+          echo "检查 Dockerfile..."
+          if [ -f "Dockerfile" ]; then
+            echo "✓ Dockerfile 存在"
+            cat Dockerfile
+          else
+            echo "✗ Dockerfile 不存在!"
+            exit 1
+          fi
+          
+          echo "检查 .dockerignore..."
+          if [ -f ".dockerignore" ]; then
+            echo "✓ .dockerignore 存在"
+            cat .dockerignore
+          else
+            echo "✗ .dockerignore 不存在，创建一个空文件"
+            touch .dockerignore
+          fi
+      
+      # 设置平台参数
+      - name: Set platform parameter
+        id: set_platform
+        run: |
+          if [ "${{ inputs.platform }}" = "amd64" ]; then
+            echo "platforms=linux/amd64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=amd64" >> $GITHUB_OUTPUT
+          elif [ "${{ inputs.platform }}" = "arm64" ]; then
+            echo "platforms=linux/arm64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=arm64" >> $GITHUB_OUTPUT
+          else
+            echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+            echo "qemu_platforms=arm64,amd64" >> $GITHUB_OUTPUT
+          fi
+          echo "使用平台: ${{ steps.set_platform.outputs.platforms }}"
+      
+      # 设置QEMU，支持多架构构建
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ steps.set_platform.outputs.qemu_platforms }}
+      
+      # 设置Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: ${{ steps.set_platform.outputs.platforms }}
+
+      # 显示Docker信息
+      - name: Docker info
+        run: |
+          docker version
+          docker info
+          docker buildx ls
+
+      # 登录到GHCR
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 设置标签名称
+      - name: Set up Docker tags
+        id: docker_tags
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.version || 'latest' }}"
+          elif [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG="${{ github.ref_name }}"
+          else
+            TAG="${{ github.ref_name || 'latest' }}"
+          fi
+          echo "使用标签: $TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:$TAG"
+          echo "image=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
+
+      # 使用Docker Buildx构建多架构镜像并推送
+      - name: Build and push Docker image
+        run: |
+          echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }} 平台: ${{ steps.set_platform.outputs.platforms }}"
+          
+          # 使用buildx构建镜像
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            # 构建并推送
+            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
+              --push \
+              --tag ${{ steps.docker_tags.outputs.image }} \
+              .
+            echo "已推送镜像到 ${{ env.REGISTRY }}"
+          else
+            # 仅构建，不推送
+            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
+              --tag ${{ steps.docker_tags.outputs.image }} \
+              --load \
+              .
+            echo "拉取请求，跳过推送"
+          fi
+          
+          # 显示镜像信息
+          docker buildx imagetools inspect ${{ steps.docker_tags.outputs.image }}
+
+      # 显示构建结果
+      - name: Image info
+        if: success()
+        run: |
+          echo "构建成功!"
+          echo "镜像: ${{ steps.docker_tags.outputs.image }}"
+          echo "支持的架构: ${{ steps.set_platform.outputs.platforms }}" 
