@@ -11,7 +11,7 @@ on:
       model:
         description: 'GPT模型名称'
         required: false
-        default: 'qwen/qwen3-32b:free'
+        default: 'deepseek/deepseek-chat:free'
         type: string
       gpt_base_url:
         description: 'OpenAI API Base URL'
@@ -74,7 +74,7 @@ jobs:
           fi
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'qwen/qwen3-32b:free' }}"
+          python market_report_generator.py --model "${{ github.event.inputs.model || 'deepseek/deepseek-chat:free' }}"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
