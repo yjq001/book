@@ -119,6 +119,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # 登录到 Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       # 设置标签名称
       - name: Set up Docker tags
         id: docker_tags
@@ -134,31 +141,28 @@ jobs:
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:$TAG"
           echo "image=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
+          DOCKERHUB_IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:$TAG"
+          echo "dockerhub_image=$DOCKERHUB_IMAGE" >> $GITHUB_OUTPUT
 
-      # 使用Docker Buildx构建多架构镜像并推送
-      - name: Build and push Docker image
+      # 构建并推送到两个仓库（仅单架构）
+      - name: Build and push Docker image (GHCR & Docker Hub)
         run: |
-          echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }} 平台: ${{ steps.set_platform.outputs.platforms }}"
-          
-          # 使用buildx构建镜像
+          echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }} 和 ${{ steps.docker_tags.outputs.dockerhub_image }} 平台: ${{ steps.set_platform.outputs.platforms }}"
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            # 构建并推送
-            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
-              --push \
-              --tag ${{ steps.docker_tags.outputs.image }} \
+            docker build --platform ${{ steps.set_platform.outputs.platforms }} \
+              -t ${{ steps.docker_tags.outputs.image }} \
+              -t ${{ steps.docker_tags.outputs.dockerhub_image }} \
               .
-            echo "已推送镜像到 ${{ env.REGISTRY }}"
+            docker push ${{ steps.docker_tags.outputs.image }}
+            docker push ${{ steps.docker_tags.outputs.dockerhub_image }}
+            echo "已推送镜像到 GHCR 和 Docker Hub"
           else
-            # 仅构建，不推送
-            docker buildx build --platform ${{ steps.set_platform.outputs.platforms }} \
-              --tag ${{ steps.docker_tags.outputs.image }} \
-              --load \
+            docker build --platform ${{ steps.set_platform.outputs.platforms }} \
+              -t ${{ steps.docker_tags.outputs.image }} \
               .
             echo "拉取请求，跳过推送"
           fi
-          
-          # 显示镜像信息
-          docker buildx imagetools inspect ${{ steps.docker_tags.outputs.image }}
+          docker images
 
       # 显示构建结果
       - name: Image info
@@ -166,4 +170,5 @@ jobs:
         run: |
           echo "构建成功!"
           echo "镜像: ${{ steps.docker_tags.outputs.image }}"
+          echo "Docker Hub 镜像: ${{ steps.docker_tags.outputs.dockerhub_image }}"
           echo "支持的架构: ${{ steps.set_platform.outputs.platforms }}" 
