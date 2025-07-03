@@ -1,0 +1,210 @@
+name: 📱 Build StockGate APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: '源代码仓库 (格式: owner/repo)'
+        required: true
+        default: 'yjq001/sex-robot'
+      source_branch:
+        description: '源代码分支'
+        required: true
+        default: 'master'
+      app_version:
+        description: 'App版本号'
+        required: false
+        default: '1.0.0'
+
+jobs:
+  build-apk:
+    name: 🚀 构建 StockGate APK
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 拉取源代码
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.event.inputs.source_repo }}
+        ref: ${{ github.event.inputs.source_branch }}
+        token: ${{ secrets.PAT_TOKEN }}
+        path: ./source-code
+        
+    - name: ☕ 设置 Java 环境
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: 📱 设置 Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: 🔧 设置 Node.js 环境
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: './source-code/app/StockGateApp/package.json'
+        
+    - name: 📂 复制源代码到工作目录
+      run: |
+        echo "📂 复制 StockGateApp 源代码..."
+        cp -r ./source-code/app/StockGateApp ./stockgate-app
+        cd ./stockgate-app
+        
+        echo "📋 当前目录内容:"
+        ls -la
+        
+        echo "📄 package.json 内容:"
+        cat package.json
+        
+    - name: 📦 安装依赖
+      working-directory: ./stockgate-app
+      run: |
+        echo "📦 安装 npm 依赖..."
+        npm install
+        
+        echo "✅ 依赖安装完成，当前目录内容:"
+        ls -la
+        
+    - name: 🏗️ 添加 Android 平台
+      working-directory: ./stockgate-app
+      run: |
+        echo "🏗️ 添加 Android 平台..."
+        npx cap add android
+        
+        echo "⚡ 同步项目..."
+        npx cap sync android
+        
+        echo "📁 检查 android 目录:"
+        ls -la android/
+        
+    - name: 🔧 配置 Android 构建
+      working-directory: ./stockgate-app
+      run: |
+        echo "🔧 配置 Gradle 构建..."
+        
+        # 修改 android/variables.gradle 设置版本
+        sed -i "s/versionName = .*/versionName = \"${{ github.event.inputs.app_version }}\"/" android/variables.gradle
+        
+        # 确保 gradlew 有执行权限
+        chmod +x android/gradlew
+        
+        echo "📋 当前配置:"
+        cat android/variables.gradle
+        
+    - name: 🔑 创建签名密钥
+      working-directory: ./stockgate-app/android
+      run: |
+        echo "🔑 创建 APK 签名密钥..."
+        keytool -genkey -v -keystore stockgate.keystore \
+          -alias stockgate \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -dname "CN=StockGate, OU=App, O=StockGate Inc, L=Beijing, S=Beijing, C=CN" \
+          -storepass stockgate123 \
+          -keypass stockgate123
+          
+        echo "✅ 密钥创建完成"
+        ls -la *.keystore
+        
+    - name: 🏗️ 构建 Debug APK
+      working-directory: ./stockgate-app/android
+      run: |
+        echo "🏗️ 构建 Debug APK..."
+        ./gradlew assembleDebug
+        
+        echo "📱 Debug APK 构建完成:"
+        find . -name "*.apk" -path "*/debug/*"
+        
+    - name: 🏗️ 构建 Release APK
+      working-directory: ./stockgate-app/android
+      run: |
+        echo "🏗️ 构建 Release APK..."
+        
+        # 配置签名信息
+        echo "android.injected.signing.store.file=$(pwd)/stockgate.keystore" >> gradle.properties
+        echo "android.injected.signing.store.password=stockgate123" >> gradle.properties
+        echo "android.injected.signing.key.alias=stockgate" >> gradle.properties
+        echo "android.injected.signing.key.password=stockgate123" >> gradle.properties
+        
+        # 构建 Release APK
+        ./gradlew assembleRelease
+        
+        echo "📱 Release APK 构建完成:"
+        find . -name "*.apk" -path "*/release/*"
+        
+    - name: 📝 重命名 APK 文件
+      working-directory: ./stockgate-app/android
+      run: |
+        echo "📝 重命名 APK 文件..."
+        
+        # 找到并重命名 Debug APK
+        DEBUG_APK=$(find . -name "*.apk" -path "*/debug/*" | head -1)
+        if [ -f "$DEBUG_APK" ]; then
+          cp "$DEBUG_APK" "StockGate-${{ github.event.inputs.app_version }}-debug.apk"
+          echo "✅ Debug APK: StockGate-${{ github.event.inputs.app_version }}-debug.apk"
+        fi
+        
+        # 找到并重命名 Release APK
+        RELEASE_APK=$(find . -name "*.apk" -path "*/release/*" | head -1)
+        if [ -f "$RELEASE_APK" ]; then
+          cp "$RELEASE_APK" "StockGate-${{ github.event.inputs.app_version }}-release.apk"
+          echo "✅ Release APK: StockGate-${{ github.event.inputs.app_version }}-release.apk"
+        fi
+        
+        echo "📊 最终 APK 文件:"
+        ls -lh StockGate-*.apk
+        
+    - name: 📊 APK 信息统计
+      working-directory: ./stockgate-app/android
+      run: |
+        echo "📊 StockGate APK 构建信息"
+        echo "================================"
+        echo "📅 构建时间: $(date)"
+        echo "🏷️ 版本号: ${{ github.event.inputs.app_version }}"
+        echo "📦 源代码仓库: ${{ github.event.inputs.source_repo }}"
+        echo "🌿 源代码分支: ${{ github.event.inputs.source_branch }}"
+        echo ""
+        
+        if [ -f "StockGate-${{ github.event.inputs.app_version }}-debug.apk" ]; then
+          echo "🔧 Debug APK 大小: $(du -h "StockGate-${{ github.event.inputs.app_version }}-debug.apk" | cut -f1)"
+        fi
+        
+        if [ -f "StockGate-${{ github.event.inputs.app_version }}-release.apk" ]; then
+          echo "🚀 Release APK 大小: $(du -h "StockGate-${{ github.event.inputs.app_version }}-release.apk" | cut -f1)"
+        fi
+        
+        echo "================================"
+        
+    - name: 📤 上传 Debug APK
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: StockGate-${{ github.event.inputs.app_version }}-debug
+        path: ./stockgate-app/android/StockGate-${{ github.event.inputs.app_version }}-debug.apk
+        retention-days: 30
+        
+    - name: 📤 上传 Release APK
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: StockGate-${{ github.event.inputs.app_version }}-release
+        path: ./stockgate-app/android/StockGate-${{ github.event.inputs.app_version }}-release.apk
+        retention-days: 90
+        
+    - name: 🎉 构建完成
+      run: |
+        echo "🎉 StockGate APK 构建完成！"
+        echo ""
+        echo "📥 下载方式:"
+        echo "1. 在 GitHub Actions 页面点击本次运行"
+        echo "2. 滚动到底部的 'Artifacts' 区域"  
+        echo "3. 下载对应的 APK 文件"
+        echo ""
+        echo "📱 APK 说明:"
+        echo "- Debug APK: 用于开发测试，包含调试信息"
+        echo "- Release APK: 用于正式发布，已优化和签名"
+        echo ""
+        echo "✅ 构建成功完成！" 
