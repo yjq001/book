@@ -1,9 +1,10 @@
 name: Translate Video Metadata
 
-on:
-  schedule:
-    - cron: '*/10 * * * *'  # 每10分钟运行一次
-  workflow_dispatch:        # 允许手动触发
+# Workflow disabled - uncomment the 'on:' section below to re-enable
+# on:
+#   schedule:
+#     - cron: '*/10 * * * *'  # 每10分钟运行一次
+#   workflow_dispatch:        # 允许手动触发
 
 jobs:
   translate:

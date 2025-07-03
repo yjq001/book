@@ -1,43 +1,44 @@
 name: Pornhub Crawler
 
-on:
-  schedule:
-    - cron: '0 1/4 * * *'  # 从凌晨1点开始，每4小时运行一次
-  workflow_dispatch:      # 允许手动触发
-    inputs:
-      mode:
-        description: '爬取模式 (full, incremental, retry)'
-        required: true
-        default: 'full'
-        type: choice
-        options:
-          - full
-          - incremental
-          - retry
-      start_page:
-        description: '起始页码（仅用于全量爬取）'
-        required: false
-        default: '1'
-        type: string
-      end_page:
-        description: '结束页码（仅用于全量爬取，可选）'
-        required: false
-        default: '20'
-        type: string
-      pages:
-        description: '增量爬取时检查的页数（默认：10）'
-        required: false
-        default: '10'
-        type: string
-      error_file:
-        description: '包含失败URL的文件（仅用于retry模式）'
-        required: false
-        default: 'error_urls.txt'
-        type: string
-      proxy:
-        description: '代理服务器地址'
-        required: false
-        type: string
+# Workflow disabled - uncomment the 'on:' section below to re-enable
+# on:
+#   schedule:
+#     - cron: '0 1/4 * * *'  # 从凌晨1点开始，每4小时运行一次
+#   workflow_dispatch:      # 允许手动触发
+#     inputs:
+#       mode:
+#         description: '爬取模式 (full, incremental, retry)'
+#         required: true
+#         default: 'full'
+#         type: choice
+#         options:
+#           - full
+#           - incremental
+#           - retry
+#       start_page:
+#         description: '起始页码（仅用于全量爬取）'
+#         required: false
+#         default: '1'
+#         type: string
+#       end_page:
+#         description: '结束页码（仅用于全量爬取，可选）'
+#         required: false
+#         default: '20'
+#         type: string
+#       pages:
+#         description: '增量爬取时检查的页数（默认：10）'
+#         required: false
+#         default: '10'
+#         type: string
+#       error_file:
+#         description: '包含失败URL的文件（仅用于retry模式）'
+#         required: false
+#         default: 'error_urls.txt'
+#         type: string
+#       proxy:
+#         description: '代理服务器地址'
+#         required: false
+#         type: string
 
 jobs:
   crawl:
