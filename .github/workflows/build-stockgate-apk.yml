@@ -89,10 +89,11 @@ jobs:
       working-directory: ./stockgate-app
       run: |
         sudo apt-get update && sudo apt-get install -y imagemagick
-        for size in 48 72 96 144 192 512; do
-          mkdir -p android/app/src/main/res/mipmap-${size}x${size}
-          convert logo.png -resize ${size}x${size} android/app/src/main/res/mipmap-${size}x${size}/ic_launcher.png || true
-        done
+        convert logo.png -resize 48x48 android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+        convert logo.png -resize 72x72 android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+        convert logo.png -resize 96x96 android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+        convert logo.png -resize 144x144 android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+        convert logo.png -resize 192x192 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
         
     - name: 🔧 配置 Android 构建
       working-directory: ./stockgate-app
