@@ -213,4 +213,13 @@ jobs:
         echo "- Debug APK: 用于开发测试，包含调试信息"
         echo "- Release APK: 用于正式发布，已优化和签名"
         echo ""
-        echo "✅ 构建成功完成！" 
+        echo "✅ 构建成功完成！"
+
+    - name: 🎨 替换 Android 应用图标
+      working-directory: ./stockgate-app
+      run: |
+        sudo apt-get update && sudo apt-get install -y imagemagick
+        for size in 48 72 96 144 192 512; do
+          mkdir -p android/app/src/main/res/mipmap-${size}x${size}
+          convert logo.png -resize ${size}x${size} android/app/src/main/res/mipmap-${size}x${size}/ic_launcher.png || true
+        done 
