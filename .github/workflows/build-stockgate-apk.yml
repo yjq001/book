@@ -67,6 +67,12 @@ jobs:
         echo "✅ 依赖安装完成，当前目录内容:"
         ls -la
         
+    - name: 📦 准备 web 资源
+      working-directory: ./stockgate-app
+      run: |
+        mkdir -p www
+        cp index.html www/
+        
     - name: 🏗️ 添加 Android 平台
       working-directory: ./stockgate-app
       run: |
