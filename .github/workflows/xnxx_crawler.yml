@@ -1,43 +1,44 @@
 name: XNXX Crawler
 
-on:
-  schedule:
-    - cron: '0 3/4 * * *'  # 从凌晨3点开始，每4小时运行一次
-  workflow_dispatch:
-    inputs:
-      command:
-        description: '命令类型'
-        required: true
-        default: 'full'
-        type: choice
-        options:
-          - full
-          - video
-          - search
-          - batch
-      start_page:
-        description: '起始页码'
-        required: false
-        default: '1'
-        type: string
-      end_page:
-        description: '结束页码'
-        required: false
-        default: '20'
-        type: string
-      url:
-        description: '视频URL'
-        required: false
-        type: string
-      query:
-        description: '搜索关键词'
-        required: false
-        type: string
-      file:
-        description: 'URL文件'
-        required: false
-        default: 'urls.txt'
-        type: string
+# Workflow disabled - uncomment the 'on:' section below to re-enable
+# on:
+#   schedule:
+#     - cron: '0 3/4 * * *'  # 从凌晨3点开始，每4小时运行一次
+#   workflow_dispatch:
+#     inputs:
+#       command:
+#         description: '命令类型'
+#         required: true
+#         default: 'full'
+#         type: choice
+#         options:
+#           - full
+#           - video
+#           - search
+#           - batch
+#       start_page:
+#         description: '起始页码'
+#         required: false
+#         default: '1'
+#         type: string
+#       end_page:
+#         description: '结束页码'
+#         required: false
+#         default: '20'
+#         type: string
+#       url:
+#         description: '视频URL'
+#         required: false
+#         type: string
+#       query:
+#         description: '搜索关键词'
+#         required: false
+#         type: string
+#       file:
+#         description: 'URL文件'
+#         required: false
+#         default: 'urls.txt'
+#         type: string
 
 jobs:
   crawl:
