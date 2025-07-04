@@ -85,15 +85,28 @@ jobs:
         echo "📁 检查 android 目录:"
         ls -la android/
         
+    - name: �� 检查 logo.png 和目标目录
+      working-directory: ./stockgate-app
+      run: |
+        echo "当前目录内容："
+        ls -lh
+        echo "logo.png 文件信息："
+        file logo.png || true
+        echo "目标 mipmap 目录内容："
+        ls -lh android/app/src/main/res/ | grep mipmap || true
+
     - name: 🎨 替换 Android 应用图标
       working-directory: ./stockgate-app
       run: |
         sudo apt-get update && sudo apt-get install -y imagemagick
+        set -x
         convert logo.png -resize 48x48 android/app/src/main/res/mipmap-mdpi/ic_launcher.png
         convert logo.png -resize 72x72 android/app/src/main/res/mipmap-hdpi/ic_launcher.png
         convert logo.png -resize 96x96 android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
         convert logo.png -resize 144x144 android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
         convert logo.png -resize 192x192 android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+        echo "替换后各目录内容："
+        ls -lh android/app/src/main/res/mipmap-*/ic_launcher.png || true
         
     - name: 🔧 配置 Android 构建
       working-directory: ./stockgate-app
