@@ -12,7 +12,7 @@ on:
       base_url:
         description: OpenAI API基础URL
         required: false
-        default: 'https://openrouter.ai/api/v1'
+        default: 'https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter'
         type: string
       max_tokens:
         description: '最大Token数量'
@@ -22,7 +22,7 @@ on:
       model_id:
         description: '模型ID'
         required: false
-        default: 'openai/gpt-4.1-nano'
+        default: 'mistralai/mistral-small-3.1-24b-instruct:free'
         type: string
       post_limit:
         description: '获取帖子数量'
