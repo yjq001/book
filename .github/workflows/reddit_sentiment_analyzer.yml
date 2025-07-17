@@ -1,0 +1,93 @@
+name: Reddit情绪分析器
+
+on:
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      api_endpoint:
+        description: API端点URL
+        required: false
+        default:https://api.easyllms.com/api/stockvip'
+        type: string
+      base_url:
+        description: OpenAI API基础URL
+        required: false
+        default: 'https://openrouter.ai/api/v1'
+        type: string
+      max_tokens:
+        description: '最大Token数量
+        required: false
+        default: '80      type: string
+      model_id:
+        description: '模型ID
+        required: false
+        default:openai/gpt-4.1nano'
+        type: string
+      post_limit:
+        description: '获取帖子数量
+        required: false
+        default:5      type: string
+      comment_limit:
+        description: 每个帖子评论数量
+        required: false
+        default: 100      type: string
+      hours:
+        description: '获取过去多少小时的内容
+        required: false
+        default: 24      type: string
+  # 定时触发：美东时间周一到周五早上7点（即UTC 12点）
+  schedule:
+    - cron: '0 12 * * 1-5'
+
+jobs:
+  reddit-sentiment-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes:10 
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: Checkout private repository
+        uses: actions/checkout@v4
+        with:
+          repository: yjq001/sex-robot
+          path: ./sex-robot
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: master
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Copy files from private repository
+        run: |
+          cp -r ./sex-robot/* ./
+      
+      - name: 设置Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10          cache: pip'
+      
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r infos/requirements.txt
+      
+      - name: 运行Reddit情绪分析器
+        working-directory: ./infos
+        run: python reddit_sentiment_analyzer_v3    env:
+          API_ENDPOINT: ${{ github.event.inputs.api_endpoint ||https://api.easyllms.com/api/stockvip' }}
+          BASE_URL: ${{ github.event.inputs.base_url || 'https://openrouter.ai/api/v1 }}
+          MAX_TOKENS: ${{ github.event.inputs.max_tokens || '8000}}
+          MODEL_ID: ${{ github.event.inputs.model_id ||openai/gpt-4.1-nano' }}
+          POST_LIMIT: ${{ github.event.inputs.post_limit || '5' }}
+          COMMENT_LIMIT: ${{ github.event.inputs.comment_limit || 10 }}
+          HOURS: ${{ github.event.inputs.hours || '24 }}
+      
+      - name: 上传日志
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reddit-sentiment-logs
+          path: |
+            infos/*.log
+            infos/__pycache__/
+          retention-days: 1 
