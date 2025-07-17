@@ -22,7 +22,7 @@ on:
       model_id:
         description: '模型ID'
         required: false
-        default: 'mistralai/mistral-small-3.1-24b-instruct:free'
+        default: 'qwen/qwen3-235b-a22b:free'
         type: string
       post_limit:
         description: '获取帖子数量'
@@ -41,7 +41,7 @@ on:
         type: string
   # 定时触发：美东时间周一到周五早上7点（即UTC 12点）
   schedule:
-    - cron: '0 12 * * 1-5'
+    - cron: '0 11 * * 1-5'
 
 jobs:
   reddit-sentiment-analysis:
