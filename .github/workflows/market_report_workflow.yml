@@ -74,7 +74,7 @@ jobs:
           fi
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'deepseek/deepseek-chat:free' }}"
+          python market_report_generator.py --model "${{ github.event.inputs.model || 'tencent/hunyuan-a13b-instruct:free' }}"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
