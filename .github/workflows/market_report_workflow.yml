@@ -129,6 +129,58 @@ jobs:
           commit_message: 'Deploy market report: ${{ steps.date.outputs.date }}'
           cname: ${{ github.repository_owner }}.github.io
       
+      - name: Wait for GitHub Pages deployment
+        run: |
+          echo "等待 GitHub Pages 部署完成..."
+          
+          # 最多等待 1 小时（3600 秒）
+          MAX_WAIT=3600
+          ELAPSED=0
+          INTERVAL=60
+          
+          while [ $ELAPSED -lt $MAX_WAIT ]; do
+            # 检查页面是否可访问（HTTP 200）
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+              "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.date.outputs.date_compact }}/market_report_zh.html" \
+              || echo "000")
+            
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✅ GitHub Pages 部署成功！页面已可访问（HTTP $HTTP_CODE）"
+              echo "⏱️  总等待时间: $ELAPSED 秒"
+              break
+            else
+              MINUTES=$((ELAPSED / 60))
+              echo "⏳ 等待中... (已等待 $MINUTES 分钟 / 最多 60 分钟) - HTTP $HTTP_CODE"
+              sleep $INTERVAL
+              ELAPSED=$((ELAPSED + INTERVAL))
+            fi
+          done
+          
+          if [ $ELAPSED -ge $MAX_WAIT ]; then
+            echo "⚠️  等待超时（1小时），但继续执行通知步骤"
+          fi
+      
+      - name: Send Telegram notification
+        run: |
+          # 构建 Markdown 格式的通知文案
+          cat > /tmp/telegram_message.json <<'EOF'
+          {
+            "text": "📊 **美股市场简报已发布**\n\n📅 **日期**: DATE_PLACEHOLDER\n\n🔗 **在线查看**:\n• [📈 查看报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/DATE_COMPACT_PLACEHOLDER/market_report_zh.html)\n\n📚 **历史报告**: [查看所有报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/)\n\n---\n\n📱 **扫码关注 StockGate 美股通**\n获取您的AI投资助手\n\n![微信公众号](https://cos.easyllms.com/others/qrcode.jpg)"
+          }
+          EOF
+          
+          # 替换占位符
+          sed -i "s/DATE_PLACEHOLDER/${{ steps.date.outputs.date }}/g" /tmp/telegram_message.json
+          sed -i "s/DATE_COMPACT_PLACEHOLDER/${{ steps.date.outputs.date_compact }}/g" /tmp/telegram_message.json
+          sed -i "s/OWNER_PLACEHOLDER/${{ github.repository_owner }}/g" /tmp/telegram_message.json
+          sed -i "s/REPO_PLACEHOLDER/${{ github.event.repository.name }}/g" /tmp/telegram_message.json
+          
+          # 发送 POST 请求到 Telegram API
+          curl -X POST https://code.easyllms.com/api/telegram/send \
+            -H "Content-Type: application/json" \
+            -d @/tmp/telegram_message.json \
+            --fail --show-error || echo "Telegram notification failed, but continuing workflow"
+
       - name: Send email with reports
         uses: dawidd6/action-send-mail@v3
         with:
