@@ -165,7 +165,7 @@ jobs:
           # 构建 Markdown 格式的通知文案
           cat > /tmp/telegram_message.json <<'EOF'
           {
-            "text": "📊 **美股市场简报已发布**\n\n📅 **日期**: DATE_PLACEHOLDER\n\n🔗 **在线查看**:\n• [📈 查看报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/DATE_COMPACT_PLACEHOLDER/market_report_zh.html)\n\n---\n\n📱 **扫码关注 StockGate 美股通**\n获取您的AI投资助手\n\n[🔗 公众号二维码](https://cos.easyllms.com/others/qrcode.jpg)"
+            "text": "**📊 美股市场简报**\n \n 📅 **日期**: DATE_PLACEHOLDER\n\n [👉 立即查看完整报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/DATE_COMPACT_PLACEHOLDER/market_report_zh.html)\n\n---\n\n🤖 **StockGate 美股通**\n💡 *您的专属 AI 投资助手*\n\n[📸 扫码关注公众号](https://cos.easyllms.com/others/qrcode.jpg)"
           }
           EOF
           
