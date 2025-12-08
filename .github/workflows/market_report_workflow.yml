@@ -3,7 +3,7 @@ name: Generate Market Report
 on:
   schedule:
     # 北京时间早上6点 = UTC+8 6:00 = UTC 22:00 (前一天)
-    - cron: '59 21 * * 0-5'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
+    - cron: '39 21 * * 0-5'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
   
   # Allow manual trigger
   workflow_dispatch:
