@@ -23,7 +23,7 @@ jobs:
             -e IBKR_PORT="${{ secrets.IBKR_PORT }}" \
             -e IBKR_CLIENT_ID=1 \
             -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT_PAPER }}" \
-            -e IBKR_REQUEST_TIMEOUT_S=60 \
+            -e IBKR_REQUEST_TIMEOUT_S=120 \
             -e STRATEGY_NAME="momentum_daily_v1" \
             -e TICKERS_FILE="tickers_allowlist.txt" \
             -e TICKERS_ALLOWLIST="AAPL,MSFT,NVDA,TSLA" \
