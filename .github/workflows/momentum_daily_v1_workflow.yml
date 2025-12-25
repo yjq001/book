@@ -1,0 +1,42 @@
+name: Momentum Daily V1 Trading
+
+on:
+  schedule:
+    # 每天 UTC 15:30 执行
+    - cron: '30 15 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  run_momentum_daily_v1:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run momentum daily v1 strategy
+        run: |
+          docker pull ghcr.io/yjq001/ibkr:latest
+          
+          docker run --rm --network host \
+            --name momentum_daily_v1 \
+            -e IBKR_HOST="${{ secrets.IBKR_HOST }}" \
+            -e IBKR_PORT="${{ secrets.IBKR_PORT }}" \
+            -e IBKR_CLIENT_ID="${{ secrets.IBKR_CLIENT_ID }}" \
+            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT }}" \
+            -e IBKR_REQUEST_TIMEOUT_S=60 \
+            -e STRATEGY_NAME="momentum_daily_v1" \
+            -e TICKERS_FILE="tickers_allowlist.txt" \
+            -e TICKERS_ALLOWLIST="AAPL,MSFT,NVDA,TSLA" \
+            -e DRY_RUN=false \
+            -e TRADING_TIMEZONE="America/New_York" \
+            -e TRADING_RTH_ONLY=true \
+            -e TRADING_START_HHMM="09:35" \
+            -e TRADING_END_HHMM="15:55" \
+            -e MIN_TRADE_VALUE_USD=50 \
+            -e MAX_POSITIONS=5 \
+            -e MAX_POSITION_WEIGHT=0.20 \
+            -e SLIPPAGE_BPS=15 \
+            -e TELEGRAM_NOTIFY_ENABLED=true \
+            -e TELEGRAM_CHAT_ID='@godstar001' \
+            ghcr.io/yjq001/ibkr:latest
+
