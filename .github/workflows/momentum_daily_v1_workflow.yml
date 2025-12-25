@@ -1,4 +1,4 @@
-name: Momentum Daily V1 Trading
+name: Momentum Daily V1 Trading (Paper)
 
 on:
   schedule:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Run momentum daily v1 strategy
+      - name: Run momentum daily v1 strategy (Paper)
         run: |
           docker pull ghcr.io/yjq001/ibkr:latest
           
@@ -21,8 +21,8 @@ jobs:
             --name momentum_daily_v1 \
             -e IBKR_HOST="${{ secrets.IBKR_HOST }}" \
             -e IBKR_PORT="${{ secrets.IBKR_PORT }}" \
-            -e IBKR_CLIENT_ID="${{ secrets.IBKR_CLIENT_ID }}" \
-            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT }}" \
+            -e IBKR_CLIENT_ID=1 \
+            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT_PAPER }}" \
             -e IBKR_REQUEST_TIMEOUT_S=60 \
             -e STRATEGY_NAME="momentum_daily_v1" \
             -e TICKERS_FILE="tickers_allowlist.txt" \
