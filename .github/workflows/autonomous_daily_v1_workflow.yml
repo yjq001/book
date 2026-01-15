@@ -20,7 +20,7 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: ''
+        default: 'gemini-3-flash-preview'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -28,7 +28,7 @@ on:
       dry_run:
         description: 'Dry Run Mode (true/false)'
         required: false
-        default: 'false'
+        default: 'true'
 
 jobs:
   run_autonomous_daily_v1:
