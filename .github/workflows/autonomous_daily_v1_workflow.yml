@@ -7,6 +7,19 @@ on:
   
   # Allow manual trigger
   workflow_dispatch:
+    inputs:
+      autonomous_provider:
+        description: 'LLM Provider (gemini/openai/openrouter)'
+        required: false
+        default: 'gemini'
+      autonomous_model:
+        description: 'LLM Model name'
+        required: false
+        default: 'gemini-3-flash-preview'
+      telegram_chat_id:
+        description: 'Telegram Chat ID'
+        required: false
+        default: '-1003444893572'
 
 jobs:
   run_autonomous_daily_v1:
@@ -40,8 +53,8 @@ jobs:
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="gemini" \
-            -e AUTONOMOUS_MODEL="gemini-3-flash-preview" \
+            -e AUTONOMOUS_PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ github.event.inputs.autonomous_model || 'gemini-3-flash-preview' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -55,7 +68,7 @@ jobs:
             \
             # ============ Telegram 通知 ============
             -e TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
-            -e TELEGRAM_CHAT_ID="-1003444893572" \
+            -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}" \
             -e TELEGRAM_NOTIFY_ENABLED=false \
             -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
             -e TELEGRAM_TIMEOUT_S=10 \
