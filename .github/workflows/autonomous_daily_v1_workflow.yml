@@ -33,6 +33,7 @@ on:
 jobs:
   run_autonomous_daily_v1:
     runs-on: ubuntu-latest
+    timeout-minutes: 50
     
     steps:
       - name: Set LLM configuration based on provider
