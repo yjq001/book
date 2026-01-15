@@ -9,23 +9,65 @@ on:
   workflow_dispatch:
     inputs:
       autonomous_provider:
-        description: 'LLM Provider (gemini/openai/openrouter)'
+        description: 'LLM Provider'
         required: false
+        type: choice
         default: 'gemini'
+        options:
+          - gemini
+          - openai
+          - openrouter
       autonomous_model:
-        description: 'LLM Model name'
+        description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'gemini-3-flash-preview'
+        default: ''
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
         default: '-1003444893572'
+      dry_run:
+        description: 'Dry Run Mode (true/false)'
+        required: false
+        default: 'false'
 
 jobs:
   run_autonomous_daily_v1:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Set LLM configuration based on provider
+        id: set_llm_config
+        run: |
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
+          CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
+          
+          # 根据提供商设置默认模型
+          case "$PROVIDER" in
+            openai)
+              DEFAULT_MODEL="gpt-4o-mini"
+              ;;
+            gemini)
+              DEFAULT_MODEL="gemini-3-flash-preview"
+              ;;
+            openrouter)
+              DEFAULT_MODEL="openai/gpt-4o-mini"
+              ;;
+            *)
+              DEFAULT_MODEL="gemini-3-flash-preview"
+              ;;
+          esac
+          
+          # 如果用户提供了自定义模型，使用自定义模型；否则使用默认模型
+          if [ -n "$CUSTOM_MODEL" ]; then
+            MODEL="$CUSTOM_MODEL"
+          else
+            MODEL="$DEFAULT_MODEL"
+          fi
+          
+          echo "provider=$PROVIDER" >> $GITHUB_OUTPUT
+          echo "model=$MODEL" >> $GITHUB_OUTPUT
+          echo "Using provider: $PROVIDER, model: $MODEL"
+      
       - name: Run autonomous daily v1 strategy
         run: |
           docker pull ghcr.io/yjq001/ibkr:latest
@@ -43,7 +85,7 @@ jobs:
             -e IBKR_MOCK=false \
             \
             # ============ 交易控制 ============
-            -e DRY_RUN=true \
+            -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
             -e STRATEGY_NAME="autonomous_daily_v1" \
             \
             # ============ LLM 大模型配置 ============
@@ -53,8 +95,8 @@ jobs:
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}" \
-            -e AUTONOMOUS_MODEL="${{ github.event.inputs.autonomous_model || 'gemini-3-flash-preview' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -103,4 +145,69 @@ jobs:
             -e SLIPPAGE_BPS=15 \
             \
             ghcr.io/yjq001/ibkr:latest
+      
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          # 判断工作流状态
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="成功"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="失败"
+          fi
+          
+          # 获取工作流信息
+          WORKFLOW_NAME="${{ github.workflow }}"
+          RUN_NUMBER="${{ github.run_number }}"
+          RUN_ID="${{ github.run_id }}"
+          ACTOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
+          
+          # 构建消息内容
+          MESSAGE="${STATUS_EMOJI} *工作流执行${STATUS_TEXT}*
+
+📋 *工作流信息*
+• 名称: ${WORKFLOW_NAME}
+• 运行编号: #${RUN_NUMBER}
+• 触发者: ${ACTOR}
+• 仓库: ${REPO}
+
+🤖 *策略配置*
+• 提供商: ${PROVIDER}
+• 模型: ${MODEL}
+• 模拟模式: ${DRY_RUN}
+
+🔗 *查看详情*
+[查看运行日志](https://github.com/${REPO}/actions/runs/${RUN_ID})"
+          
+          # 使用 Python 构建 JSON（安全处理特殊字符）
+          python3 <<PYTHON_SCRIPT
+import json
+import os
+
+message = """${MESSAGE}"""
+chat_id = "${CHAT_ID}"
+
+payload = {
+    "chat_id": chat_id,
+    "text": message,
+    "parse_mode": "Markdown",
+    "disable_web_page_preview": True
+}
+
+with open("/tmp/telegram_message.json", "w", encoding="utf-8") as f:
+    json.dump(payload, f, ensure_ascii=False, indent=2)
+PYTHON_SCRIPT
+          
+          # 发送 Telegram 消息
+          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d @/tmp/telegram_message.json \
+            --fail --show-error || echo "Telegram notification failed, but continuing workflow"
 
