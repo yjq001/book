@@ -39,7 +39,7 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openai' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
@@ -54,7 +54,7 @@ jobs:
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gpt-4.1-nano"
+              DEFAULT_MODEL="gemini-3-flash-preview"
               ;;
           esac
           
