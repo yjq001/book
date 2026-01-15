@@ -1,4 +1,4 @@
-name: AI自主策略-Autonomous Daily V1 Trading
+name: 策略-Autonomous Daily V1 Trading
 
 on:
   schedule:
@@ -170,40 +170,44 @@ jobs:
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
           # 构建消息内容
-          MESSAGE="${STATUS_EMOJI} *工作流执行${STATUS_TEXT}*
+          MESSAGE=$(cat <<EOF
+          ${STATUS_EMOJI} *工作流执行${STATUS_TEXT}*
 
-📋 *工作流信息*
-• 名称: ${WORKFLOW_NAME}
-• 运行编号: #${RUN_NUMBER}
-• 触发者: ${ACTOR}
-• 仓库: ${REPO}
+          📋 *工作流信息*
+          • 名称: ${WORKFLOW_NAME}
+          • 运行编号: #${RUN_NUMBER}
+          • 触发者: ${ACTOR}
+          • 仓库: ${REPO}
 
-🤖 *策略配置*
-• 提供商: ${PROVIDER}
-• 模型: ${MODEL}
-• 模拟模式: ${DRY_RUN}
+          🤖 *策略配置*
+          • 提供商: ${PROVIDER}
+          • 模型: ${MODEL}
+          • 模拟模式: ${DRY_RUN}
 
-🔗 *查看详情*
-[查看运行日志](https://github.com/${REPO}/actions/runs/${RUN_ID})"
+          🔗 *查看详情*
+          [查看运行日志](https://github.com/${REPO}/actions/runs/${RUN_ID})
+          EOF
+          )
           
           # 使用 Python 构建 JSON（安全处理特殊字符）
-          python3 <<PYTHON_SCRIPT
-import json
-import os
-
-message = """${MESSAGE}"""
-chat_id = "${CHAT_ID}"
-
-payload = {
-    "chat_id": chat_id,
-    "text": message,
-    "parse_mode": "Markdown",
-    "disable_web_page_preview": True
-}
-
-with open("/tmp/telegram_message.json", "w", encoding="utf-8") as f:
-    json.dump(payload, f, ensure_ascii=False, indent=2)
-PYTHON_SCRIPT
+          export MESSAGE CHAT_ID
+          python3 <<'PYTHON_SCRIPT'
+          import json
+          import os
+          
+          message = os.environ.get('MESSAGE', '')
+          chat_id = os.environ.get('CHAT_ID', '')
+          
+          payload = {
+              "chat_id": chat_id,
+              "text": message,
+              "parse_mode": "Markdown",
+              "disable_web_page_preview": True
+          }
+          
+          with open("/tmp/telegram_message.json", "w", encoding="utf-8") as f:
+              json.dump(payload, f, ensure_ascii=False, indent=2)
+          PYTHON_SCRIPT
           
           # 发送 Telegram 消息
           curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
