@@ -74,8 +74,6 @@ jobs:
           
           docker run --rm --network host \
             --name autonomous_daily_v1 \
-            \
-            # ============ IBKR 连接配置 ============
             -e USE_MOCK_BROKER=false \
             -e IBKR_HOST="${{ secrets.IBKR_HOST }}" \
             -e IBKR_PORT="${{ secrets.IBKR_PORT }}" \
@@ -83,67 +81,44 @@ jobs:
             -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT_PAPER }}" \
             -e IBKR_REQUEST_TIMEOUT_S=120 \
             -e IBKR_MOCK=false \
-            \
-            # ============ 交易控制 ============
             -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
             -e STRATEGY_NAME="autonomous_daily_v1" \
-            \
-            # ============ LLM 大模型配置 ============
             -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
             -e OPENAI_MODEL="gpt-4o-mini" \
             -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
-            \
-            # ============ MCP 服务 ============
-            -e MCP_SERVER_URL="${{ secrets.MCP_SERVER_URL }}" \
-            \
-            # ============ Upstash Redis ============
+            -e MCP_SERVER_URL="${{ secrets.MCP_SERVER_URL || '' }}" \
             -e UPSTASH_REDIS_URL="https://smashing-spaniel-32228.upstash.io" \
             -e UPSTASH_REDIS_TOKEN="${{ secrets.UPSTASH_REDIS_TOKEN }}" \
-            \
-            # ============ Telegram 通知 ============
             -e TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
             -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}" \
             -e TELEGRAM_NOTIFY_ENABLED=false \
             -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
             -e TELEGRAM_TIMEOUT_S=10 \
-            \
-            # ============ 人工审批配置 ============
             -e APPROVAL_REQUIRED=true \
             -e APPROVAL_TIMEOUT_MINUTES=30 \
             -e APPROVAL_POLL_INTERVAL_SECONDS=60 \
-            \
-            # ============ 风控配置 ============
             -e RISK_MAX_ITERATIONS=5 \
             -e RISK_MAX_REVISION_ROUNDS=5 \
-            \
-            # ============ 执行配置 ============
             -e EXECUTOR_PRICE_CAP_BUFFER=2 \
-            \
-            # ============ 记忆系统 ============
             -e MEMORY_TRADE_HISTORY_DAYS=30 \
             -e MEMORY_CONVERSATION_ROUNDS=10 \
             -e MEMORY_INSIGHT_TTL_DAYS=7 \
-            \
-            # ============ 交易时间窗口 ============
             -e TRADING_TIMEZONE="America/New_York" \
             -e TRADING_RTH_ONLY=true \
             -e TRADING_START_HHMM="09:35" \
             -e TRADING_END_HHMM="15:55" \
-            \
-            # ============ 仓位控制 ============
             -e MIN_TRADE_VALUE_USD=50 \
             -e MAX_POSITIONS=20 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
-            \
             ghcr.io/yjq001/ibkr:latest
       
       - name: Send Telegram notification
