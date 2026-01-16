@@ -122,6 +122,7 @@ jobs:
             -e MAX_POSITIONS=20 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
+            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT }}" \
             ghcr.io/yjq001/ibkr:latest
       
       - name: Send Telegram notification
