@@ -160,7 +160,7 @@ jobs:
             -e TELEGRAM_NOTIFY_ENABLED=false \
             -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
             -e TELEGRAM_TIMEOUT_S=10 \
-            -e APPROVAL_REQUIRED=true \
+            -e APPROVAL_REQUIRED=false \
             -e APPROVAL_TIMEOUT_MINUTES=30 \
             -e APPROVAL_POLL_INTERVAL_SECONDS=60 \
             -e RISK_MAX_ITERATIONS=5 \
