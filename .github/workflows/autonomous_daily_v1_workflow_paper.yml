@@ -1,0 +1,261 @@
+name: 策略-Autonomous Daily V1 Trading (Paper)
+
+on:
+  schedule:
+    # 美东时间下午 15:00 执行（周一到周五）
+    # UTC 19:00 对应 EDT 15:00（夏令时，3月-11月）
+    # UTC 19:00 对应 EST 14:00（冬令时，11月-3月）
+    - cron: '01 19 * * 1-5'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      autonomous_provider:
+        description: 'LLM Provider'
+        required: false
+        type: choice
+        default: 'gemini'
+        options:
+          - gemini
+          - openai
+          - openrouter
+      autonomous_model:
+        description: 'LLM Model name (leave empty to use default for selected provider)'
+        required: false
+        default: 'gemini-3-flash-preview'
+      telegram_chat_id:
+        description: 'Telegram Chat ID'
+        required: false
+        default: '-1003444893572'
+      dry_run:
+        description: 'Dry Run Mode (true/false)'
+        required: false
+        default: 'true'
+
+jobs:
+  run_autonomous_daily_v1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    
+    steps:
+      - name: Set LLM configuration based on provider
+        id: set_llm_config
+        run: |
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
+          CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
+          
+          # 根据提供商设置默认模型
+          case "$PROVIDER" in
+            openai)
+              DEFAULT_MODEL="gpt-4.1-nano"
+              ;;
+            gemini)
+              DEFAULT_MODEL="gemini-3-flash-preview"
+              ;;
+            openrouter)
+              DEFAULT_MODEL="openai/gpt-4o-mini"
+              ;;
+            *)
+              DEFAULT_MODEL="gemini-3-flash-preview"
+              ;;
+          esac
+          
+          # 如果用户提供了自定义模型，使用自定义模型；否则使用默认模型
+          if [ -n "$CUSTOM_MODEL" ]; then
+            MODEL="$CUSTOM_MODEL"
+          else
+            MODEL="$DEFAULT_MODEL"
+          fi
+          
+          echo "provider=$PROVIDER" >> $GITHUB_OUTPUT
+          echo "model=$MODEL" >> $GITHUB_OUTPUT
+          echo "Using provider: $PROVIDER, model: $MODEL"
+      
+      - name: Start IBKR Gateway container
+        run: |
+          # 创建 Docker 网络（如果不存在）
+          docker network create ibkr-network 2>/dev/null || true
+          
+          # 停止并删除已存在的容器（如果存在）
+          docker stop ib-gateway 2>/dev/null || true
+          docker rm ib-gateway 2>/dev/null || true
+          
+          # 拉取最新镜像
+          docker pull ghcr.io/gnzsnz/ib-gateway:latest
+          
+          # 启动 IBKR Gateway 容器
+          docker run -d \
+            --name ib-gateway \
+            --network ibkr-network \
+            -e TWS_USERID="${{ secrets.TWS_USERID }}" \
+            -e TWS_PASSWORD="${{ secrets.TWS_PASSWORD }}" \
+            -e TRADING_MODE=paper \
+            -e READ_ONLY_API=no \
+            -e VNC_SERVER_PASSWORD="${{ secrets.VNC_SERVER_PASSWORD }}" \
+            ghcr.io/gnzsnz/ib-gateway:latest
+          
+          # 等待 IBKR Gateway 启动并登录完成
+          echo "等待 IBKR Gateway 启动并登录..."
+          MAX_WAIT=300  # 最多等待5分钟
+          ELAPSED=0
+          INTERVAL=5
+          
+          while [ $ELAPSED -lt $MAX_WAIT ]; do
+            # 检查容器是否运行
+            if ! docker exec ib-gateway echo "Container is running" 2>/dev/null; then
+              echo "⏳ 等待容器启动... (已等待 $ELAPSED 秒 / 最多 $MAX_WAIT 秒)"
+              sleep $INTERVAL
+              ELAPSED=$((ELAPSED + INTERVAL))
+              continue
+            fi
+            
+            # 检查日志中是否包含登录完成信息
+            if docker logs ib-gateway 2>&1 | grep -q "IBC: Login has completed"; then
+              echo "✅ IBKR Gateway 已启动并登录完成"
+              break
+            fi
+            
+            echo "⏳ 等待登录完成... (已等待 $ELAPSED 秒 / 最多 $MAX_WAIT 秒)"
+            sleep $INTERVAL
+            ELAPSED=$((ELAPSED + INTERVAL))
+          done
+          
+          # 如果超时，退出并报错
+          if [ $ELAPSED -ge $MAX_WAIT ]; then
+            echo "❌ IBKR Gateway 启动超时（${MAX_WAIT}秒），退出工作流"
+            echo "容器日志："
+            docker logs ib-gateway 2>&1 | tail -50
+            exit 1
+          fi
+      
+      - name: Run autonomous daily v1 strategy
+        run: |
+          docker pull ghcr.io/yjq001/ibkr:latest
+          
+          docker run --rm --network ibkr-network \
+            --name autonomous_daily_v1 \
+            -e USE_MOCK_BROKER=false \
+            -e IBKR_HOST="ib-gateway" \
+            -e IBKR_PORT="4004" \
+            -e IBKR_CLIENT_ID=3 \
+            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT_PAPER }}" \
+            -e IBKR_REQUEST_TIMEOUT_S=120 \
+            -e IBKR_MOCK=false \
+            -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
+            -e STRATEGY_NAME="autonomous_daily_v1" \
+            -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            -e OPENAI_MODEL="gpt-4o-mini" \
+            -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
+            -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
+            -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
+            -e OPENROUTER_APP_NAME="IBKR Bot" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}" \
+            -e LLM_STREAMING=true \
+            -e STRATEGIST_PROVIDER="openai" \
+            -e STRATEGIST_MODEL="o4-mini" \
+            -e MCP_SERVER_URL="${{ secrets.MCP_SERVER_URL || '' }}" \
+            -e UPSTASH_REDIS_URL="https://smashing-spaniel-32228.upstash.io" \
+            -e UPSTASH_REDIS_TOKEN="${{ secrets.UPSTASH_REDIS_TOKEN }}" \
+            -e TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
+            -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}" \
+            -e TELEGRAM_NOTIFY_ENABLED=false \
+            -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
+            -e TELEGRAM_TIMEOUT_S=10 \
+            -e APPROVAL_REQUIRED=false \
+            -e APPROVAL_TIMEOUT_MINUTES=30 \
+            -e APPROVAL_POLL_INTERVAL_SECONDS=60 \
+            -e RISK_MAX_ITERATIONS=5 \
+            -e RISK_MAX_REVISION_ROUNDS=5 \
+            -e EXECUTOR_PRICE_CAP_BUFFER=2 \
+            -e MEMORY_TRADE_HISTORY_DAYS=30 \
+            -e MEMORY_CONVERSATION_ROUNDS=10 \
+            -e MEMORY_INSIGHT_TTL_DAYS=7 \
+            -e TRADING_TIMEZONE="America/New_York" \
+            -e TRADING_RTH_ONLY=true \
+            -e TRADING_START_HHMM="09:35" \
+            -e TRADING_END_HHMM="15:55" \
+            -e MIN_TRADE_VALUE_USD=50 \
+            -e MAX_POSITIONS=20 \
+            -e MAX_POSITION_WEIGHT=0.10 \
+            -e SLIPPAGE_BPS=15 \
+            ghcr.io/yjq001/ibkr:latest
+      
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          # 判断工作流状态
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="成功"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="失败"
+          fi
+          
+          # 获取工作流信息
+          WORKFLOW_NAME="${{ github.workflow }}"
+          RUN_NUMBER="${{ github.run_number }}"
+          RUN_ID="${{ github.run_id }}"
+          ACTOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
+          
+          # 构建消息内容
+          MESSAGE=$(cat <<EOF
+          ${STATUS_EMOJI} *工作流执行${STATUS_TEXT}*
+
+          📋 *工作流信息*
+          • 名称: ${WORKFLOW_NAME}
+          • 运行编号: #${RUN_NUMBER}
+          • 触发者: ${ACTOR}
+          • 仓库: ${REPO}
+
+          🤖 *策略配置*
+          • 提供商: ${PROVIDER}
+          • 模型: ${MODEL}
+          • 模拟模式: ${DRY_RUN}
+
+          🔗 *查看详情*
+          [查看运行日志](https://github.com/${REPO}/actions/runs/${RUN_ID})
+          EOF
+          )
+          
+          # 使用 Python 构建 JSON（安全处理特殊字符）
+          export MESSAGE CHAT_ID
+          python3 <<'PYTHON_SCRIPT'
+          import json
+          import os
+          
+          message = os.environ.get('MESSAGE', '')
+          chat_id = os.environ.get('CHAT_ID', '')
+          
+          payload = {
+              "chat_id": chat_id,
+              "text": message,
+              "parse_mode": "Markdown",
+              "disable_web_page_preview": True
+          }
+          
+          with open("/tmp/telegram_message.json", "w", encoding="utf-8") as f:
+              json.dump(payload, f, ensure_ascii=False, indent=2)
+          PYTHON_SCRIPT
+          
+          # 发送 Telegram 消息
+          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d @/tmp/telegram_message.json \
+            --fail --show-error || echo "Telegram notification failed, but continuing workflow"
+      
+      - name: Cleanup IBKR Gateway container and network
+        if: always()
+        run: |
+          echo "清理 IBKR Gateway 容器和网络..."
+          docker stop ib-gateway 2>/dev/null || true
+          docker rm ib-gateway 2>/dev/null || true
+          docker network rm ibkr-network 2>/dev/null || true
+          echo "✅ 清理完成"
+
