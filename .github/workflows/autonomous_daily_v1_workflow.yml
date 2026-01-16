@@ -71,74 +71,17 @@ jobs:
           echo "model=$MODEL" >> $GITHUB_OUTPUT
           echo "Using provider: $PROVIDER, model: $MODEL"
       
-      - name: Start IBKR Gateway container
-        run: |
-          # 创建 Docker 网络（如果不存在）
-          docker network create ibkr-network 2>/dev/null || true
-          
-          # 停止并删除已存在的容器（如果存在）
-          docker stop ib-gateway 2>/dev/null || true
-          docker rm ib-gateway 2>/dev/null || true
-          
-          # 拉取最新镜像
-          docker pull ghcr.io/gnzsnz/ib-gateway:latest
-          
-          # 启动 IBKR Gateway 容器
-          docker run -d \
-            --name ib-gateway \
-            --network ibkr-network \
-            -e TWS_USERID="${{ secrets.TWS_USERID }}" \
-            -e TWS_PASSWORD="${{ secrets.TWS_PASSWORD }}" \
-            -e TRADING_MODE=paper \
-            -e READ_ONLY_API=no \
-            -e VNC_SERVER_PASSWORD="${{ secrets.VNC_SERVER_PASSWORD }}" \
-            ghcr.io/gnzsnz/ib-gateway:latest
-          
-          # 等待 IBKR Gateway 启动并登录完成
-          echo "等待 IBKR Gateway 启动并登录..."
-          MAX_WAIT=300  # 最多等待5分钟
-          ELAPSED=0
-          INTERVAL=5
-          
-          while [ $ELAPSED -lt $MAX_WAIT ]; do
-            # 检查容器是否运行
-            if ! docker exec ib-gateway echo "Container is running" 2>/dev/null; then
-              echo "⏳ 等待容器启动... (已等待 $ELAPSED 秒 / 最多 $MAX_WAIT 秒)"
-              sleep $INTERVAL
-              ELAPSED=$((ELAPSED + INTERVAL))
-              continue
-            fi
-            
-            # 检查日志中是否包含登录完成信息
-            if docker logs ib-gateway 2>&1 | grep -q "IBC: Login has completed"; then
-              echo "✅ IBKR Gateway 已启动并登录完成"
-              break
-            fi
-            
-            echo "⏳ 等待登录完成... (已等待 $ELAPSED 秒 / 最多 $MAX_WAIT 秒)"
-            sleep $INTERVAL
-            ELAPSED=$((ELAPSED + INTERVAL))
-          done
-          
-          # 如果超时，退出并报错
-          if [ $ELAPSED -ge $MAX_WAIT ]; then
-            echo "❌ IBKR Gateway 启动超时（${MAX_WAIT}秒），退出工作流"
-            echo "容器日志："
-            docker logs ib-gateway 2>&1 | tail -50
-            exit 1
-          fi
-      
       - name: Run autonomous daily v1 strategy
         run: |
           docker pull ghcr.io/yjq001/ibkr:latest
           
-          docker run --rm --network ibkr-network \
+          docker run --rm --network host \
             --name autonomous_daily_v1 \
             -e USE_MOCK_BROKER=false \
-            -e IBKR_HOST="ib-gateway" \
-            -e IBKR_PORT="4004" \
+            -e IBKR_HOST="${{ secrets.IBKR_HOST }}" \
+            -e IBKR_PORT="${{ secrets.IBKR_PORT }}" \
             -e IBKR_CLIENT_ID=3 \
-            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT_PAPER }}" \
+            -e IBKR_ACCOUNT="${{ secrets.IBKR_ACCOUNT }}" \
             -e IBKR_REQUEST_TIMEOUT_S=120 \
             -e IBKR_MOCK=false \
             -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
@@ -250,12 +193,3 @@ jobs:
             -d @/tmp/telegram_message.json \
             --fail --show-error || echo "Telegram notification failed, but continuing workflow"
       
-      - name: Cleanup IBKR Gateway container and network
-        if: always()
-        run: |
-          echo "清理 IBKR Gateway 容器和网络..."
-          docker stop ib-gateway 2>/dev/null || true
-          docker rm ib-gateway 2>/dev/null || true
-          docker network rm ibkr-network 2>/dev/null || true
-          echo "✅ 清理完成"
-
