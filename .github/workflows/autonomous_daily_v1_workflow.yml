@@ -81,6 +81,9 @@ jobs:
           # 拉取最新镜像
           docker pull ghcr.io/gnzsnz/ib-gateway:latest
           
+          # 打印调试信息
+          echo "TWS_USERID: ${{ secrets.TWS_USERID }}"
+          
           # 启动 IBKR Gateway 容器
           docker run -d \
             --name ib-gateway \
