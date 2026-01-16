@@ -79,8 +79,8 @@ jobs:
             --name autonomous_daily_v1_alpaca \
             -e USE_MOCK_BROKER=false \
             -e BROKER_TYPE=alpaca \
-            -e ALPACA_API_KEY="${{ secrets.ALPACA_API_KEY }}" \
-            -e ALPACA_API_SECRET="${{ secrets.ALPACA_API_SECRET }}" \
+            -e ALPACA_API_KEY="${{ secrets.ALPACA_API_KEY_PAPER }}" \
+            -e ALPACA_API_SECRET="${{ secrets.ALPACA_API_SECRET_PAPER }}" \
             -e ALPACA_BASE_URL="https://paper-api.alpaca.markets" \
             -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
             -e STRATEGY_NAME="autonomous_daily_v1" \
