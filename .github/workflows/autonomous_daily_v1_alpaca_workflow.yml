@@ -5,7 +5,7 @@ on:
     # 美东时间下午 15:00 执行（周一到周五）
     # UTC 19:00 对应 EDT 15:00（夏令时，3月-11月）
     # UTC 19:00 对应 EST 14:00（冬令时，11月-3月）
-    - cron: '20 19 * * 1-5'
+    - cron: '20 15 * * 1-5'
   
   # Allow manual trigger
   workflow_dispatch:
