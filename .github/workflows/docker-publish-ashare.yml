@@ -1,4 +1,4 @@
-name: Docker Build ashare (amd64) and Push
+name: Docker Build ashare (multi-arch) and Push
 
 on:
   release:
@@ -61,6 +61,10 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -87,21 +91,22 @@ jobs:
           FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:$TAG"
           echo "image=$FULL_IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image (amd64)
+      - name: Build and push Docker image (multi-arch)
         run: |
-          echo "开始构建镜像: ${{ steps.docker_tags.outputs.image }} 平台: linux/amd64"
-          docker buildx build --platform linux/amd64 \
+          echo "开始构建多架构镜像: ${{ steps.docker_tags.outputs.image }}"
+          echo "支持的平台: linux/amd64,linux/arm64"
+          docker buildx build --platform linux/amd64,linux/arm64 \
             --push \
             --tag ${{ steps.docker_tags.outputs.image }} \
             --file ashare/Dockerfile \
             ashare
-          echo "已推送镜像到 ${{ env.REGISTRY }}"
+          echo "已推送多架构镜像到 ${{ env.REGISTRY }}"
 
       - name: Image info
         if: success()
         run: |
           echo "构建成功!"
           echo "镜像: ${{ steps.docker_tags.outputs.image }}"
-          echo "架构: linux/amd64"
+          echo "支持的架构: linux/amd64, linux/arm64"
 
 
