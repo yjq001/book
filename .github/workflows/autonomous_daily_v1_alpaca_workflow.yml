@@ -50,13 +50,13 @@ jobs:
               DEFAULT_MODEL="gpt-5-mini"
               ;;
             gemini)
-              DEFAULT_MODEL="gemini-2.5-flash"
+              DEFAULT_MODEL="gemini-3-flash-preview"
               ;;
             openrouter)
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gemini-2.5-flash"
+              DEFAULT_MODEL="gemini-3-flash-preview"
               ;;
           esac
           
@@ -91,7 +91,7 @@ jobs:
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-2.5-flash' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -143,7 +143,7 @@ jobs:
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
           PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-2.5-flash' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
