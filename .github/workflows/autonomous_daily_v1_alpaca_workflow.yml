@@ -41,7 +41,7 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openai' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
@@ -50,13 +50,13 @@ jobs:
               DEFAULT_MODEL="gpt-5-mini"
               ;;
             gemini)
-              DEFAULT_MODEL="gemini-3-flash-preview"
+              DEFAULT_MODEL="gemini-2.5-flash"
               ;;
             openrouter)
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gemini-3-flash-preview"
+              DEFAULT_MODEL="gemini-2.5-flash"
               ;;
           esac
           
@@ -90,8 +90,8 @@ jobs:
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5-mini' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-2.5-flash' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -143,7 +143,7 @@ jobs:
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
           PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-2.5-flash' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
