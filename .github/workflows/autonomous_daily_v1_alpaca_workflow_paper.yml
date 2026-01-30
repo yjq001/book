@@ -1,4 +1,4 @@
-name: 策略-Autonomous Daily V1 Trading (Alpaca)
+name: 策略-Autonomous Daily V1 Trading (Alpaca-Paper)
 
 on:
   schedule:
