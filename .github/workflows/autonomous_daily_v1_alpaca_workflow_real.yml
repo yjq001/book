@@ -120,8 +120,8 @@ jobs:
             -e MAX_POSITIONS=20 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
-            -e DIARY_TITLE="AI打工人-alpaca" \
-            -e INITIAL_CAPITAL="100000" \
+            -e DIARY_TITLE="AI打工人-alpaca实盘" \
+            -e INITIAL_CAPITAL="10000" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
       - name: Send Telegram notification
