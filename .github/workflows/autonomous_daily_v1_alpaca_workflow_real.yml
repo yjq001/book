@@ -34,7 +34,7 @@ on:
 
 jobs:
   run_autonomous_daily_v1_alpaca:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 50
     
     steps:
