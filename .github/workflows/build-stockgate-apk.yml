@@ -19,7 +19,7 @@ on:
 jobs:
   build-apk:
     name: 🚀 构建 StockGate APK
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     steps:
     - name: 📥 拉取源代码

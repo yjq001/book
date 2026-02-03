@@ -10,7 +10,7 @@ on:
 
 jobs:
   run_momentum_daily_v1:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     steps:
       - name: Run momentum daily v1 strategy (Paper)
