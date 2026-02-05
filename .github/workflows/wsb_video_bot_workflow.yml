@@ -1,9 +1,6 @@
 name: WSB Video Bot
 
 on:
-  schedule:
-    # 可以根据需要设置定时任务
-    # - cron: '0 0 * * *'  # 每天 UTC 0:00 执行
   # Allow manual trigger
   workflow_dispatch:
     inputs:
