@@ -32,6 +32,10 @@ jobs:
             -e TELEGRAM_NOTIFY_ENABLED=true \
             -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
             -e TELEGRAM_TIMEOUT_S=10 \
+            -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
+            -e REDDIT_CLIENT_ID="pilB4EG7VFAfZlGj0RmwiA" \
+            -e REDDIT_CLIENT_SECRET="AoEQjUzCBf85m1T_1fGDLL2KY3MbMg" \
+            -e REDDIT_USER_AGENT="wsb_video_bot/0.1 by u/wsb_video_bot" \
             ghcr.io/yjq001/wsb_video_bot:${IMAGE_VERSION}
       
       - name: Send Telegram notification
