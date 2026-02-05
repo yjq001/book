@@ -40,23 +40,23 @@ jobs:
 
       - name: Verify wsb_video_bot Docker build files
         run: |
-          echo "检查 sexy-robot/wsb_video_bot/ 目录..."
-          ls -la sexy-robot/wsb_video_bot
+          echo "检查 wsb_video_bot/ 目录..."
+          ls -la wsb_video_bot
 
-          echo "检查 sexy-robot/wsb_video_bot/Dockerfile..."
-          if [ -f "sexy-robot/wsb_video_bot/Dockerfile" ]; then
-            echo "✓ sexy-robot/wsb_video_bot/Dockerfile 存在"
+          echo "检查 wsb_video_bot/Dockerfile..."
+          if [ -f "wsb_video_bot/Dockerfile" ]; then
+            echo "✓ wsb_video_bot/Dockerfile 存在"
           else
-            echo "✗ sexy-robot/wsb_video_bot/Dockerfile 不存在!"
+            echo "✗ wsb_video_bot/Dockerfile 不存在!"
             exit 1
           fi
 
-          echo "检查 sexy-robot/wsb_video_bot/.dockerignore..."
-          if [ -f "sexy-robot/wsb_video_bot/.dockerignore" ]; then
-            echo "✓ sexy-robot/wsb_video_bot/.dockerignore 存在"
+          echo "检查 wsb_video_bot/.dockerignore..."
+          if [ -f "wsb_video_bot/.dockerignore" ]; then
+            echo "✓ wsb_video_bot/.dockerignore 存在"
           else
-            echo "✗ sexy-robot/wsb_video_bot/.dockerignore 不存在，创建一个空文件"
-            touch sexy-robot/wsb_video_bot/.dockerignore
+            echo "✗ wsb_video_bot/.dockerignore 不存在，创建一个空文件"
+            touch wsb_video_bot/.dockerignore
           fi
 
       - name: Set up Docker Buildx
@@ -93,8 +93,8 @@ jobs:
           docker buildx build --platform linux/amd64 \
             --push \
             --tag ${{ steps.docker_tags.outputs.image }} \
-            --file sexy-robot/wsb_video_bot/Dockerfile \
-            sexy-robot/wsb_video_bot
+            --file wsb_video_bot/Dockerfile \
+            wsb_video_bot
           echo "已推送镜像到 ${{ env.REGISTRY }}"
 
       - name: Image info
