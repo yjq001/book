@@ -120,7 +120,7 @@ jobs:
             -e MAX_POSITIONS=20 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
-            -e DIARY_TITLE="AI打工人-alpaca" \
+            -e DIARY_TITLE="AI打工人" \
             -e INITIAL_CAPITAL="100000" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
