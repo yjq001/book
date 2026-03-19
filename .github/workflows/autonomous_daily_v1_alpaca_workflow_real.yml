@@ -15,7 +15,7 @@ on:
         description: 'LLM Provider'
         required: false
         type: choice
-        default: 'gemini'
+        default: 'openai'
         options:
           - gemini
           - openai
@@ -23,7 +23,7 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'gemini-3-flash-preview'
+        default: 'gpt-5.4'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -42,13 +42,13 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openai' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
           case "$PROVIDER" in
             openai)
-              DEFAULT_MODEL="gpt-5-mini"
+              DEFAULT_MODEL="gpt-5.4"
               ;;
             gemini)
               DEFAULT_MODEL="gemini-3-flash-preview"
@@ -57,7 +57,7 @@ jobs:
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gemini-3-flash-preview"
+              DEFAULT_MODEL="gpt-5.4"
               ;;
           esac
           
@@ -91,8 +91,8 @@ jobs:
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -143,8 +143,8 @@ jobs:
           RUN_ID="${{ github.run_id }}"
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
-          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3-flash-preview' }}"
+          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
