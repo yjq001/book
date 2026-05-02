@@ -165,7 +165,7 @@ jobs:
           # 构建 Markdown 格式的通知文案
           cat > /tmp/telegram_message.json <<'EOF'
           {
-            "text": "**📊 美股市场简报**\n \n 📅 **日期**: DATE_PLACEHOLDER\n\n [👉 立即查看完整报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/DATE_COMPACT_PLACEHOLDER/market_report_zh.html)\n\n---\n\n🤖 **StockGate 美股通**\n💡 *您的专属 AI 投资助手*\n\n[📸 扫码关注公众号](https://cos.easyllms.com/others/qrcode.jpg)"
+            "text": "**📊 美股市场简报**\n \n 📅 **日期**: DATE_PLACEHOLDER\n\n [👉 立即查看完整报告](https://OWNER_PLACEHOLDER.github.io/REPO_PLACEHOLDER/DATE_COMPACT_PLACEHOLDER/market_report_zh.html)\n\n---\n\n🛒 **如何订阅更多专业策略？**\n\n① 网页快捷订购：\n🔗 [点击此处订购 AI 策略](https://code.easyllms.cn/product-order.html?login_type=auto&source=feishu)\n\n② 微信搜索并关注公众号：**StockGate美股通**\n点击底部菜单：`股神星` ➔ `AI策略` ➔ `订购`\n🔗 [点击此处查看公众号二维码](https://cos.easyllms.com/others/qrcode.jpg)"
           }
           EOF
           
