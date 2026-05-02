@@ -122,9 +122,10 @@ jobs:
             -e MAX_POSITIONS=12 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
-            -e DIARY_TITLE="AI打工人" \
+            -e DIARY_TITLE="AI美股动量猎手" \
             -e INITIAL_CAPITAL="100000" \
             -e PORTFOLIO_CORE_MIN_PCT="30" \
+            -e PROD_CODE="88001" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
       - name: Send Telegram notification
