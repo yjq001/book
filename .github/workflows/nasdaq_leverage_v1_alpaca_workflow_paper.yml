@@ -1,0 +1,110 @@
+name: 策略-Nasdaq Leverage V1 (Alpaca-Paper)
+
+on:
+  workflow_dispatch:
+    inputs:
+      telegram_chat_id:
+        description: 'Telegram Chat ID'
+        required: false
+        default: '-1003444893572'
+      dry_run:
+        description: 'Dry Run Mode (true/false)'
+        required: false
+        default: 'true'
+
+jobs:
+  run_nasdaq_leverage_v1_alpaca:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 50
+
+    steps:
+      - name: Run nasdaq leverage v1 with Alpaca
+        run: |
+          docker pull ghcr.io/yjq001/ibkr:latest
+
+          docker run --rm --network host \
+            --name nasdaq_leverage_v1_alpaca \
+            -e USE_MOCK_BROKER=false \
+            -e BROKER_TYPE=alpaca \
+            -e ALPACA_API_KEY="${{ secrets.ALPACA_API_KEY_PAPER_QQQ }}" \
+            -e ALPACA_API_SECRET="${{ secrets.ALPACA_API_SECRET_PAPER_QQQ }}" \
+            -e ALPACA_BASE_URL="https://paper-api.alpaca.markets" \
+            -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
+            -e STRATEGY_NAME="nasdaq_leverage_v1" \
+            -e STRATEGY_INSTANCE_ID="nasdaq_leverage_v1_alpaca_paper" \
+            -e TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
+            -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}" \
+            -e TELEGRAM_NOTIFY_ENABLED=false \
+            -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
+            -e TELEGRAM_TIMEOUT_S=10 \
+            -e APPROVAL_REQUIRED=false \
+            -e TRADING_TIMEZONE="America/New_York" \
+            -e TRADING_RTH_ONLY=true \
+            -e TRADING_START_HHMM="09:35" \
+            -e TRADING_END_HHMM="15:55" \
+            -e DIARY_TITLE="纳指多级杠杆轮动策略" \
+            -e INITIAL_CAPITAL="100000" \
+            -e PROD_CODE="" \
+            ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
+
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="成功"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="失败"
+          fi
+
+          WORKFLOW_NAME="${{ github.workflow }}"
+          RUN_NUMBER="${{ github.run_number }}"
+          RUN_ID="${{ github.run_id }}"
+          ACTOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
+
+          MESSAGE=$(cat <<EOF
+          ${STATUS_EMOJI} *工作流执行${STATUS_TEXT}*
+
+          📋 *工作流信息*
+          • 名称: ${WORKFLOW_NAME}
+          • 运行编号: #${RUN_NUMBER}
+          • 触发者: ${ACTOR}
+          • 仓库: ${REPO}
+
+          📈 *策略*
+          • 策略: nasdaq_leverage_v1（Alpaca Paper）
+          • 模拟模式: ${DRY_RUN}
+          • Broker: Alpaca
+
+          🔗 *查看详情*
+          [查看运行日志](https://github.com/${REPO}/actions/runs/${RUN_ID})
+          EOF
+          )
+
+          export MESSAGE CHAT_ID
+          python3 <<'PYTHON_SCRIPT'
+          import json
+          import os
+
+          message = os.environ.get('MESSAGE', '')
+          chat_id = os.environ.get('CHAT_ID', '')
+
+          payload = {
+              "chat_id": chat_id,
+              "text": message,
+              "parse_mode": "Markdown",
+              "disable_web_page_preview": True
+          }
+
+          with open("/tmp/telegram_message.json", "w", encoding="utf-8") as f:
+              json.dump(payload, f, ensure_ascii=False, indent=2)
+          PYTHON_SCRIPT
+
+          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d @/tmp/telegram_message.json \
+            --fail --show-error || echo "Telegram notification failed, but continuing workflow"
