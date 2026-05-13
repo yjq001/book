@@ -33,8 +33,8 @@ jobs:
             -e STRATEGY_NAME="nasdaq_leverage_v1" \
             -e STRATEGY_INSTANCE_ID="nasdaq_leverage_v1_alpaca_paper" \
             -e TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
-            -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}" \
-            -e TELEGRAM_NOTIFY_ENABLED=true \
+            -e TELEGRAM_CHAT_ID="${{ github.event.inputs.telegram_chat_id || '@godstar001' }}" \
+            -e TELEGRAM_NOTIFY_ENABLED=false \
             -e TELEGRAM_NOTIFY_URL="https://code.easyllms.com/api/telegram/send" \
             -e TELEGRAM_TIMEOUT_S=10 \
             -e APPROVAL_REQUIRED=false \
