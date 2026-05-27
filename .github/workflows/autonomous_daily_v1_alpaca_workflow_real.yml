@@ -23,7 +23,7 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'gpt-5.4-mini'
+        default: 'gpt-5.4'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -48,7 +48,7 @@ jobs:
           # 根据提供商设置默认模型
           case "$PROVIDER" in
             openai)
-              DEFAULT_MODEL="gpt-5.4-mini"
+              DEFAULT_MODEL="gpt-5.4"
               ;;
             gemini)
               DEFAULT_MODEL="gemini-3-flash-preview"
@@ -57,7 +57,7 @@ jobs:
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gpt-5.4-mini"
+              DEFAULT_MODEL="gpt-5.4"
               ;;
           esac
           
@@ -93,7 +93,7 @@ jobs:
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4-mini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -148,7 +148,7 @@ jobs:
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
           PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4-mini' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
