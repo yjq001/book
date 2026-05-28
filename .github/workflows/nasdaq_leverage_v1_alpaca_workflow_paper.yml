@@ -29,6 +29,8 @@ jobs:
             -e ALPACA_API_KEY="${{ secrets.ALPACA_API_KEY_PAPER_QQQ }}" \
             -e ALPACA_API_SECRET="${{ secrets.ALPACA_API_SECRET_PAPER_QQQ }}" \
             -e ALPACA_BASE_URL="https://paper-api.alpaca.markets" \
+            -e UPSTASH_REDIS_URL="https://smashing-spaniel-32228.upstash.io" \
+            -e UPSTASH_REDIS_TOKEN="${{ secrets.UPSTASH_REDIS_TOKEN }}" \
             -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
             -e STRATEGY_NAME="nasdaq_leverage_v1" \
             -e STRATEGY_INSTANCE_ID="nasdaq_leverage_v1_alpaca_paper" \
