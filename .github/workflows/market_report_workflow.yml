@@ -51,11 +51,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wkhtmltopdf fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
-          # 安装Chrome浏览器
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
           sudo fc-cache -f -v
       
       - name: Install dependencies
@@ -193,15 +188,13 @@ jobs:
           from: 市场简报自动生成器 <${{ secrets.EMAIL_USERNAME }}>
           secure: true
           ignore_cert: true
-          convert_markdown: true
+          convert_markdown: false
           priority: high
           body: |
             <div style="font-family: Arial, sans-serif; padding: 20px;">
               <p>您好，</p>
               
-              <p>附件是 美股市场简报(${{ steps.date.outputs.date }})（中英文版本及长图）。</p>
-              
-              <p>您也可以通过以下链接在线查看报告：</p>
+              <p>今日 美股市场简报(${{ steps.date.outputs.date }}) 已生成，请通过以下链接查看：</p>
               <p>
                 <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.date.outputs.date_compact }}/market_report_zh.html" style="color: #007bff; text-decoration: none; margin-right: 20px;">📊 中文版报告</a>
                 <a href="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.date.outputs.date_compact }}/market_report_en.html" style="color: #007bff; text-decoration: none;">📈 英文版报告</a>
@@ -214,6 +207,4 @@ jobs:
               
               <p style="color: #666; font-size: 12px; margin-top: 30px;">此邮件由自动化系统发送，请勿回复。</p>
             </div>
-          attachments: |
-            infos/reports/*.png
           content_type: text/html
