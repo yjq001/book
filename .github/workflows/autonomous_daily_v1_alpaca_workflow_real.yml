@@ -36,7 +36,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'gpt-5.4-mini'
+        default: 'gpt-5.4'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -108,7 +108,7 @@ jobs:
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
             -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'anthropic/claude-opus-4.8' }}" \
             -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openai' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.4-mini' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.4' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
