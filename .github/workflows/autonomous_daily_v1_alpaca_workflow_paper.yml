@@ -100,7 +100,7 @@ jobs:
             -e STRATEGY_INSTANCE_ID="autonomous_daily_v1_alpaca_paper" \
             -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
             -e OPENAI_MODEL="gpt-4o-mini" \
-            -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
+            -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY_YANG }}" \
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
