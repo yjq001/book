@@ -134,7 +134,9 @@ jobs:
             -e TRADING_END_HHMM="15:55" \
             -e MIN_TRADE_VALUE_USD=50 \
             -e MIN_POSITIONS=3 \
-            -e MAX_POSITIONS=12 \
+            -e MAX_POSITIONS=5 \
+            -e SPEC_MAX_WEIGHT_PCT=50 \
+            -e CORE_MAX_WEIGHT_PCT=50 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
             -e DIARY_TITLE="AI美股动量猎手" \
