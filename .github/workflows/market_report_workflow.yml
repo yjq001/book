@@ -3,7 +3,7 @@ name: Generate Market Report
 on:
   schedule:
     # 北京时间早上6点 = UTC+8 6:00 = UTC 22:00 (前一天)
-    - cron: '39 21 * * 0-5'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
+    - cron: '09 21 * * 0-5'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
   
   # Allow manual trigger
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
       model:
         description: 'GPT模型名称'
         required: false
-        default: 'openrouter/owl-alpha'
+        default: 'openai/gpt-5.4-nano'
         type: string
       gpt_base_url:
         description: 'OpenAI API Base URL'
@@ -69,7 +69,7 @@ jobs:
           fi
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'openrouter/owl-alpha' }}"
+          python market_report_generator.py --model "${{ github.event.inputs.model || 'openai/gpt-5.4-nano' }}"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
