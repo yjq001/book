@@ -139,7 +139,7 @@ jobs:
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
             -e DIARY_TITLE="AI美股价值稳航" \
-            -e INITIAL_CAPITAL="50000" \
+            -e INITIAL_CAPITAL="49900" \
             -e PORTFOLIO_CORE_MIN_PCT="50" \
             -e PROD_CODE="88002" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
