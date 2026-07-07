@@ -89,14 +89,14 @@ jobs:
           docker pull ghcr.io/yjq001/ibkr:latest
           
           docker run --rm --network host \
-            --name autonomous_daily_v1_alpaca \
+            --name autonomous_smallcap_v1_alpaca \
             -e USE_MOCK_BROKER=false \
             -e BROKER_TYPE=alpaca \
             -e ALPACA_API_KEY="${{ secrets.ALPACA_API_KEY_PAPER }}" \
             -e ALPACA_API_SECRET="${{ secrets.ALPACA_API_SECRET_PAPER }}" \
             -e ALPACA_BASE_URL="https://paper-api.alpaca.markets" \
             -e DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}" \
-            -e STRATEGY_NAME="autonomous_daily_v1" \
+            -e STRATEGY_NAME="autonomous_smallcap_v1" \
             -e STRATEGY_INSTANCE_ID="autonomous_daily_v1_alpaca_paper" \
             -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
             -e OPENAI_MODEL="gpt-4o-mini" \
@@ -135,13 +135,16 @@ jobs:
             -e MIN_TRADE_VALUE_USD=50 \
             -e MIN_POSITIONS=3 \
             -e MAX_POSITIONS=10 \
-            -e SPEC_MAX_WEIGHT_PCT=50 \
-            -e CORE_MAX_WEIGHT_PCT=50 \
+            -e SPEC_MAX_WEIGHT_PCT=8 \
+            -e CORE_MAX_WEIGHT_PCT=15 \
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
             -e DIARY_TITLE="AI美股动量猎手" \
             -e INITIAL_CAPITAL="100000" \
-            -e PORTFOLIO_CORE_MIN_PCT="30" \
+            -e PORTFOLIO_CORE_MIN_PCT="70" \
+            -e MAX_TOTAL_POSITION_PCT=95 \
+            -e CORE_STOP_LOSS_PCT=22 \
+            -e SPEC_STOP_LOSS_PCT=25 \
             -e PROD_CODE="88001" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
