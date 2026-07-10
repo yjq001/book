@@ -1,17 +1,13 @@
 name: Generate Market Report
 
 on:
-  schedule:
-    # 北京时间早上6点 = UTC+8 6:00 = UTC 22:00 (前一天)
-    - cron: '09 21 * * 0-5'  # 周日到周四的UTC 22:00，对应北京时间周一到周五的早上6点
-  
-  # Allow manual trigger
+  # 仅支持手动触发
   workflow_dispatch:
     inputs:
       model:
         description: 'GPT模型名称'
         required: false
-        default: 'openai/gpt-5.4-nano'
+        default: 'openai/gpt-5.4-mini'
         type: string
       gpt_base_url:
         description: 'OpenAI API Base URL'
@@ -69,7 +65,7 @@ jobs:
           fi
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'openai/gpt-5.4-nano' }}"
+          python market_report_generator.py --model "${{ github.event.inputs.model || 'openai/gpt-5.4-mini' }}"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
