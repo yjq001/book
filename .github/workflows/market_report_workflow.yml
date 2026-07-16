@@ -21,7 +21,7 @@ on:
           - 'https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter'
           - 'https://integrate.api.nvidia.com/v1'
       api_key:
-        description: 'API Key (NVIDIA等需要单独key时填写，留空则使用默认secrets)'
+        description: 'API Key (选 NVIDIA 留空即可，后台将自动赋默认值 nvapi-sQ83...)'
         required: false
         default: ''
         type: string
