@@ -110,10 +110,10 @@ jobs:
           # 根据模型自动选择或应用对应的 API Key 与 Base URL
           if [ ! -z "$INPUT_API_KEY" ]; then
             OPENAI_API_KEY="$INPUT_API_KEY"
-          elif [ "$MODEL" = "nvidia/nemotron-3-ultra-550b-a55b" ]; then
+          elif [[ "$GPT_BASE_URL" == *"nvidia"* ]] || [[ "$MODEL" == *"nvidia"* ]]; then
             OPENAI_API_KEY="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"
-            # 如果选择 NVIDIA 模型时 Base URL 未选对，自动匹配为 NVIDIA API 地址
-            if [ "$GPT_BASE_URL" = "https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter" ] || [ -z "$GPT_BASE_URL" ]; then
+            # 如果选择 NVIDIA 模型但 Base URL 没选对，自动匹配为 NVIDIA API 地址
+            if [[ "$GPT_BASE_URL" != *"nvidia"* ]]; then
               GPT_BASE_URL="https://integrate.api.nvidia.com/v1"
             fi
           fi
