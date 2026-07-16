@@ -7,7 +7,7 @@ on:
       model:
         description: 'GPT模型名称 (下拉选择)'
         required: false
-        default: 'openai/gpt-5.4-mini'
+        default: 'z-ai/glm-5.2'
         type: choice
         options:
           - 'openai/gpt-5.4-mini'
@@ -26,7 +26,7 @@ on:
       gpt_base_url:
         description: 'OpenAI API Base URL (下拉选择)'
         required: false
-        default: 'https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter'
+        default: 'https://integrate.api.nvidia.com/v1'
         type: choice
         options:
           - 'https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter'
@@ -85,7 +85,7 @@ jobs:
       
       - name: Run market report generator
         env:
-          INPUT_MODEL: ${{ github.event.inputs.model || 'openai/gpt-5.4-mini' }}
+          INPUT_MODEL: ${{ github.event.inputs.model || 'z-ai/glm-5.2' }}
           INPUT_CUSTOM_MODEL: ${{ github.event.inputs.custom_model }}
           INPUT_BASE_URL: ${{ github.event.inputs.gpt_base_url }}
           INPUT_CUSTOM_BASE_URL: ${{ github.event.inputs.custom_base_url }}
@@ -95,7 +95,7 @@ jobs:
           if [ ! -z "$INPUT_CUSTOM_MODEL" ]; then
             MODEL="$INPUT_CUSTOM_MODEL"
           elif [ "$MODEL" = "custom (手写输入)" ]; then
-            MODEL="openai/gpt-5.4-mini"
+            MODEL="z-ai/glm-5.2"
           fi
 
           GPT_BASE_URL="$INPUT_BASE_URL"
