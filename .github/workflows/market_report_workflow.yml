@@ -68,9 +68,27 @@ jobs:
       
       - name: Run market report generator
         env:
-          GPT_BASE_URL: ${{ github.event.inputs.gpt_base_url }}
-          OPENAI_API_KEY: ${{ github.event.inputs.api_key || secrets.OPENAI_API_KEY }}
+          INPUT_MODEL: ${{ github.event.inputs.model || 'openai/gpt-5.4-mini' }}
+          INPUT_BASE_URL: ${{ github.event.inputs.gpt_base_url }}
+          INPUT_API_KEY: ${{ github.event.inputs.api_key }}
+          SECRET_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          MODEL="$INPUT_MODEL"
+          GPT_BASE_URL="$INPUT_BASE_URL"
+          
+          # 根据模型自动选择或应用对应的 API Key 与 Base URL
+          if [ ! -z "$INPUT_API_KEY" ]; then
+            OPENAI_API_KEY="$INPUT_API_KEY"
+          elif [ "$MODEL" = "nvidia/nemotron-3-ultra-550b-a55b" ]; then
+            OPENAI_API_KEY="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"
+            # 如果选择 NVIDIA 模型时 Base URL 未选对，自动匹配为 NVIDIA API 地址
+            if [ "$GPT_BASE_URL" = "https://gateway.ai.cloudflare.com/v1/cbb425c1b4186b90437390d353e01ce8/openrouter/openrouter" ]; then
+              GPT_BASE_URL="https://integrate.api.nvidia.com/v1"
+            fi
+          else
+            OPENAI_API_KEY="$SECRET_API_KEY"
+          fi
+
           # 更新配置文件中的GPT base URL
           if [ ! -z "$GPT_BASE_URL" ]; then
             sed -i "s|API_BASE_URL = .*|API_BASE_URL = $GPT_BASE_URL|" infos/config.ini
@@ -81,7 +99,7 @@ jobs:
           fi
           # Run the report generator
           cd infos
-          python market_report_generator.py --model "${{ github.event.inputs.model || 'openai/gpt-5.4-mini' }}"
+          python market_report_generator.py --model "$MODEL"
       
       - name: Upload reports as artifacts
         uses: actions/upload-artifact@v4
