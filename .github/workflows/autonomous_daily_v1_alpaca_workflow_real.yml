@@ -36,7 +36,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'gpt-5.4'
+        default: 'gpt-5.6-luna'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -61,7 +61,7 @@ jobs:
           # 根据提供商设置默认模型
           case "$PROVIDER" in
             openai)
-              DEFAULT_MODEL="gpt-5.4"
+              DEFAULT_MODEL="gpt-5.6-luna"
               ;;
             gemini)
               DEFAULT_MODEL="gemini-3-flash-preview"
@@ -70,7 +70,7 @@ jobs:
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
             *)
-              DEFAULT_MODEL="gpt-5.4"
+              DEFAULT_MODEL="gpt-5.6-luna"
               ;;
           esac
           
@@ -108,7 +108,7 @@ jobs:
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
             -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'anthropic/claude-opus-4.8' }}" \
             -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openai' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.4' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.6-luna' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -163,7 +163,7 @@ jobs:
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
           PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.6-luna' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
