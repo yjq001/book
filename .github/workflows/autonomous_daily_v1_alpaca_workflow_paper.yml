@@ -14,7 +14,7 @@ on:
         description: 'LLM Provider'
         required: false
         type: choice
-        default: 'openai'
+        default: 'nvidia'
         options:
           - gemini
           - openai
@@ -23,12 +23,12 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'gpt-5.4-mini'
+        default: 'z-ai/glm-5.2'
       analysis_provider:
         description: 'Analysis Provider'
         required: false
         type: choice
-        default: 'openai'
+        default: 'nvidia'
         options:
           - openai
           - gemini
@@ -37,7 +37,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'gpt-5.4-mini'
+        default: 'z-ai/glm-5.2'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -56,7 +56,7 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openai' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'nvidia' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
@@ -110,10 +110,10 @@ jobs:
             -e NVIDIA_API_KEY="${{ secrets.NVIDIA_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gpt-5.4-mini' }}" \
-            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openai' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.4-mini' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'nvidia' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'z-ai/glm-5.2' }}" \
+            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'nvidia' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'z-ai/glm-5.2' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
