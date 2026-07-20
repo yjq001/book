@@ -20,6 +20,7 @@ on:
           - openai
           - gemini
           - openrouter
+          - nvidia
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
@@ -33,6 +34,7 @@ on:
           - openai
           - gemini
           - openrouter
+          - nvidia
       analysis_model:
         description: 'Analysis Model name'
         required: false
@@ -69,6 +71,9 @@ jobs:
             openrouter)
               DEFAULT_MODEL="openai/gpt-4o-mini"
               ;;
+            nvidia)
+              DEFAULT_MODEL="z-ai/glm-5.2"
+              ;;
             *)
               DEFAULT_MODEL="gpt-5.6-luna"
               ;;
@@ -103,6 +108,7 @@ jobs:
             -e OPENAI_MODEL="gpt-4o-mini" \
             -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             -e OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
+            -e NVIDIA_API_KEY="${{ secrets.NVIDIA_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
