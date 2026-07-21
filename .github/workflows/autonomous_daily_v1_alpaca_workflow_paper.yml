@@ -14,7 +14,7 @@ on:
         description: 'LLM Provider'
         required: false
         type: choice
-        default: 'nvidia'
+        default: 'gemini'
         options:
           - gemini
           - openai
@@ -23,7 +23,7 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'z-ai/glm-5.2'
+        default: 'gemini-3.1-pro-preview'
       analysis_provider:
         description: 'Analysis Provider'
         required: false
@@ -56,7 +56,7 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'nvidia' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
@@ -65,7 +65,7 @@ jobs:
               DEFAULT_MODEL="gpt-5.4-mini"
               ;;
             gemini)
-              DEFAULT_MODEL="gemini-3.1-flash-lite"
+              DEFAULT_MODEL="gemini-3.1-pro-preview"
               ;;
             openrouter)
               DEFAULT_MODEL="openai/gpt-4o-mini"
@@ -74,7 +74,7 @@ jobs:
               DEFAULT_MODEL="z-ai/glm-5.2"
               ;;
             *)
-              DEFAULT_MODEL="gemini-3.1-flash-lite"
+              DEFAULT_MODEL="gemini-3.1-pro-preview"
               ;;
           esac
           
@@ -110,8 +110,8 @@ jobs:
             -e NVIDIA_API_KEY="${{ secrets.NVIDIA_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'nvidia' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'z-ai/glm-5.2' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.1-pro-preview' }}" \
             -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'nvidia' }}" \
             -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'z-ai/glm-5.2' }}" \
             -e LLM_STREAMING=true \
