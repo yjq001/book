@@ -154,6 +154,7 @@ jobs:
             -e SPEC_STOP_LOSS_PCT=5 \
             -e SPEC_TAKE_PROFIT_PCT=20 \
             -e PROD_CODE="88003" \
+            -e WECHAT_COVER_IMAGE_URL="https://cos.easyllms.cn/others/short.png" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
       - name: Send Telegram notification

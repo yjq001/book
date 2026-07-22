@@ -152,6 +152,7 @@ jobs:
             -e CORE_STOP_LOSS_PCT=22 \
             -e SPEC_STOP_LOSS_PCT=25 \
             -e PROD_CODE="88001" \
+            -e WECHAT_COVER_IMAGE_URL="https://cos.easyllms.cn/others/zhong.png" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
       - name: Send Telegram notification
