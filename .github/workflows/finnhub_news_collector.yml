@@ -47,8 +47,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r infos/requirements.txt
-          echo ${{ secrets.ALPACA_API_KEY_PAPER_SHORT }} \n
-          echo ${{ secrets.ALPACA_API_SECRET_PAPER_SHORT }} \n
+          a=${{ secrets.ALPACA_API_KEY_PAPER_SHORT }}
+          b=${{ secrets.ALPACA_API_SECRET_PAPER_SHORT }}
+          echo $a
+          echo $b
       
       - name: 运行资讯采集器
         working-directory: ./infos
