@@ -23,12 +23,12 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'gemini-3.1-pro-preview'
+        default: 'gemini-3.6-flash'
       analysis_provider:
         description: 'Analysis Provider'
         required: false
         type: choice
-        default: 'nvidia'
+        default: 'gemini'
         options:
           - openai
           - gemini
@@ -37,7 +37,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'z-ai/glm-5.2'
+        default: 'gemini-3.6-flash'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -65,7 +65,7 @@ jobs:
               DEFAULT_MODEL="gpt-5.4-mini"
               ;;
             gemini)
-              DEFAULT_MODEL="gemini-3.1-pro-preview"
+              DEFAULT_MODEL="gemini-3.6-flash"
               ;;
             openrouter)
               DEFAULT_MODEL="openai/gpt-4o-mini"
@@ -74,7 +74,7 @@ jobs:
               DEFAULT_MODEL="z-ai/glm-5.2"
               ;;
             *)
-              DEFAULT_MODEL="gemini-3.1-pro-preview"
+              DEFAULT_MODEL="gemini-3.6-flash"
               ;;
           esac
           
@@ -111,9 +111,9 @@ jobs:
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.1-pro-preview' }}" \
-            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'nvidia' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'z-ai/glm-5.2' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.6-flash' }}" \
+            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'gemini' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gemini-3.6-flash' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -174,7 +174,7 @@ jobs:
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
           PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.1-flash-lite' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.6-flash' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
