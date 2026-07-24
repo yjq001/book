@@ -14,7 +14,7 @@ on:
         description: 'LLM Provider'
         required: false
         type: choice
-        default: 'nvidia'
+        default: 'gemini'
         options:
           - gemini
           - openai
@@ -23,12 +23,12 @@ on:
       autonomous_model:
         description: 'LLM Model name (leave empty to use default for selected provider)'
         required: false
-        default: 'z-ai/glm-5.2'
+        default: 'gemini-3.6-flash'
       analysis_provider:
         description: 'Analysis Provider'
         required: false
         type: choice
-        default: 'nvidia'
+        default: 'gemini'
         options:
           - openai
           - gemini
@@ -37,7 +37,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'z-ai/glm-5.2'
+        default: 'gemini-3.6-flash'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -56,7 +56,7 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'nvidia' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'gemini' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
@@ -74,7 +74,7 @@ jobs:
               DEFAULT_MODEL="z-ai/glm-5.2"
               ;;
             *)
-              DEFAULT_MODEL="z-ai/glm-5.2"
+              DEFAULT_MODEL="gemini-3.6-flash"
               ;;
           esac
           
@@ -110,10 +110,10 @@ jobs:
             -e NVIDIA_API_KEY="${{ secrets.NVIDIA_API_KEY }}" \
             -e OPENROUTER_HTTP_REFERER="https://github.com/easyllms/ibkr-bot" \
             -e OPENROUTER_APP_NAME="IBKR Bot" \
-            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'nvidia' }}" \
-            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'z-ai/glm-5.2' }}" \
-            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'nvidia' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'z-ai/glm-5.2' }}" \
+            -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}" \
+            -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.6-flash' }}" \
+            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'gemini' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gemini-3.6-flash' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -175,8 +175,8 @@ jobs:
           RUN_ID="${{ github.run_id }}"
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
-          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'nvidia' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'z-ai/glm-5.2' }}"
+          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'gemini' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'gemini-3.6-flash' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
