@@ -145,7 +145,7 @@ jobs:
             -e CORE_MAX_WEIGHT_PCT=15 \
             -e MAX_POSITION_WEIGHT=0.15 \
             -e SLIPPAGE_BPS=15 \
-            -e DIARY_TITLE="盘前策略|AI美股短线掘金" \
+            -e DIARY_TITLE="【盘前策略】AI美股短线掘金" \
             -e INITIAL_CAPITAL="100000" \
             -e PORTFOLIO_CORE_MIN_PCT="50" \
             -e MAX_TOTAL_POSITION_PCT=120 \
@@ -153,7 +153,7 @@ jobs:
             -e CORE_TAKE_PROFIT_PCT=15 \
             -e SPEC_STOP_LOSS_PCT=5 \
             -e SPEC_TAKE_PROFIT_PCT=20 \
-            -e PROD_CODE="880003" \
+            -e PROD_CODE="88003" \
             -e WECHAT_COVER_IMAGE_URL="https://cos.easyllms.cn/others/short.png" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
       
