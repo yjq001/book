@@ -1,9 +1,9 @@
-name: 十分钟Finnhub资讯采集器
+name: 一小时Finnhub资讯采集器
 
 on:
   schedule:
-    # 每10分钟运行一次
-    - cron: '*/10 * * * *'
+    # 每1小时运行一次
+    - cron: '0 * * * *'
   
   # 允许手动触发
   workflow_dispatch:
@@ -47,10 +47,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r infos/requirements.txt
-          a=${{ secrets.ALPACA_API_KEY_PAPER_SHORT }}
-          b=${{ secrets.ALPACA_API_SECRET_PAPER_SHORT }}
-          echo $a
-          echo $b
       
       - name: 运行资讯采集器
         working-directory: ./infos
