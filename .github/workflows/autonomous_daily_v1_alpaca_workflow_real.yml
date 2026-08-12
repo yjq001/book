@@ -131,7 +131,7 @@ jobs:
             -e APPROVAL_POLL_INTERVAL_SECONDS=60 \
             -e RISK_MAX_ITERATIONS=5 \
             -e RISK_MAX_REVISION_ROUNDS=5 \
-            -e EXECUTOR_PRICE_CAP_BUFFER=2 \
+            -e EXECUTOR_PRICE_CAP_BUFFER=0.2 \
             -e MEMORY_TRADE_HISTORY_DAYS=30 \
             -e MEMORY_CONVERSATION_ROUNDS=10 \
             -e MEMORY_INSIGHT_TTL_DAYS=7 \
