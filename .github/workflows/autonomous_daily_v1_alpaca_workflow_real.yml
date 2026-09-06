@@ -29,7 +29,7 @@ on:
         description: 'Analysis Provider'
         required: false
         type: choice
-        default: 'openai'
+        default: 'openrouter'
         options:
           - openai
           - gemini
@@ -38,7 +38,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'gpt-5.6-luna'
+        default: 'google/gemini-3.8-flash'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -57,25 +57,25 @@ jobs:
       - name: Set LLM configuration based on provider
         id: set_llm_config
         run: |
-          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openai' }}"
+          PROVIDER="${{ github.event.inputs.autonomous_provider || 'openrouter' }}"
           CUSTOM_MODEL="${{ github.event.inputs.autonomous_model }}"
           
           # 根据提供商设置默认模型
           case "$PROVIDER" in
             openai)
-              DEFAULT_MODEL="openai/gpt-5.6-luna"
+              DEFAULT_MODEL="google/gemini-3.8-flash"
               ;;
             gemini)
               DEFAULT_MODEL="gemini-3-flash-preview"
               ;;
             openrouter)
-              DEFAULT_MODEL="openai/gpt-5.6-luna"
+              DEFAULT_MODEL="google/gemini-3.8-flash"
               ;;
             nvidia)
               DEFAULT_MODEL="z-ai/glm-5.2"
               ;;
             *)
-              DEFAULT_MODEL="openai/gpt-5.6-luna"
+              DEFAULT_MODEL="google/gemini-3.8-flash"
               ;;
           esac
           
@@ -113,8 +113,8 @@ jobs:
             -e OPENROUTER_APP_NAME="IBKR Bot" \
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
             -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'anthropic/claude-opus-5' }}" \
-            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openai' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'gpt-5.6-luna' }}" \
+            -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openrouter' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'google/gemini-3.8-flash' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -169,8 +169,8 @@ jobs:
           RUN_ID="${{ github.run_id }}"
           ACTOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
-          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openai' }}"
-          MODEL="${{ steps.set_llm_config.outputs.model || 'openai/gpt-5.6-luna' }}"
+          PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}"
+          MODEL="${{ steps.set_llm_config.outputs.model || 'google/gemini-3.8-flash' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
           CHAT_ID="${{ github.event.inputs.telegram_chat_id || '-1003444893572' }}"
           
