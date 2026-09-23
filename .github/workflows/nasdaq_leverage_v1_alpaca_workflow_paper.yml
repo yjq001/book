@@ -44,9 +44,10 @@ jobs:
             -e TRADING_RTH_ONLY=true \
             -e TRADING_START_HHMM="01:00" \
             -e TRADING_END_HHMM="16:00" \
-            -e DIARY_TITLE="纳指多级杠杆轮动策略" \
+            -e DIARY_TITLE="纳指杠杆轮动策略" \
             -e INITIAL_CAPITAL="100000" \
-            -e PROD_CODE="" \
+            -e PROD_CODE="88004" \
+            -e WECHAT_COVER_IMAGE_URL="https://cos.easyllms.cn/others/ai-us-stock4.png" \
             ghcr.io/yjq001/ibkr:latest ibkr-bot run-once
 
       - name: Send Telegram notification
