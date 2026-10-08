@@ -7,10 +7,10 @@ on:
       model:
         description: 'GPT模型名称 (下拉选择)'
         required: false
-        default: 'anthropic/claude-haiku-5.5'
+        default: 'openai/gpt-6-luna'
         type: choice
         options:
-          - 'anthropic/claude-haiku-5.5'
+          - 'openai/gpt-6-luna'
           - 'openai/gpt-5.6-luna'
           - 'qwen/qwen3.7-flash'
           - 'z-ai/glm-5.2'
@@ -81,7 +81,7 @@ jobs:
 
       - name: Run retail action generator
         env:
-          INPUT_MODEL: ${{ github.event.inputs.model || 'anthropic/claude-haiku-5.5' }}
+          INPUT_MODEL: ${{ github.event.inputs.model || 'openai/gpt-6-luna' }}
           INPUT_CUSTOM_MODEL: ${{ github.event.inputs.custom_model }}
           INPUT_BASE_URL: ${{ github.event.inputs.gpt_base_url || 'https://openrouter.ai/api/v1' }}
           INPUT_CUSTOM_BASE_URL: ${{ github.event.inputs.custom_base_url }}
@@ -93,7 +93,7 @@ jobs:
           if [ ! -z "$INPUT_CUSTOM_MODEL" ]; then
             MODEL="$INPUT_CUSTOM_MODEL"
           elif [ "$MODEL" = "custom (手写输入)" ]; then
-            MODEL="anthropic/claude-haiku-5.5"
+            MODEL="openai/gpt-6-luna"
           fi
 
           GPT_BASE_URL="$INPUT_BASE_URL"
