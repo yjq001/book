@@ -7,9 +7,10 @@ on:
       model:
         description: 'GPT模型名称 (下拉选择)'
         required: false
-        default: 'qwen/qwen3.7-flash'
+        default: 'anthropic/claude-haiku-5.5'
         type: choice
         options:
+          - 'anthropic/claude-haiku-5.5'
           - 'qwen/qwen3.7-flash'
           - 'z-ai/glm-5.2'
           - 'nvidia/nemotron-3-ultra-550b-a55b'
@@ -85,7 +86,7 @@ jobs:
       
       - name: Run market report generator
         env:
-          INPUT_MODEL: ${{ github.event.inputs.model || 'qwen/qwen3.7-flash' }}
+          INPUT_MODEL: ${{ github.event.inputs.model || 'anthropic/claude-haiku-5.5' }}
           INPUT_CUSTOM_MODEL: ${{ github.event.inputs.custom_model }}
           INPUT_BASE_URL: ${{ github.event.inputs.gpt_base_url || 'https://openrouter.ai/api/v1' }}
           INPUT_CUSTOM_BASE_URL: ${{ github.event.inputs.custom_base_url }}
@@ -97,7 +98,7 @@ jobs:
           if [ ! -z "$INPUT_CUSTOM_MODEL" ]; then
             MODEL="$INPUT_CUSTOM_MODEL"
           elif [ "$MODEL" = "custom (手写输入)" ]; then
-            MODEL="qwen/qwen3.7-flash"
+            MODEL="anthropic/claude-haiku-5.5"
           fi
 
           GPT_BASE_URL="$INPUT_BASE_URL"
