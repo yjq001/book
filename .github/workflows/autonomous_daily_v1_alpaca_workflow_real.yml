@@ -38,7 +38,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'anthropic/claude-haiku-5.5'
+        default: 'openai/gpt-6-luna'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -114,7 +114,7 @@ jobs:
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
             -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'anthropic/claude-opus-5.5' }}" \
             -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openrouter' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'anthropic/claude-haiku-5.5' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'openai/gpt-6-luna' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
