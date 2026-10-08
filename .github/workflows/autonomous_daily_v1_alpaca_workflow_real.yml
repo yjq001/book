@@ -38,7 +38,7 @@ on:
       analysis_model:
         description: 'Analysis Model name'
         required: false
-        default: 'openai/gpt-6-luna'
+        default: 'anthropic/claude-haiku-5.5'
       telegram_chat_id:
         description: 'Telegram Chat ID'
         required: false
@@ -114,7 +114,7 @@ jobs:
             -e AUTONOMOUS_PROVIDER="${{ steps.set_llm_config.outputs.provider || 'openrouter' }}" \
             -e AUTONOMOUS_MODEL="${{ steps.set_llm_config.outputs.model || 'anthropic/claude-opus-5.5' }}" \
             -e ANALYSIS_PROVIDER="${{ github.event.inputs.analysis_provider || 'openrouter' }}" \
-            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'openai/gpt-6-luna' }}" \
+            -e ANALYSIS_MODEL="${{ github.event.inputs.analysis_model || 'anthropic/claude-haiku-5.5' }}" \
             -e LLM_STREAMING=true \
             -e STRATEGIST_PROVIDER="openai" \
             -e STRATEGIST_MODEL="o4-mini" \
@@ -145,7 +145,7 @@ jobs:
             -e MAX_POSITION_WEIGHT=0.10 \
             -e SLIPPAGE_BPS=15 \
             -e DIARY_TITLE="【尾盘策略】AI美股价值稳航" \
-            -e INITIAL_CAPITAL="49900" \
+            -e INITIAL_CAPITAL="48400" \
             -e PORTFOLIO_CORE_MIN_PCT="50" \
             -e PROD_CODE="88002" \
             -e WECHAT_COVER_IMAGE_URL="https://cos.easyllms.cn/others/chang.png" \
