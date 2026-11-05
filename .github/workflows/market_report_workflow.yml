@@ -158,23 +158,35 @@ jobs:
           echo "date=$(TZ='Asia/Shanghai' date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
           echo "date_compact=$(TZ='Asia/Shanghai' date +'%Y%m%d')" >> $GITHUB_OUTPUT
       
+      # 先取出 gh-pages 现有内容（含站长日报 webmaster/ 等其他目录），再放入今天的报告
+      - name: Checkout existing GitHub Pages content
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: gh-pages
+          path: gh-pages-deploy
+          fetch-depth: 1
+
       - name: Prepare files for GitHub Pages
         run: |
-          # 创建日期目录
+          rm -rf ./gh-pages-deploy/.git
+
+          # 创建日期目录并复制报告
           mkdir -p ./gh-pages-deploy/${{ steps.date.outputs.date_compact }}
-          
-          # 复制报告文件到日期目录
           cp -r ./infos/reports/* ./gh-pages-deploy/${{ steps.date.outputs.date_compact }}/
-          
+
           # 同时复制到根目录以保持兼容性
           cp -r ./infos/reports/* ./gh-pages-deploy/
-          
-          # 查找并删除90天前的旧文件夹
-          find ./gh-pages-deploy -maxdepth 1 -type d -name "20[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" -mtime +90 -exec rm -rf {} \;
-          
+
+          # 只保留最近 90 天的日期目录（按目录名判断，checkout 后文件时间都是当天，不能用 mtime）
+          cutoff=$(TZ='Asia/Shanghai' date -d '90 days ago' +%Y%m%d)
+          for d in ./gh-pages-deploy/20[0-9][0-9][0-9][0-9][0-9][0-9]; do
+            [ -d "$d" ] && [ "$(basename "$d")" \< "$cutoff" ] && rm -rf "$d"
+          done
+
           echo "准备完成，将部署以下文件："
-          find ./gh-pages-deploy -type f | sort
-      
+          find ./gh-pages-deploy -type f | sort | tail -50
+
       - name: List all generated files
         run: |
           echo "Generated files:"
@@ -186,8 +198,9 @@ jobs:
           personal_token: ${{ secrets.PAT_TOKEN }}
           publish_dir: ./gh-pages-deploy
           destination_dir: ./
-          keep_files: true
-          force_orphan: false
+          # publish_dir 已包含 gh-pages 的全部现有内容；每次生成一个只含当前内容的新提交，避免分支历史无限膨胀
+          keep_files: false
+          force_orphan: true
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'Deploy market report: ${{ steps.date.outputs.date }}'
