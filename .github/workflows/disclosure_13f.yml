@@ -60,7 +60,6 @@ jobs:
         working-directory: ./sex-robot/disclosures
         env:
           INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENFIGI_API_KEY: ${{ secrets.OPENFIGI_API_KEY }}
           MODE: ${{ inputs.mode }}
           QUARTERS: ${{ inputs.quarters }}
