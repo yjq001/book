@@ -1,0 +1,56 @@
+name: 美股大佬持仓-国会议员交易
+
+on:
+  schedule:
+    # 每天两次（北京时间 9 点、21 点）
+    - cron: '0 1,13 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'recent / backfill'
+        required: true
+        default: 'recent'
+        type: choice
+        options: [recent, backfill]
+      years:
+        description: 'backfill 年份，空格分隔，如 2024 2025'
+        required: false
+
+concurrency:
+  group: disclosure-congress
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout private repository
+        uses: actions/checkout@v4
+        with:
+          repository: yjq001/sex-robot
+          path: ./sex-robot
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: master
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r sex-robot/disclosures/requirements.txt
+
+      - name: 运行采集
+        working-directory: ./sex-robot/disclosures
+        env:
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          MODE: ${{ inputs.mode }}
+          YEARS: ${{ inputs.years }}
+        run: |
+          if [ "$MODE" = "backfill" ]; then
+            python congress.py backfill --years $YEARS
+          else
+            python congress.py recent --days 10
+          fi
