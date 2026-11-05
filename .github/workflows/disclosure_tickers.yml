@@ -1,0 +1,39 @@
+name: 美股大佬持仓-股票池
+
+on:
+  schedule:
+    # 每周日一次
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: disclosure-tickers
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout private repository
+        uses: actions/checkout@v4
+        with:
+          repository: yjq001/sex-robot
+          path: ./sex-robot
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: master
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r sex-robot/disclosures/requirements.txt
+
+      - name: 股票池入库
+        working-directory: ./sex-robot/disclosures
+        env:
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+        run: python tickers.py

@@ -1,0 +1,73 @@
+name: 美股大佬持仓-机构13F
+
+on:
+  schedule:
+    # 平时每天一次
+    - cron: '0 23 * * *'
+    # 季度截止日前后（2/5/8/11 月 10-16 号）每小时一次
+    - cron: '30 * 10-16 2,5,8,11 *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'recent / backfill'
+        required: true
+        default: 'recent'
+        type: choice
+        options: [recent, backfill]
+      quarters:
+        description: 'backfill 回补报告期数'
+        required: false
+        default: '8'
+      fund:
+        description: '只跑某家机构（funds.csv 里的 slug），留空跑全部'
+        required: false
+
+concurrency:
+  group: disclosure-13f
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout private repository
+        uses: actions/checkout@v4
+        with:
+          repository: yjq001/sex-robot
+          path: ./sex-robot
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: master
+          fetch-depth: 1
+          persist-credentials: false
+
+      # CUSIP→代码映射缓存：仓库里提交的是初始版本，运行中新增的存 Actions 缓存
+      - name: 恢复 CUSIP 缓存
+        uses: actions/cache@v4
+        with:
+          path: sex-robot/disclosures/data/cusips.json
+          key: cusips-${{ github.run_id }}
+          restore-keys: cusips-
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r sex-robot/disclosures/requirements.txt
+
+      - name: 运行采集
+        working-directory: ./sex-robot/disclosures
+        env:
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENFIGI_API_KEY: ${{ secrets.OPENFIGI_API_KEY }}
+          MODE: ${{ inputs.mode }}
+          QUARTERS: ${{ inputs.quarters }}
+          FUND: ${{ inputs.fund }}
+        run: |
+          if [ "$MODE" = "backfill" ]; then
+            python f13.py backfill --quarters "${QUARTERS:-8}" ${FUND:+--fund "$FUND"}
+          else
+            python f13.py recent --days 3 ${FUND:+--fund "$FUND"}
+          fi
