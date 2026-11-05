@@ -2,10 +2,13 @@ name: 美股大佬持仓-高管买卖(Form4)
 
 on:
   schedule:
-    # 美东 6:00-18:45 每 15 分钟拉实时申报（UTC，11 月起美东为 UTC-5）
-    - cron: '*/15 11-23 * * 1-5'
-    # 每天美东早 7 点按日索引补全前一天，兜底定时任务延迟漏掉的
-    - cron: '0 12 * * 2-6'
+    # 美东 6:00-19:00 每小时拉实时申报（UTC，11 月起美东为 UTC-5）。
+    # GitHub 会压缩/延迟高频 cron，避开整点和 :15 倍数；窗口放宽到 4 小时，延迟也不丢数据
+    - cron: '7 11-23 * * 1-5'
+    - cron: '37 11-23 * * 1-5'
+    # 每天美东早 7 点和晚 18 点按日索引补全，兜底定时任务延迟漏掉的
+    - cron: '23 12 * * 2-6'
+    - cron: '43 23 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
@@ -60,10 +63,12 @@ jobs:
           START: ${{ inputs.start }}
           END: ${{ inputs.end }}
         run: |
-          if [ "$SCHEDULE" = "0 12 * * 2-6" ]; then
+          if [ "$SCHEDULE" = "23 12 * * 2-6" ]; then
             python form4.py daily
+          elif [ "$SCHEDULE" = "43 23 * * 1-5" ]; then
+            python form4.py daily --date "$(date -u +%F)"
           elif [ -z "$MODE" ] || [ "$MODE" = "live" ]; then
-            python form4.py live --window-min 60
+            python form4.py live --window-min 240
           elif [ "$MODE" = "daily" ]; then
             python form4.py daily ${DATE:+--date "$DATE"}
           else

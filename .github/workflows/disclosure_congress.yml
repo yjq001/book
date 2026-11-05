@@ -2,8 +2,8 @@ name: 美股大佬持仓-国会议员交易
 
 on:
   schedule:
-    # 每天两次（北京时间 9 点、21 点）
-    - cron: '0 1,13 * * *'
+    # 每天四次（避开整点，GitHub 对整点 cron 延迟最大）
+    - cron: '17 1,7,13,19 * * *'
   workflow_dispatch:
     inputs:
       mode:
