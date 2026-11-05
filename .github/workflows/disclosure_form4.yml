@@ -1,0 +1,71 @@
+name: 美股大佬持仓-高管买卖(Form4)
+
+on:
+  schedule:
+    # 美东 6:00-18:45 每 15 分钟拉实时申报（UTC，11 月起美东为 UTC-5）
+    - cron: '*/15 11-23 * * 1-5'
+    # 每天美东早 7 点按日索引补全前一天，兜底定时任务延迟漏掉的
+    - cron: '0 12 * * 2-6'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'live / daily / backfill'
+        required: true
+        default: 'live'
+        type: choice
+        options: [live, daily, backfill]
+      date:
+        description: 'daily 模式日期 YYYY-MM-DD（默认昨天）'
+        required: false
+      start:
+        description: 'backfill 起始日期 YYYY-MM-DD（建议一次一个季度）'
+        required: false
+      end:
+        description: 'backfill 结束日期 YYYY-MM-DD'
+        required: false
+
+concurrency:
+  group: disclosure-form4-${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'schedule' }}
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'backfill' && 340 || 15 }}
+    steps:
+      - name: Checkout private repository
+        uses: actions/checkout@v4
+        with:
+          repository: yjq001/sex-robot
+          path: ./sex-robot
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: master
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r sex-robot/disclosures/requirements.txt
+
+      - name: 运行采集
+        working-directory: ./sex-robot/disclosures
+        env:
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          SCHEDULE: ${{ github.event.schedule }}
+          MODE: ${{ inputs.mode }}
+          DATE: ${{ inputs.date }}
+          START: ${{ inputs.start }}
+          END: ${{ inputs.end }}
+        run: |
+          if [ "$SCHEDULE" = "0 12 * * 2-6" ]; then
+            python form4.py daily
+          elif [ -z "$MODE" ] || [ "$MODE" = "live" ]; then
+            python form4.py live --window-min 60
+          elif [ "$MODE" = "daily" ]; then
+            python form4.py daily ${DATE:+--date "$DATE"}
+          else
+            python form4.py backfill --start "$START" ${END:+--end "$END"}
+          fi
