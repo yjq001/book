@@ -20,7 +20,7 @@ on:
           - test
           - prod
       version:
-        description: '四段版本号, 例如 0.1.8.1; 留空则在该环境已上传的最高版本上加一'
+        description: '四段版本号, 例如 0.1.8.1; 留空则自动递增'
         required: false
         default: ''
       targets:
@@ -43,6 +43,8 @@ env:
   COS_BUCKET: romsfiles-1251438792
   COS_REGION: ap-guangzhou
   COS_PREFIX: wm-harness
+  # 某个环境第一次打包且没填版本号时使用。
+  WMH_FIRST_VERSION: '0.1.8.1'
 
 jobs:
   plan:
@@ -90,11 +92,13 @@ jobs:
                   if page.get('IsTruncated') != 'true':
                       break
                   marker = page.get('NextMarker') or marker
-              if not published:
-                  sys.exit(f"::error::{os.environ['WMH_ENVIRONMENT']} 环境还没有已上传的版本, 第一次请手动填写版本号")
-              latest = max(published)
-              version = '.'.join(str(part) for part in (*latest[:3], latest[3] + 1))
-              print(f"已上传的最高版本 {'.'.join(map(str, latest))}")
+              if published:
+                  latest = max(published)
+                  version = '.'.join(str(part) for part in (*latest[:3], latest[3] + 1))
+                  print(f"已上传的最高版本 {'.'.join(map(str, latest))}")
+              else:
+                  version = os.environ['WMH_FIRST_VERSION']
+                  print('该环境还没有已上传的版本, 从起始版本开始')
           print(f'本次版本 {version}')
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
               output.write(f'version={version}\n')
