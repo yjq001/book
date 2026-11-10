@@ -106,13 +106,18 @@ jobs:
           $installed = @(${env:ProgramFiles(x86)}, $env:ProgramFiles) | Where-Object { $_ -and (Test-Path (Join-Path $_ 'NSIS/makensis.exe')) }
           if (-not $installed) { choco install nsis -y --no-progress }
 
-      - name: 🚀 构建安装包
+      - name: 🚀 构建安装包 (macOS)
+        if: runner.os == 'macOS'
+        run: pnpm run build:macos --version "$WMH_VERSION"
+
+      - name: 🚀 构建安装包 (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then
-            pnpm run build:windows --version "$WMH_VERSION"
-          else
-            pnpm run build:macos --version "$WMH_VERSION"
-          fi
+          # 构建脚本按 Windows 自带的 bsdtar 传盘符路径; Git 的 GNU tar 会把 "D:" 当成远程主机。
+          $env:PATH = "$env:SystemRoot\System32;$env:PATH"
+          pnpm run build:windows --version "$env:WMH_VERSION"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: 🚢 发布到私有仓库 Release
         env:
