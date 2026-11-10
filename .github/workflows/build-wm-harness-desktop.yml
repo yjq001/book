@@ -51,6 +51,11 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
+      - name: 🐍 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: 🔢 确定版本号
         id: version
         env:
@@ -60,8 +65,8 @@ jobs:
           COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
         run: |
           # 存储桶不允许匿名列文件, 列目录要用密钥。
-          python3 -m pip install --quiet cos-python-sdk-v5
-          python3 - <<'EOF'
+          python -m pip install --quiet cos-python-sdk-v5
+          python - <<'EOF'
           import os, re, sys
 
           requested = os.environ['WMH_VERSION'].strip()
