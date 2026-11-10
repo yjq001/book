@@ -414,9 +414,9 @@ jobs:
           now = datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M')
           lines = []
           if failed:
-              lines.append(f'## <font color="warning">⚠️ 财富AI工作台 {version} 发布未完成</font>')
+              lines.append(f'## <font color="warning">⚠️ 财富AI工作台 v{version} 发布未完成</font>')
           else:
-              lines.append(f'## 财富AI工作台 {version} 已发布')
+              lines.append(f'## 财富AI工作台 v{version} 已发布')
           lines.append(f'> 时间：{now}（北京时间）')
           notes = os.environ.get('WMH_NOTES', '').strip()
           if notes:
@@ -429,7 +429,7 @@ jobs:
           if failed:
               lines.append(f"未发布的平台请查看运行日志：{os.environ['RUN_URL']}")
           else:
-              lines.append(f'已安装 {version} 及以上版本的用户会在应用内收到更新提示。')
+              lines.append(f'已安装 v{version} 及以上版本的用户会在应用内收到更新提示。')
 
           body = json.dumps({'msgtype': 'markdown', 'markdown': {'content': '\n'.join(lines)}}).encode('utf-8')
           request = urllib.request.Request(os.environ['WECOM_WEBHOOK_URL'], data=body, headers={'Content-Type': 'application/json'})
