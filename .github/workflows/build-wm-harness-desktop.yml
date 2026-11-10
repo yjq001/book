@@ -44,7 +44,7 @@ env:
   COS_REGION: ap-guangzhou
   COS_PREFIX: wm-harness
   # 还没有发布过正式版且没填版本号时使用。
-  WMH_FIRST_VERSION: '0.1.8.1'
+  WMH_FIRST_VERSION: '0.1.8.8'
 
 jobs:
   plan:
