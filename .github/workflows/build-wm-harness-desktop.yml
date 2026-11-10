@@ -170,8 +170,8 @@ jobs:
   manifest:
     name: 🗂️ 更新版本清单
     needs: build
-    # 部分平台失败时, 已上传的平台仍要进清单。
-    if: ${{ !cancelled() }}
+    # 清单只收录正式版; 部分平台失败时, 已上传的平台仍要进清单。
+    if: ${{ !cancelled() && inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
     steps:
       - name: 🐍 设置 Python
@@ -190,7 +190,7 @@ jobs:
           import xml.etree.ElementTree as ET
 
           origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
-          prefix = os.environ['COS_PREFIX'] + '/'
+          prefix = os.environ['COS_PREFIX'] + '/prod/'
           files, marker = [], ''
           while True:
               query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
