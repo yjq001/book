@@ -382,7 +382,6 @@ jobs:
     env:
       WMH_VERSION: ${{ needs.plan.outputs.version }}
       WMH_NOTES: ${{ inputs.notes }}
-      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       DOWNLOAD_PAGE: https://cdn.gfzq.cn/wm/mobile/wm-harness/download/
       # 群机器人地址按要求写在代码里; 公开仓库里任何人都能看到, 能往群里发消息。
       WECOM_WEBHOOK_URL: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=c130b90d-7fa1-4659-8d5c-ddc0a534a3dd
@@ -421,10 +420,8 @@ jobs:
           lines.append(f"**下载地址**：{os.environ['DOWNLOAD_PAGE']}")
           for key, label in platforms:
               lines.append(f'- {label} ' + ('<font color="info">已发布</font>' if key in done else '<font color="warning">未发布</font>'))
-          lines.append('')
-          if failed:
-              lines.append(f"未发布的平台请查看运行日志：{os.environ['RUN_URL']}")
-          else:
+          if not failed:
+              lines.append('')
               lines.append(f'已安装 v{version} 及以上版本的用户会在应用内收到更新提示。')
 
           body = json.dumps({'msgtype': 'markdown', 'markdown': {'content': '\n'.join(lines)}}).encode('utf-8')
