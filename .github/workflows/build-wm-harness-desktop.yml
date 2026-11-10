@@ -1,0 +1,134 @@
+name: 🖥️ Build WM Harness Desktop
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: '源代码仓库 (格式: owner/repo)'
+        required: true
+        default: 'yjq001/wm-harness'
+      source_branch:
+        description: '源代码分支'
+        required: true
+        default: 'feature/desktop-packaging'
+      environment:
+        description: '打包环境 (test=开发版渠道, prod=正式版渠道)'
+        required: true
+        type: choice
+        default: 'test'
+        options:
+          - test
+          - prod
+      version:
+        description: '四段版本号, 例如 0.1.8.1'
+        required: true
+      targets:
+        description: '打包平台'
+        required: true
+        type: choice
+        default: 'all'
+        options:
+          - all
+          - macos-arm64
+          - macos-x64
+          - windows-x64
+
+# 本仓库是公开仓库: 日志对所有人可见, 安装包内含共享服务凭据。
+# 不要在步骤里打印环境变量, 不要使用 upload-artifact; 产物只发布到私有源码仓库的 Release。
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: 📦 ${{ matrix.target }} (${{ inputs.environment }})
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJSON(inputs.targets == 'all' && '["macos-arm64","macos-x64","windows-x64"]' || format('["{0}"]', inputs.targets)) }}
+    runs-on: ${{ matrix.target == 'macos-arm64' && 'macos-15' || matrix.target == 'macos-x64' && 'macos-15-intel' || 'windows-2025' }}
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash
+    env:
+      WMH_ENVIRONMENT: ${{ inputs.environment }}
+      WMH_VERSION: ${{ inputs.version }}
+      SOURCE_REPO: ${{ inputs.source_repo }}
+
+    steps:
+      - name: 📥 拉取源代码
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.source_repo }}
+          ref: ${{ inputs.source_branch }}
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: 🔧 设置 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 🔧 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: ✅ 校验参数
+        run: |
+          if ! [[ "$WMH_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[1-9][0-9]*$ ]]; then
+            echo "::error::版本号必须是四段数字且第四段大于 0, 例如 0.1.8.1"
+            exit 1
+          fi
+          echo "Node $(node -v) $(node -p process.arch), pnpm $(pnpm -v)"
+
+      - name: 🌐 载入环境配置
+        run: |
+          # 环境地址和服务凭据取自私有源码仓库的环境文件, 不写进这个公开仓库。
+          # 复制成根目录 .env 由构建脚本自行读取; 不要写入 GITHUB_ENV, 否则会出现在公开日志里。
+          case "$WMH_ENVIRONMENT" in
+            test) channel=dev ;;
+            prod) channel=stable ;;
+          esac
+          file="scripts/desktop/env/$WMH_ENVIRONMENT.env"
+          if [ ! -f "$file" ]; then
+            echo "::error::源码仓库缺少 $WMH_ENVIRONMENT 环境配置文件: $file"
+            exit 1
+          fi
+          cp "$file" .env
+          echo "WMH_DESKTOP_CHANNEL=$channel" >> "$GITHUB_ENV"
+
+      - name: 📦 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 🪟 准备 NSIS
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $installed = @(${env:ProgramFiles(x86)}, $env:ProgramFiles) | Where-Object { $_ -and (Test-Path (Join-Path $_ 'NSIS/makensis.exe')) }
+          if (-not $installed) { choco install nsis -y --no-progress }
+
+      - name: 🚀 构建安装包
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            pnpm run build:windows --version "$WMH_VERSION"
+          else
+            pnpm run build:macos --version "$WMH_VERSION"
+          fi
+
+      - name: 🚢 发布到私有仓库 Release
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          shopt -s nullglob
+          files=(.artifacts/macos-*/WealthWorkbench*.dmg* .artifacts/windows-*/WealthWorkbench*-setup.exe*)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "::error::没有找到安装包"
+            exit 1
+          fi
+          tag="desktop-$WMH_ENVIRONMENT-$WMH_VERSION"
+          # 三个平台并行, 只有一个能创建成功, 其余直接上传。
+          gh release view "$tag" --repo "$SOURCE_REPO" > /dev/null 2>&1 \
+            || gh release create "$tag" --repo "$SOURCE_REPO" --target "$(git rev-parse HEAD)" \
+                 --title "财富工作台 $WMH_VERSION ($WMH_ENVIRONMENT)" --notes "" --prerelease \
+            || gh release view "$tag" --repo "$SOURCE_REPO" > /dev/null
+          gh release upload "$tag" "${files[@]}" --repo "$SOURCE_REPO" --clobber
+          echo "已发布 ${#files[@]} 个文件到 $SOURCE_REPO 的 Release $tag"
