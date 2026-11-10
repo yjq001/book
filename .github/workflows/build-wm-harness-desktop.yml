@@ -117,7 +117,16 @@ jobs:
           # 构建脚本按 Windows 自带的 bsdtar 传盘符路径; Git 的 GNU tar 会把 "D:" 当成远程主机。
           $env:PATH = "$env:SystemRoot\System32;$env:PATH"
           pnpm run build:windows --version "$env:WMH_VERSION"
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $code = $LASTEXITCODE
+          if ($code -eq 0) { exit 0 }
+          # 构建中途的 pnpm install 会重写 node_modules\.bin\tsx.CMD; cmd 回到这个被改写的批处理时读到错位内容,
+          # 即使构建脚本已正常结束也会返回失败。.release.json 是构建脚本最后写出的文件, 以它判断是否完成。
+          $installer = Get-ChildItem .artifacts/windows-*/WealthWorkbench*-setup.exe -ErrorAction SilentlyContinue
+          if ($installer.Count -eq 1 -and (Test-Path "$($installer.FullName).sha256") -and (Test-Path "$($installer.FullName).release.json")) {
+            Write-Host "::warning::构建脚本已完成, 忽略 tsx 启动器的退出码 $code"
+            exit 0
+          }
+          exit $code
 
       - name: 🚢 发布到私有仓库 Release
         env:
