@@ -372,3 +372,70 @@ jobs:
           publish_feed wealth-workbench-updates.json arm64 "$(installer macos-arm64.dmg)" "$(installer win10-11-x64-setup.exe)"
           publish_feed wealth-workbench-updates-macos-x64.json x64 "$(installer macos-x64.dmg)" ""
           rm -f "$work/key.pem"
+
+  notify:
+    name: 📣 企业微信通知
+    needs: [plan, build, feed]
+    # 只通知正式版; 有平台失败时也通知, 避免大家以为发布是完整的。
+    if: ${{ !cancelled() && needs.plan.result == 'success' && inputs.environment == 'prod' }}
+    runs-on: ubuntu-latest
+    env:
+      WMH_VERSION: ${{ needs.plan.outputs.version }}
+      WMH_NOTES: ${{ inputs.notes }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      DOWNLOAD_PAGE: https://cdn.gfzq.cn/wm/mobile/wm-harness/download/
+      # 群机器人地址按要求写在代码里; 公开仓库里任何人都能看到, 能往群里发消息。
+      WECOM_WEBHOOK_URL: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=c130b90d-7fa1-4659-8d5c-ddc0a534a3dd
+    steps:
+      - name: 📣 发送通知
+        run: |
+          python3 - <<'EOF'
+          import json, os, sys, time, urllib.request
+          from datetime import datetime, timedelta, timezone
+
+          version = os.environ['WMH_VERSION']
+          origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/{os.environ['COS_PREFIX']}/prod/"
+
+          def published(name):
+              """签名清单里已经是本次版本的平台; 清单读不到或不是本次版本就算没发布。"""
+              try:
+                  with urllib.request.urlopen(f'{origin}{name}?t={int(time.time())}', timeout=30) as response:
+                      envelope = json.loads(response.read().decode('utf-8'))
+                  releases = json.loads(envelope['payload'])['releases']
+              except Exception as error:
+                  print(f'读取 {name} 失败: {type(error).__name__}')
+                  return set()
+              return {item['platform'] for item in releases if item['version'] == version}
+
+          done = published('wealth-workbench-updates.json') | published('wealth-workbench-updates-macos-x64.json')
+          platforms = [('windows-x64', 'Windows x64'), ('macos-arm64', 'macOS Apple 芯片'), ('macos-x64', 'macOS Intel 芯片')]
+          failed = [label for key, label in platforms if key not in done]
+
+          now = datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M')
+          lines = []
+          if failed:
+              lines.append(f'## <font color="warning">⚠️ 财富AI工作台 {version} 发布未完成</font>')
+          else:
+              lines.append(f'## 财富AI工作台 {version} 已发布')
+          lines.append(f'> 时间：{now}（北京时间）')
+          notes = os.environ.get('WMH_NOTES', '').strip()
+          if notes:
+              lines.append(f'> 更新说明：{notes[:500]}')
+          lines.append('')
+          lines.append(f"**下载地址**：{os.environ['DOWNLOAD_PAGE']}")
+          for key, label in platforms:
+              lines.append(f'- {label} ' + ('<font color="info">已发布</font>' if key in done else '<font color="warning">未发布</font>'))
+          lines.append('')
+          if failed:
+              lines.append(f"未发布的平台请查看运行日志：{os.environ['RUN_URL']}")
+          else:
+              lines.append(f'已安装 {version} 及以上版本的用户会在应用内收到更新提示。')
+
+          body = json.dumps({'msgtype': 'markdown', 'markdown': {'content': '\n'.join(lines)}}).encode('utf-8')
+          request = urllib.request.Request(os.environ['WECOM_WEBHOOK_URL'], data=body, headers={'Content-Type': 'application/json'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              result = json.loads(response.read().decode('utf-8'))
+          if result.get('errcode') != 0:
+              sys.exit(f"::error::企业微信返回错误 {result.get('errcode')}: {result.get('errmsg')}")
+          print('通知已发送' + (f'，未发布: {", ".join(failed)}' if failed else ''))
+          EOF
