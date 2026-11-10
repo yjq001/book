@@ -34,9 +34,14 @@ on:
           - windows-x64
 
 # 本仓库是公开仓库: 日志对所有人可见, 安装包内含共享服务凭据。
-# 不要在步骤里打印环境变量, 不要使用 upload-artifact; 产物只发布到私有源码仓库的 Release。
+# 不要在步骤里打印环境变量, 不要使用 upload-artifact; 产物只上传到腾讯云 COS。
 permissions:
   contents: read
+
+env:
+  COS_BUCKET: romsfiles-1251438792
+  COS_REGION: ap-guangzhou
+  COS_PREFIX: wm-harness
 
 jobs:
   build:
@@ -53,7 +58,6 @@ jobs:
     env:
       WMH_ENVIRONMENT: ${{ inputs.environment }}
       WMH_VERSION: ${{ inputs.version }}
-      SOURCE_REPO: ${{ inputs.source_repo }}
 
     steps:
       - name: 📥 拉取源代码
@@ -128,21 +132,74 @@ jobs:
           }
           exit $code
 
-      - name: 🚢 发布到私有仓库 Release
+      - name: 🐍 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ☁️ 上传到腾讯云 COS
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
         run: |
-          shopt -s nullglob
-          files=(.artifacts/macos-*/WealthWorkbench*.dmg* .artifacts/windows-*/WealthWorkbench*-setup.exe*)
-          if [ "${#files[@]}" -eq 0 ]; then
-            echo "::error::没有找到安装包"
+          if [ -z "$COS_SECRET_ID" ] || [ -z "$COS_SECRET_KEY" ]; then
+            echo "::error::仓库缺少 COS_SECRET_ID / COS_SECRET_KEY 这两个 secret"
             exit 1
           fi
-          tag="desktop-$WMH_ENVIRONMENT-$WMH_VERSION"
-          # 三个平台并行, 只有一个能创建成功, 其余直接上传。
-          gh release view "$tag" --repo "$SOURCE_REPO" > /dev/null 2>&1 \
-            || gh release create "$tag" --repo "$SOURCE_REPO" --target "$(git rev-parse HEAD)" \
-                 --title "财富工作台 $WMH_VERSION ($WMH_ENVIRONMENT)" --notes "" --prerelease \
-            || gh release view "$tag" --repo "$SOURCE_REPO" > /dev/null
-          gh release upload "$tag" "${files[@]}" --repo "$SOURCE_REPO" --clobber
-          echo "已发布 ${#files[@]} 个文件到 $SOURCE_REPO 的 Release $tag"
+          shopt -s nullglob
+          files=(.artifacts/macos-*/WealthWorkbench*.dmg .artifacts/macos-*/WealthWorkbench*.dmg.sha256
+                 .artifacts/windows-*/WealthWorkbench*-setup.exe .artifacts/windows-*/WealthWorkbench*-setup.exe.sha256)
+          if [ "${#files[@]}" -ne 2 ]; then
+            echo "::error::应当恰好有一个安装包和它的 .sha256, 实际找到 ${#files[@]} 个文件"
+            exit 1
+          fi
+          python -m pip install --quiet coscmd
+          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
+          for file in "${files[@]}"; do
+            coscmd upload "$file" "$COS_PREFIX/$WMH_ENVIRONMENT/$WMH_VERSION/$(basename "$file")"
+          done
+
+  manifest:
+    name: 🗂️ 更新版本清单
+    needs: build
+    # 部分平台失败时, 已上传的平台仍要进清单。
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐍 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 🗂️ 生成并上传 versions.js
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+        run: |
+          # 下载页用 <script> 加载这份清单, 不依赖存储桶的跨域设置。
+          python - <<'EOF'
+          import json, os, urllib.parse, urllib.request
+          import xml.etree.ElementTree as ET
+
+          origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
+          prefix = os.environ['COS_PREFIX'] + '/'
+          files, marker = [], ''
+          while True:
+              query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
+              with urllib.request.urlopen(origin + '?' + query, timeout=30) as response:
+                  root = ET.fromstring(response.read())
+              for item in root.findall('Contents'):
+                  key = item.findtext('Key')
+                  if key.endswith(('.dmg', '.exe')):
+                      files.append({'key': key, 'size': int(item.findtext('Size')), 'lastModified': item.findtext('LastModified')})
+                  marker = key
+              if root.findtext('IsTruncated') != 'true':
+                  break
+              marker = root.findtext('NextMarker') or marker
+          with open('versions.js', 'w', encoding='utf-8') as output:
+              output.write('window.__WM_HARNESS_RELEASES__ = ' + json.dumps({'files': files}, ensure_ascii=False) + '\n')
+          print(f'{len(files)} installers listed')
+          EOF
+          python -m pip install --quiet coscmd
+          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
+          coscmd upload -H "{'Cache-Control':'no-cache'}" versions.js "$COS_PREFIX/versions.js"
