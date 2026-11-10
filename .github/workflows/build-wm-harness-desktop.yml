@@ -20,8 +20,9 @@ on:
           - test
           - prod
       version:
-        description: '四段版本号, 例如 0.1.8.1'
-        required: true
+        description: '四段版本号, 例如 0.1.8.1; 留空则在该环境已上传的最高版本上加一'
+        required: false
+        default: ''
       targets:
         description: '打包平台'
         required: true
@@ -44,7 +45,57 @@ env:
   COS_PREFIX: wm-harness
 
 jobs:
+  plan:
+    name: 🔢 确定版本号
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: 🔢 确定版本号
+        id: version
+        env:
+          WMH_ENVIRONMENT: ${{ inputs.environment }}
+          WMH_VERSION: ${{ inputs.version }}
+        run: |
+          python3 - <<'EOF'
+          import os, re, sys, urllib.parse, urllib.request
+          import xml.etree.ElementTree as ET
+
+          requested = os.environ['WMH_VERSION'].strip()
+          if requested:
+              if not re.fullmatch(r'\d+\.\d+\.\d+\.[1-9]\d*', requested):
+                  sys.exit('::error::版本号必须是四段数字且第四段大于 0, 例如 0.1.8.1')
+              version = requested
+          else:
+              origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
+              # 桶只允许匿名列出这一个前缀, 环境在下面按路径筛选。
+              prefix = os.environ['COS_PREFIX'] + '/'
+              directory = prefix + os.environ['WMH_ENVIRONMENT'] + '/'
+              published, marker = set(), ''
+              while True:
+                  query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
+                  with urllib.request.urlopen(origin + '?' + query, timeout=30) as response:
+                      root = ET.fromstring(response.read())
+                  for item in root.findall('Contents'):
+                      marker = item.findtext('Key')
+                      match = re.match(re.escape(directory) + r'(\d+\.\d+\.\d+\.\d+)/', marker)
+                      if match:
+                          published.add(tuple(int(part) for part in match.group(1).split('.')))
+                  if root.findtext('IsTruncated') != 'true':
+                      break
+                  marker = root.findtext('NextMarker') or marker
+              if not published:
+                  sys.exit(f"::error::{os.environ['WMH_ENVIRONMENT']} 环境还没有已上传的版本, 第一次请手动填写版本号")
+              latest = max(published)
+              version = '.'.join(str(part) for part in (*latest[:3], latest[3] + 1))
+              print(f"已上传的最高版本 {'.'.join(map(str, latest))}")
+          print(f'本次版本 {version}')
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(f'version={version}\n')
+          EOF
+
   build:
+    needs: plan
     name: 📦 ${{ matrix.target }} (${{ inputs.environment }})
     strategy:
       fail-fast: false
@@ -57,7 +108,7 @@ jobs:
         shell: bash
     env:
       WMH_ENVIRONMENT: ${{ inputs.environment }}
-      WMH_VERSION: ${{ inputs.version }}
+      WMH_VERSION: ${{ needs.plan.outputs.version }}
 
     steps:
       - name: 📥 拉取源代码
@@ -76,13 +127,9 @@ jobs:
           node-version: '24'
           cache: 'pnpm'
 
-      - name: ✅ 校验参数
+      - name: ✅ 构建环境
         run: |
-          if ! [[ "$WMH_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[1-9][0-9]*$ ]]; then
-            echo "::error::版本号必须是四段数字且第四段大于 0, 例如 0.1.8.1"
-            exit 1
-          fi
-          echo "Node $(node -v) $(node -p process.arch), pnpm $(pnpm -v)"
+          echo "版本 $WMH_VERSION, Node $(node -v) $(node -p process.arch), pnpm $(pnpm -v)"
 
       - name: 🌐 载入环境配置
         run: |
@@ -169,9 +216,9 @@ jobs:
 
   manifest:
     name: 🗂️ 更新版本清单
-    needs: build
+    needs: [plan, build]
     # 清单只收录正式版; 部分平台失败时, 已上传的平台仍要进清单。
-    if: ${{ !cancelled() && inputs.environment == 'prod' }}
+    if: ${{ !cancelled() && needs.plan.result == 'success' && inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
     steps:
       - name: 🐍 设置 Python
@@ -190,7 +237,8 @@ jobs:
           import xml.etree.ElementTree as ET
 
           origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
-          prefix = os.environ['COS_PREFIX'] + '/prod/'
+          # 桶只允许匿名列出这一个前缀, 正式版在下面按路径筛选。
+          prefix = os.environ['COS_PREFIX'] + '/'
           files, marker = [], ''
           while True:
               query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
@@ -198,7 +246,7 @@ jobs:
                   root = ET.fromstring(response.read())
               for item in root.findall('Contents'):
                   key = item.findtext('Key')
-                  if key.endswith(('.dmg', '.exe')) and '/latest/' not in key:
+                  if key.startswith(prefix + 'prod/') and key.endswith(('.dmg', '.exe')) and '/latest/' not in key:
                       files.append({'key': key, 'size': int(item.findtext('Size')), 'lastModified': item.findtext('LastModified')})
                   marker = key
               if root.findtext('IsTruncated') != 'true':
