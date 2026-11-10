@@ -214,8 +214,8 @@ jobs:
           coscmd upload "${metadata[0]}" "$COS_PREFIX/$WMH_ENVIRONMENT/$WMH_VERSION/$(basename "${metadata[0]}")"
           for file in "${files[@]}"; do
             name="$(basename "$file")"
-            # latest 一份去掉版本号和提交号, 每次覆盖, 下载页的固定链接指向它。
-            latest="$(sed -E 's/-[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-[0-9a-f]{8}-/-/; s/-win10-11-x64-/-windows-x64-/' <<< "$name")"
+            # latest 一份去掉版本号, 每次覆盖, 下载页的固定链接指向它。
+            latest="$(sed -E 's/-[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-/-/; s/-win10-11-x64-/-windows-x64-/' <<< "$name")"
             if [ "$latest" = "$name" ]; then
               echo "::error::无法从文件名得到 latest 名称: $name"
               exit 1
