@@ -376,7 +376,7 @@ jobs:
   notify:
     name: 📣 企业微信通知
     needs: [plan, build, feed]
-    # 只通知正式版; 有平台失败时也通知, 避免大家以为发布是完整的。
+    # 只通知正式版; 有平台失败时也通知, 由下面逐平台的发布状态标明。
     if: ${{ !cancelled() && needs.plan.result == 'success' && inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
     env:
@@ -412,11 +412,7 @@ jobs:
           failed = [label for key, label in platforms if key not in done]
 
           now = datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M')
-          lines = []
-          if failed:
-              lines.append(f'## <font color="warning">⚠️ 财富AI工作台 v{version} 发布未完成</font>')
-          else:
-              lines.append(f'## 财富AI工作台 v{version} 已发布')
+          lines = [f'## 财富AI工作台 v{version} 已发布']
           lines.append(f'> 时间：{now}（北京时间）')
           notes = os.environ.get('WMH_NOTES', '').strip()
           if notes:
