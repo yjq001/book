@@ -207,14 +207,17 @@ jobs:
           coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
           for file in "${files[@]}"; do
             name="$(basename "$file")"
-            # 带版本号的一份不可变; latest 一份去掉版本号和提交号, 每次覆盖, 下载页的固定链接指向它。
+            # latest 一份去掉版本号和提交号, 每次覆盖, 下载页的固定链接指向它。
             latest="$(sed -E 's/-[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-[0-9a-f]{8}-/-/; s/-win10-11-x64-/-windows-x64-/' <<< "$name")"
             if [ "$latest" = "$name" ]; then
               echo "::error::无法从文件名得到 latest 名称: $name"
               exit 1
             fi
-            coscmd upload "$file" "$COS_PREFIX/$WMH_ENVIRONMENT/$WMH_VERSION/$name"
-            coscmd upload -H "{'Cache-Control':'no-cache'}" "$file" "$COS_PREFIX/$WMH_ENVIRONMENT/latest/$latest"
+            versioned="$COS_PREFIX/$WMH_ENVIRONMENT/$WMH_VERSION/$name"
+            coscmd upload "$file" "$versioned"
+            # latest 在桶内由带版本的那份直接复制, 不再从构建机上传第二遍。
+            coscmd copy -d Replaced -H "{'Cache-Control':'no-cache'}" \
+              "$COS_BUCKET.cos.$COS_REGION.myqcloud.com/$versioned" "$COS_PREFIX/$WMH_ENVIRONMENT/latest/$latest"
           done
 
   manifest:
