@@ -56,10 +56,13 @@ jobs:
         env:
           WMH_ENVIRONMENT: ${{ inputs.environment }}
           WMH_VERSION: ${{ inputs.version }}
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
         run: |
+          # 存储桶不允许匿名列文件, 列目录要用密钥。
+          python3 -m pip install --quiet cos-python-sdk-v5
           python3 - <<'EOF'
-          import os, re, sys, urllib.parse, urllib.request
-          import xml.etree.ElementTree as ET
+          import os, re, sys
 
           requested = os.environ['WMH_VERSION'].strip()
           if requested:
@@ -67,23 +70,21 @@ jobs:
                   sys.exit('::error::版本号必须是四段数字且第四段大于 0, 例如 0.1.8.1')
               version = requested
           else:
-              origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
-              # 桶只允许匿名列出这一个前缀, 环境在下面按路径筛选。
-              prefix = os.environ['COS_PREFIX'] + '/'
-              directory = prefix + os.environ['WMH_ENVIRONMENT'] + '/'
+              from qcloud_cos import CosConfig, CosS3Client
+              client = CosS3Client(CosConfig(Region=os.environ['COS_REGION'],
+                                             SecretId=os.environ['COS_SECRET_ID'], SecretKey=os.environ['COS_SECRET_KEY']))
+              directory = f"{os.environ['COS_PREFIX']}/{os.environ['WMH_ENVIRONMENT']}/"
               published, marker = set(), ''
               while True:
-                  query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
-                  with urllib.request.urlopen(origin + '?' + query, timeout=30) as response:
-                      root = ET.fromstring(response.read())
-                  for item in root.findall('Contents'):
-                      marker = item.findtext('Key')
+                  page = client.list_objects(Bucket=os.environ['COS_BUCKET'], Prefix=directory, Marker=marker, MaxKeys=1000)
+                  for item in page.get('Contents', []):
+                      marker = item['Key']
                       match = re.match(re.escape(directory) + r'(\d+\.\d+\.\d+\.\d+)/', marker)
                       if match:
                           published.add(tuple(int(part) for part in match.group(1).split('.')))
-                  if root.findtext('IsTruncated') != 'true':
+                  if page.get('IsTruncated') != 'true':
                       break
-                  marker = root.findtext('NextMarker') or marker
+                  marker = page.get('NextMarker') or marker
               if not published:
                   sys.exit(f"::error::{os.environ['WMH_ENVIRONMENT']} 环境还没有已上传的版本, 第一次请手动填写版本号")
               latest = max(published)
@@ -232,30 +233,27 @@ jobs:
           COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
         run: |
           # 下载页用 <script> 加载这份清单, 不依赖存储桶的跨域设置。
+          python -m pip install --quiet coscmd
           python - <<'EOF'
-          import json, os, urllib.parse, urllib.request
-          import xml.etree.ElementTree as ET
+          import json, os
+          from qcloud_cos import CosConfig, CosS3Client
 
-          origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/"
-          # 桶只允许匿名列出这一个前缀, 正式版在下面按路径筛选。
-          prefix = os.environ['COS_PREFIX'] + '/'
+          client = CosS3Client(CosConfig(Region=os.environ['COS_REGION'],
+                                         SecretId=os.environ['COS_SECRET_ID'], SecretKey=os.environ['COS_SECRET_KEY']))
+          prefix = os.environ['COS_PREFIX'] + '/prod/'
           files, marker = [], ''
           while True:
-              query = urllib.parse.urlencode({'prefix': prefix, 'marker': marker, 'max-keys': '1000'})
-              with urllib.request.urlopen(origin + '?' + query, timeout=30) as response:
-                  root = ET.fromstring(response.read())
-              for item in root.findall('Contents'):
-                  key = item.findtext('Key')
-                  if key.startswith(prefix + 'prod/') and key.endswith(('.dmg', '.exe')) and '/latest/' not in key:
-                      files.append({'key': key, 'size': int(item.findtext('Size')), 'lastModified': item.findtext('LastModified')})
-                  marker = key
-              if root.findtext('IsTruncated') != 'true':
+              page = client.list_objects(Bucket=os.environ['COS_BUCKET'], Prefix=prefix, Marker=marker, MaxKeys=1000)
+              for item in page.get('Contents', []):
+                  marker = item['Key']
+                  if marker.endswith(('.dmg', '.exe')) and '/latest/' not in marker:
+                      files.append({'key': marker, 'size': int(item['Size']), 'lastModified': item['LastModified']})
+              if page.get('IsTruncated') != 'true':
                   break
-              marker = root.findtext('NextMarker') or marker
+              marker = page.get('NextMarker') or marker
           with open('versions.js', 'w', encoding='utf-8') as output:
               output.write('window.__WM_HARNESS_RELEASES__ = ' + json.dumps({'files': files}, ensure_ascii=False) + '\n')
           print(f'{len(files)} installers listed')
           EOF
-          python -m pip install --quiet coscmd
           coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
           coscmd upload -H "{'Cache-Control':'no-cache'}" versions.js "$COS_PREFIX/versions.js"
