@@ -56,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      started: ${{ steps.version.outputs.started }}
     steps:
       - name: 🔢 确定版本号
         id: version
@@ -65,7 +66,7 @@ jobs:
           # 版本号只以 versions.js 里的正式版为准: 最高正式版加一。
           # 只有正式版打包会更新 versions.js, 所以两次正式版之间的测试包都是同一个版本号。
           python3 - <<'EOF'
-          import json, os, re, sys, urllib.error, urllib.request
+          import json, os, re, sys, time, urllib.error, urllib.request
 
           requested = os.environ['WMH_VERSION'].strip()
           if requested:
@@ -99,6 +100,8 @@ jobs:
           print(f'本次版本 {version}')
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
               output.write(f'version={version}\n')
+              # 测试包没有签名清单, 通知时按 latest 是否在本次运行之后更新过来判断各平台是否发布。
+              output.write(f'started={int(time.time())}\n')
           EOF
 
   build:
@@ -376,11 +379,13 @@ jobs:
   notify:
     name: 📣 企业微信通知
     needs: [plan, build, feed]
-    # 只通知正式版; 有平台失败时也通知, 由下面逐平台的发布状态标明。
-    if: ${{ !cancelled() && needs.plan.result == 'success' && inputs.environment == 'prod' }}
+    # 正式版和测试版都通知; 有平台失败时也通知, 由下面逐平台的发布状态标明。
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
     runs-on: ubuntu-latest
     env:
+      WMH_ENVIRONMENT: ${{ inputs.environment }}
       WMH_VERSION: ${{ needs.plan.outputs.version }}
+      WMH_STARTED: ${{ needs.plan.outputs.started }}
       WMH_NOTES: ${{ inputs.notes }}
       DOWNLOAD_PAGE: https://cdn.gfzq.cn/wm/mobile/wm-harness/download/
       # 群机器人地址按要求写在代码里; 公开仓库里任何人都能看到, 能往群里发消息。
@@ -389,10 +394,11 @@ jobs:
       - name: 📣 发送通知
         run: |
           python3 - <<'EOF'
-          import json, os, sys, time, urllib.request
+          import email.utils, json, os, sys, time, urllib.request
 
           version = os.environ['WMH_VERSION']
-          origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/{os.environ['COS_PREFIX']}/prod/"
+          prod = os.environ['WMH_ENVIRONMENT'] == 'prod'
+          origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/{os.environ['COS_PREFIX']}/{os.environ['WMH_ENVIRONMENT']}/"
 
           def published(name):
               """签名清单里已经是本次版本的平台; 清单读不到或不是本次版本就算没发布。"""
@@ -405,11 +411,29 @@ jobs:
                   return set()
               return {item['platform'] for item in releases if item['version'] == version}
 
-          done = published('wealth-workbench-updates.json') | published('wealth-workbench-updates-macos-x64.json')
+          def refreshed(key):
+              """测试包没有签名清单; latest 安装包在本次运行开始之后被覆盖过, 才算本次发布了。"""
+              name = {'windows-x64': 'windows-x64-setup.exe'}.get(key, f'{key}.dmg')
+              try:
+                  request = urllib.request.Request(f'{origin}latest/WealthWorkbench-Dev-{name}', method='HEAD')
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      modified = email.utils.parsedate_to_datetime(response.headers['Last-Modified']).timestamp()
+              except Exception as error:
+                  print(f'读取 {key} 的 latest 安装包失败: {type(error).__name__}')
+                  return False
+              return modified >= int(os.environ['WMH_STARTED'])
+
           platforms = [('windows-x64', 'Windows x64'), ('macos-arm64', 'macOS Apple 芯片'), ('macos-x64', 'macOS Intel 芯片')]
+          if prod:
+              done = published('wealth-workbench-updates.json') | published('wealth-workbench-updates-macos-x64.json')
+          else:
+              done = {key for key, _ in platforms if refreshed(key)}
           failed = [label for key, label in platforms if key not in done]
 
-          lines = [f'## 财富AI工作台 v{version} 已发布']
+          if prod:
+              lines = [f'## 财富AI工作台 v{version} 正式版已发布', '> 环境：<font color="info">生产环境</font>']
+          else:
+              lines = [f'## 【测试】财富AI工作台 v{version} 测试版已发布', '> 环境：<font color="warning">测试环境</font>（下载页底部“测试版本”里下载）']
           notes = os.environ.get('WMH_NOTES', '').strip()
           if notes:
               lines.append(f'> 更新说明：{notes[:500]}')
