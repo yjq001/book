@@ -390,7 +390,6 @@ jobs:
         run: |
           python3 - <<'EOF'
           import json, os, sys, time, urllib.request
-          from datetime import datetime, timedelta, timezone
 
           version = os.environ['WMH_VERSION']
           origin = f"https://{os.environ['COS_BUCKET']}.cos.{os.environ['COS_REGION']}.myqcloud.com/{os.environ['COS_PREFIX']}/prod/"
@@ -410,19 +409,16 @@ jobs:
           platforms = [('windows-x64', 'Windows x64'), ('macos-arm64', 'macOS Apple 芯片'), ('macos-x64', 'macOS Intel 芯片')]
           failed = [label for key, label in platforms if key not in done]
 
-          now = datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M')
           lines = [f'## 财富AI工作台 v{version} 已发布']
-          lines.append(f'> 时间：{now}（北京时间）')
           notes = os.environ.get('WMH_NOTES', '').strip()
           if notes:
               lines.append(f'> 更新说明：{notes[:500]}')
           lines.append('')
-          lines.append(f"**下载地址**：{os.environ['DOWNLOAD_PAGE']}")
+          # 企业微信的 markdown 不会把裸地址变成链接, 要写成 [文字](地址)。
+          page = os.environ['DOWNLOAD_PAGE']
+          lines.append(f'**下载地址**：[{page}]({page})')
           for key, label in platforms:
               lines.append(f'- {label} ' + ('<font color="info">已发布</font>' if key in done else '<font color="warning">未发布</font>'))
-          if not failed:
-              lines.append('')
-              lines.append(f'已安装 v{version} 及以上版本的用户会在应用内收到更新提示。')
 
           body = json.dumps({'msgtype': 'markdown', 'markdown': {'content': '\n'.join(lines)}}).encode('utf-8')
           request = urllib.request.Request(os.environ['WECOM_WEBHOOK_URL'], data=body, headers={'Content-Type': 'application/json'})
