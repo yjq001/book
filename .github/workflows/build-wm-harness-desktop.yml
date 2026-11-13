@@ -144,17 +144,17 @@ jobs:
       - name: 🌐 载入环境配置
         run: |
           # 环境地址和服务凭据取自私有源码仓库的环境文件, 不写进这个公开仓库。
-          # 复制成根目录 .env 由构建脚本自行读取; 不要写入 GITHUB_ENV, 否则会出现在公开日志里。
+          # 复制到构建脚本读取的根目录文件 (测试版读 .env.dev, 正式版读 .env); 不要写入 GITHUB_ENV, 否则会出现在公开日志里。
           case "$WMH_ENVIRONMENT" in
-            test) channel=dev ;;
-            prod) channel=stable ;;
+            test) channel=dev; target=.env.dev ;;
+            prod) channel=stable; target=.env ;;
           esac
           file="scripts/desktop/env/$WMH_ENVIRONMENT.env"
           if [ ! -f "$file" ]; then
             echo "::error::源码仓库缺少 $WMH_ENVIRONMENT 环境配置文件: $file"
             exit 1
           fi
-          cp "$file" .env
+          cp "$file" "$target"
           echo "WMH_DESKTOP_CHANNEL=$channel" >> "$GITHUB_ENV"
 
       - name: 📦 安装依赖
