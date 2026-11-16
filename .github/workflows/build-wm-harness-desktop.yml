@@ -213,7 +213,7 @@ jobs:
             exit 1
           fi
           python -m pip install --quiet coscmd
-          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" -m 16 -p 16 > /dev/null
+          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
           coscmd upload "${metadata[0]}" "$COS_PREFIX/$WMH_ENVIRONMENT/$WMH_VERSION/$(basename "${metadata[0]}")"
           for file in "${files[@]}"; do
             name="$(basename "$file")"
@@ -270,7 +270,7 @@ jobs:
               output.write('window.__WM_HARNESS_RELEASES__ = ' + json.dumps({'files': files}, ensure_ascii=False) + '\n')
           print(f'{len(files)} installers listed')
           EOF
-          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" -m 16 -p 16 > /dev/null
+          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
           coscmd upload -H "{'Cache-Control':'no-cache'}" versions.js "$COS_PREFIX/versions.js"
 
   feed:
@@ -317,7 +317,7 @@ jobs:
           printf '%s\n' "$WMH_UPDATE_PRIVATE_KEY" > "$work/key.pem"
           origin="https://$COS_BUCKET.cos.$COS_REGION.myqcloud.com"
           python -m pip install --quiet coscmd
-          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" -m 16 -p 16 > /dev/null
+          coscmd config -a "$COS_SECRET_ID" -s "$COS_SECRET_KEY" -b "$COS_BUCKET" -r "$COS_REGION" > /dev/null
 
           # 以桶里这个版本目录的实际内容为准: 打包失败的平台不在其中, 清单里保留它的上一版。
           python - > "$work/keys.txt" <<'EOF'
