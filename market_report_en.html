@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Market Briefing - June 05, 2026</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #5f6368;
+            --background-color: #ffffff;
+            --card-background: #f8f9fa;
+            --positive-color: #34a853;
+            --negative-color: #ea4335;
+            --border-color: #dadce0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "WenQuanYi Micro Hei", "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: #202124;
+            line-height: 1.6;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        header .date {
+            color: var(--light-text);
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .market-summary {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .index-card {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .index-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .index-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .index-change {
+            font-weight: bold;
+        }
+        
+        .positive {
+            color: var(--positive-color);
+        }
+        
+        .negative {
+            color: var(--negative-color);
+        }
+        
+        .chart-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .analysis {
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .news-container {
+            margin-top: 20px;
+        }
+        
+        .news-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .news-title a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .news-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .news-meta {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .news-summary {
+            line-height: 1.6;
+        }
+        
+        .economic-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .indicator-card {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .indicator-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-value-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-current-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .indicator-change {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .indicator-positive {
+            color: var(--positive-color);
+            background-color: rgba(15, 157, 88, 0.1);
+        }
+        
+        .indicator-negative {
+            color: var(--negative-color);
+            background-color: rgba(234, 67, 53, 0.1);
+        }
+        
+        .indicator-previous-value {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .indicator-date {
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+        
+        .indicator-next-release {
+            color: var(--light-text);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .economic-indicators-group {
+            margin-bottom: 25px;
+        }
+        
+        .economic-indicators-group h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: var(--light-text);
+        }
+        
+        .language-switch {
+            display: none;
+        }
+        
+        .language-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        
+        .comparison-type {
+            font-size: 0.9em;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+        
+        .hot-stocks {
+            margin-top: 20px;
+        }
+        
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .stock-table th, .stock-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .stock-table th {
+            background-color: var(--card-background);
+        }
+        
+        .qrcode-section {
+            text-align: center;
+        }
+        
+        .qrcode-container {
+            display: inline-block;
+            text-align: left;
+        }
+        
+        .qrcode-image {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+        }
+        
+        .qrcode-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Market Briefing</h1>
+            <div class="date">June 05, 2026</div>
+            <div class="company">StockGate 美股通</div>
+        </header>
+        
+        <div class="section">
+            <h2>Market Overview</h2>
+            <div class="market-summary">
+                
+                <div class="index-card">
+                    <div class="index-name">NASDAQ Composite</div>
+                    <div class="index-value">26830.96</div>
+                    <div class="index-change negative">
+                        -23.02 (-0.09%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/IXIC_chart.png" alt="NASDAQ Composite Chart">
+                    </div>
+                    
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">Dow Jones Industrial Average</div>
+                    <div class="index-value">51561.93</div>
+                    <div class="index-change positive">
+                        +874.86 (+1.73%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/DJI_chart.png" alt="Dow Jones Industrial Average Chart">
+                    </div>
+                    
+                </div>
+                
+                <div class="index-card">
+                    <div class="index-name">S&P 500</div>
+                    <div class="index-value">7584.31</div>
+                    <div class="index-change positive">
+                        +30.63 (+0.41%)
+                    </div>
+                    
+                    <div class="chart-container">
+                        <img src="charts/GSPC_chart.png" alt="S&P 500 Chart">
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="analysis">
+                <h3>Market Analysis</h3>
+                <p><h1>📊 市场收盘分析</h1>
+<h2>市场概览</h2>
+<p>美股市场呈现<strong>明显分化格局</strong>，道琼斯工业平均指数表现最为亮眼，大涨874.86点（+1.73%），收于51561.93点，展现出强劲的蓝筹股买盘力量。标普500指数温和上涨30.63点（+0.41%），收于7584.31点，整体市场情绪偏积极但涨幅有限。而纳斯达克综合指数则微跌23.02点（-0.09%），收于26830.96点，科技股表现相对疲软。</p>
+<h2>关键趋势解读</h2>
+<p><strong>道指领涨</strong>表明资金正从高估值的科技板块向传统价值股轮动。金融、工业、消费等周期性板块可能受益于经济复苏预期或政策利好，推动道指大幅上扬。</p>
+<p><strong>标普500温和上行</strong>说明市场整体风险偏好有所改善，但投资者仍保持谨慎态度，未出现全面追涨热情。</p>
+<p><strong>纳指微跌</strong>则反映出科技股面临一定压力，可能受到利率预期变化、估值回调或个别科技巨头业绩担忧的影响。</p>
+<h2>市场情绪</h2>
+<p>整体市场情绪偏向<strong>谨慎乐观</strong>。资金轮动迹象明显，投资者在成长股与价值股之间寻求平衡。建议关注后续经济数据及政策动向，以判断这一轮动趋势是否具有持续性。</p></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Today's Headlines</h2>
+            <div class="analysis">
+                <h3>News Analysis</h3>
+                <p><h1>📊 市场分析报告</h1>
+<hr />
+<h2>一、今日市场核心焦点</h2>
+<p><strong>1. 中东局势持续扰动能源市场</strong>
+阿曼Mina al Fahal码头运营恢复正常的表态短暂缓解了供应中断担忧，油价小幅回落。但伊朗原油出口已降至六年最低水平，叠加美伊和谈陷入停滞，地缘政治溢价仍处高位，能源市场的不确定性短期内难以消除。</p>
+<p><strong>2. AI板块回调拖累大盘</strong>
+此前引领市场上涨的AI概念股出现明显回调，成为当日股指下跌的主要推手。投资者在连续上涨后选择获利了结，反映出市场对AI估值泡沫的阶段性担忧。</p>
+<p><strong>3. 欧盟能源危机预警升级</strong>
+欧盟委员会警告，伊朗战争引发的能源价格飙升可能导致欧盟流失130万个工作岗位。这一数据凸显了地缘冲突对欧洲实体经济的深远冲击，欧洲市场承压明显。</p>
+<p><strong>4. 消费板块分化加剧</strong>
+Lululemon下调全年业绩指引并给出疲软的Q2展望，暗示消费端面临"逆风"。但Costco等折扣零售仍保持强劲客流，显示消费者正从高端品牌向性价比渠道迁移。</p>
+<p><strong>5. 市场轮动迹象显现</strong>
+前期被忽视的板块开始获得资金关注，市场风格正从科技主导转向更广泛的板块轮动，投资者在寻找新的价值洼地。</p>
+<hr />
+<h2>二、潜在市场影响因素</h2>
+<ul>
+<li><strong>地缘政治风险</strong>：美伊谈判停滞、中东停火协议失效，霍尔木兹海峡通行安全仍是最大变量</li>
+<li><strong>能源价格波动</strong>：伊朗出口锐减与阿曼供应恢复形成博弈，油价走势将直接影响全球通胀预期</li>
+<li><strong>AI估值重估</strong>：科技股回调可能引发更广泛的风险偏好收缩</li>
+<li><strong>欧洲经济衰退风险</strong>：能源成本飙升对欧洲制造业和就业的冲击正在兑现</li>
+<li><strong>消费降级趋势</strong>：高端消费品牌承压与折扣零售繁荣并存，消费结构正在重塑</li>
+</ul>
+<hr />
+<h2>三、值得关注的行业趋势</h2>
+<p>| 趋势方向 | 具体表现 |
+|---------|---------|
+| <strong>能源安全</strong> | 中东供应脆弱性暴露，能源多元化和战略储备议题升温 |
+| <strong>AI产业分化</strong> | 概念炒作退潮，具备实际盈利能力的AI企业将脱颖而出 |
+| <strong>消费两极化</strong> | 高端品牌与折扣零售的业绩剪刀差将持续扩大 |
+| <strong>欧洲产业转移</strong> | 高能源成本可能加速欧洲制造业外迁 |
+| <strong>市场风格切换</strong> | 资金从集中抱团转向均衡配置，价值股和防御性板块吸引力提升 |</p>
+<hr />
+<blockquote>
+<p>⚠️ <strong>风险提示</strong>：中东局势是当前市场最大的"黑天鹅"变量，建议密切关注霍尔木兹海峡通行状况及美伊谈判进展，同时警惕AI板块回调引发的连锁反应。</p>
+</blockquote></p>
+            </div>
+            
+            <div class="news-container">
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMiqgFBVV95cUxOTlEyVHU4OGhfS1RSaDItak5sQTZxNEptRjdDemtZdGs1aG5YMjEtV2tnTG1OM2ZxQl9pZGo1cnIyMFNmWElfUmpXcEJJSDRkTHZqdmRWRks4MG5GYUNMNDFaS3RKNUtwYTQtdjNEZGM4eVZjd3FqYlpRSGZHbl9vYTRPTkxWNVF5b0pBV2M1dzgwdk1tOEZHVTRBcEZnX0ZncWZSVWtuOWNrdw?oc=5" target="_blank">Oil edges down as Oman says Mina al Fahal operations proceeding normally - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-05 07:23:18</span>
+                    </div>
+                    <div class="news-summary">
+                        Oil edges down as Oman says Mina al Fahal operations proceeding normally  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMizAFBVV95cUxNN09XbDZ2X3c4NmJuMHFyWUltX3Q3VVRaTnBxVEZUWkdROVdPQ04zalFzX3E5RXY4bVVqTlB6akdjS1NSaTk2RmR5eFRIOVBiM29WdURtZ2FwcVpwOHpOZWE5LWoycXRudmlJd21ubUQyMXVNUXRHVkpzQXJYck1NcHI4MktzcS1XVGtfTF9rRFdWZndObzR1aGtZVldSOEVraGUtTndVRk9lUTZ0ZU9SRjB0ek5xeXhtUWtBZENLX2NIMThFekQ3ZzNZTXU?oc=5" target="_blank">Oman says Mina al Fahal terminal operations normal after reported oil export halt - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-05 02:38:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Oman says Mina al Fahal terminal operations normal after reported oil export halt  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxPSDZvYjZiMW9PTFBnYWRFYVRVa0hDanhaTmdoRTFtSVJvY1NXMHR0LXMzdm9VZlJXcUVwbkdEbWd2UG9Tb1FCQk1Rdkl5YkNYWEJ6MkhxU1ZaS3A1eUhiOGxiSzZlbkNCUklYLUJhQmFzUFBmY0dPdGU0aEFTa0tDVmpLVQ?oc=5" target="_blank">Stocks drop as AI rally pauses, US-Iran peace talks stall - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-05 01:35:00</span>
+                    </div>
+                    <div class="news-summary">
+                        Stocks drop as AI rally pauses, US-Iran peace talks stall  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/jim-cramer-says-thursdays-rally-shows-investors-huge-appetite-for-stocks.html" target="_blank">Jim Cramer says Thursday's rally shows investors' 'huge appetite' for stocks</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 22:13:39</span>
+                    </div>
+                    <div class="news-summary">
+                        CNBC's Jim Cramer said Thursday's rally showed investors remain resilient and eager to buy stocks.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMi1AFBVV95cUxNd2d6OElSLW9aQzVoaTVmZUFjSVhkUzB6bWxVcHpiQ2JyYnNmRUFjWmhsUDFfczFNalkwMERzbnNpSXFBQjhjRnFHV242RElYdDFZdFBDemUzc1hsSU40WmloSkxCRDFwWTh6OTcwa1pNblQyanh5UDNPQUk0TWZVV3BVSDZMODlXQnhqU1FvclRlcHJUclYtY3RmenN1OTRKM3JoNEFWYkt2SVQxdHR1aDZqeGxUSDZlU0hZWWNTTFp6MDFMWUxuQ1VqYzB6Y3I2dnRsbg?oc=5" target="_blank">EU could lose 1.3 million jobs due to energy price surge linked to Iran war, Commission says - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 21:22:21</span>
+                    </div>
+                    <div class="news-summary">
+                        EU could lose 1.3 million jobs due to energy price surge linked to Iran war, Commission says  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPM01DUG5YdTR1eWk0WTA3MGlTcDh0Y1g0N0ZlYUEwQTAwRWNKc3hFenJncXJ4M2hwS2ZQMlV0d2dITVU5ak4tand0WEN0MHNEZTFCYnBxc0hiSE53cnBHcmdVYXpvSGFCUTVQMFJjR2hmenFjMWdxck5iXzdRV1Q5blUzT3RLT3BsZjZCcWo3WHBYamNNdzQ2WDE1Nmp2MGFDN0lsZ0hzdjI?oc=5" target="_blank">Trump says he does not need deal with Iran to get enriched uranium - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 20:35:51</span>
+                    </div>
+                    <div class="news-summary">
+                        Trump says he does not need deal with Iran to get enriched uranium  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/lululemon-lulu-earnings-q1-2026.html" target="_blank">Lululemon cuts annual outlook and issues weak Q2 guidance, citing undisclosed 'headwinds'</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 20:12:45</span>
+                    </div>
+                    <div class="news-summary">
+                        Lululemon is expecting its situation to get a lot worse before it gets better, as it issued weak guidance for the full year.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/slighted-market-sectors-get-their-time-to-shine-plus-costco-keeps-packing-them-in.html" target="_blank">Slighted market sectors get their time to shine — plus, Costco keeps packing them in</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 18:55:48</span>
+                    </div>
+                    <div class="news-summary">
+                        Every weekday, the Investing Club releases the Homestretch; an actionable afternoon update just in time for the last hour of trading.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQU2VqZ2NBazBCTU1xMDhFRDY0RnI3ZXBuVV9kV2hfQm1QWlgybzRWVEdRZUJPQWt1RFdVcWZuNkpIUW96R2xiQTI0bV9nZWJTOXNQMWUxQnhIUTRlckpYZGNsZEtGSHZqcVhFbjFjdzhxNGR6eVpJNjRPaXlWdzdfRWpMMUwxMFBiY2ttV3ZuOG50Y0VHa2oxN28zUy1MN2F0TFVMbVhxdG9WaGo5NGZZ?oc=5" target="_blank">Iranian oil exports fall to lowest level in six years, data shows - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 17:53:52</span>
+                    </div>
+                    <div class="news-summary">
+                        Iranian oil exports fall to lowest level in six years, data shows  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxOSmpJX19sVWJhRlNTaXliaENGNERBNml5RjhpcVNoczhXVzRYeHloci1NNElZVTExd19kb01Tcmg3bGNXTVFxczFOTjlCaHlxUmo0SmNnZExwanBsaFN2YmFROWJSNnRNZ3J0R2ttRmFBSjJZRzlDendBQmMzUVlPUUw0ZjBSQ0lkZ0l6ZDZ5czFmX1V5WEpjZU9lZ2lzS243bmpvb3FKYV8zZGhuWExCRnJ0Zkc?oc=5" target="_blank">Explainer: How Trump's ceasefires are failing to stop Middle East violence - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 17:34:12</span>
+                    </div>
+                    <div class="news-summary">
+                        Explainer: How Trump's ceasefires are failing to stop Middle East violence  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/cramer-sees-an-opportunity-in-broadcoms-15percent-plunge-with-one-key-caveat.html" target="_blank">Jim Cramer sees an opportunity in Broadcom's 15% plunge, with one key caveat</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 17:12:54</span>
+                    </div>
+                    <div class="news-summary">
+                        "Every time there's been this kind of huge break in the stock, you have to buy it," Jim said.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/were-selling-an-out-of-favor-stock-into-strength-to-raise-cash-.html" target="_blank">We're selling an out-of-favor stock into strength to raise cash for better buys</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 15:41:55</span>
+                    </div>
+                    <div class="news-summary">
+                        Getting bored is never a good reason to sell a stock, but investments need catalysts.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxOd0ljYkZKSjRhZ3B4bHVaYXY3eTdSUlhwWEJ5M1FFTmxMOU9NLUVVWVhuT1pZaDdPSmhlZGd3eUhoWkZ6OGx3UVU3SS13VVM3dnNnU2gzSkpMVXdfUU5NRU9DRVgxd2wxZk04UlNjalVScEtYdUlud3JUS3U5UUdsaF9UaXlRMkhrQVZKbGRRbUI5V2diNkZDaURDVndJS3NjSHJyRHBYYzFPUko2bGdsTGNoTmFJd2gweE1aNXRfUmNyVF9RdS1CcUpn?oc=5" target="_blank">First IAEA report on Iran's nuclear programme since February shows little change despite war - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 15:32:34</span>
+                    </div>
+                    <div class="news-summary">
+                        First IAEA report on Iran's nuclear programme since February shows little change despite war  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxPQ1BqZHVHYUVXZHlOb0stcFVUUUd2Y0s5UGYtdktfZEQ1Q254Y1dPRl9aV093S3ZfYVZnM29UMEhqalJzMjlDcGV6dzZ0dFVld1RQN1IyN041Y2wzSXpKVEZKdDJuaXdoM1NXRWgweFBpcGRxOENIMGZyZTRxTnk0elVVVmxMWndjNVhMc0xKWmFYN0ZDc2ZuUHl0cndjX28?oc=5" target="_blank">US Supreme Court backs SEC in fight over 'disgorgement' power - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 14:28:05</span>
+                    </div>
+                    <div class="news-summary">
+                        US Supreme Court backs SEC in fight over 'disgorgement' power  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxNRlN1VXRKNHN0TlVwUXFvNTBzQ19ENDV1bWlCN3hYa3lEU1ZMaGUwQmYyZUQyOVRlTDJMaVdTdnpkSVFKSEVNU21UUk1zUEU1bEd5S1NfZUpVa0QyUUhMZlFjS2Vlbm1RREpwWjh6d3NPZ0ZfV1I4Rmg3ZEwtcWFGaXNVZThSaDE3d3BjQ3pfVnl1WGZQQzJXYW9LTnI4WnM4QzdvYg?oc=5" target="_blank">Gulf markets end mixed amid US-Iran peace deal hopes - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 13:27:08</span>
+                    </div>
+                    <div class="news-summary">
+                        Gulf markets end mixed amid US-Iran peace deal hopes  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/jim-cramers-top-10-things-to-watch-in-the-stock-market-thursday.html" target="_blank">Jim Cramer's top 10 things to watch in the stock market Thursday</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 13:16:41</span>
+                    </div>
+                    <div class="news-summary">
+                        The S&P 500 is headed for a lower open, led by a decline in chip stocks after Broadcom failed to raise guidance enough.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQY002cVN5dW5qZXNCOWJ4OGNvSlBwYV9pcDZCTUwxYUZlSmtvRzNueUR5QXMzMHI5bjNmanZnTXZEMHpoZEw1b0tRQ1JxdmxtN1ZmMVc1ZzhOVVNmd3o3REdTcW5xZWdSVm9iMzNKTGZQOXlHOEF1RUg3TkN2ejlIUXE1U2cybVpDWUF2RzlubDJieGpUSVNjU2R4Y21ueHRDZmJ3NWdZaVoyYklyeGc?oc=5" target="_blank">Trafigura profit, volumes, surge in first results since Hormuz closure - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 13:00:53</span>
+                    </div>
+                    <div class="news-summary">
+                        Trafigura profit, volumes, surge in first results since Hormuz closure  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/trump-tax-bill-double-taxation-trusts.html" target="_blank">Inside Wealth: Trump's 'big beautiful bill' has a 'double taxation' trap for top earners, tax lawyers say</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 11:54:29</span>
+                    </div>
+                    <div class="news-summary">
+                        A new guide by Congress' tax policy staff indicates that trust income can be taxed twice.
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://news.google.com/rss/articles/CBMizwFBVV95cUxPVUV6WWw0Smx4TF9DRzdYdVJTdlJHMnlWWlAxLXlMSWpjQ1dNWjkyTmlrN0d2RFluZGQzWmFjYTBLZWYwdlFjNmduNDFhTElYM1VoRDRyZTRoMEoxX19UNm1DdDQwT3I4Z3FSMWMwUGp4WEprdldtV29SaUFVYnMySk1Vb3NGN1BCVEtqczhnOXFwb3ZLd3JZZUFPYW9OZHRfTmVhMjQtRmlrU21HaGRBMHBhZmpoS2R2VHZuQUhaVXZXdUlCYTNleVJTR1VuTFU?oc=5" target="_blank">Marjane Satrapi, Iranian-French author of graphic novel 'Persepolis', dies aged 56 - Reuters</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">Reuters</span> | 
+                        <span class="news-date">2026-06-04 11:36:13</span>
+                    </div>
+                    <div class="news-summary">
+                        Marjane Satrapi, Iranian-French author of graphic novel 'Persepolis', dies aged 56  Reuters
+                    </div>
+                </div>
+                
+                <div class="news-item">
+                    <div class="news-title">
+                        <a href="https://www.cnbc.com/2026/06/04/eli-manning-private-equity-rcx-youth-sports.html" target="_blank">Eli Manning's private equity firm acquires licensing company for NFL Flag in bet on youth sports</a>
+                    </div>
+                    <div class="news-meta">
+                        <span class="news-source">CNBC</span> | 
+                        <span class="news-date">2026-06-04 10:37:21</span>
+                    </div>
+                    <div class="news-summary">
+                        Eli Manning's Brand Velocity Capital announced a deal to acquire youth sports company RCX amid congressional bill to ban private equity from youth sports.
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="section">
+            <h2>Economic Indicators</h2>
+            <div class="economic-indicators-container">
+                <!-- Inflation Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Inflation Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Consumer Price Index (CPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">3.8%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.5个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 3.3%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Personal Consumption Expenditures Price Index (PCE)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">3.8%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.2个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 3.5%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Core PCE Price Index</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">3.3%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        +0.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 3.2%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-13</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">YoY</div>
+                                <div class="indicator-name">Producer Price Index (PPI)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">6.0%</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +1.7个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 4.3%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-11</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- Employment Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Employment Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type"></div>
+                                <div class="indicator-name">Nonfarm Payrolls</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">158736.0</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +115.0
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 158621.0</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-07-03</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type"></div>
+                                <div class="indicator-name">Unemployment Rate</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">4.3%</div>
+                                    
+                                    <div class="indicator-change indicator-positive">
+                                        +0.0个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 4.3%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-07-03</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+                
+                <!-- Consumer Indicators -->
+                <div class="economic-indicators-group">
+                    <h3>Consumer Indicators</h3>
+                    <div class="economic-indicators">
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">MoM</div>
+                                <div class="indicator-name">Retail Sales (MoM Change)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">0.5%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        -1.1个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 1.6%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-15</div>
+                                
+                            </div>
+                            
+                        
+                            
+                            <div class="indicator-card">
+                                <div class="comparison-type">MoM</div>
+                                <div class="indicator-name">Personal Consumption Expenditures (MoM Change)</div>
+                                <div class="indicator-value-container">
+                                    <div class="indicator-current-value">0.5%</div>
+                                    
+                                    <div class="indicator-change indicator-negative">
+                                        -0.5个百分点
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="indicator-previous-value">Previous: 1.0%</div>
+                                
+                                <div class="indicator-date">Latest data date: 2026-04-01</div>
+                                
+                                <div class="indicator-next-release">Next release: 2026-06-28</div>
+                                
+                            </div>
+                            
+                        
+                            
+                        
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="section">
+            <h2>Community Hot Stocks</h2>
+            <div class="hot-stocks">
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Symbol</th>
+                            <th>Mentions</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>1</td>
+                            <td>MU</td>
+                            <td>42</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>2</td>
+                            <td>AVGO</td>
+                            <td>38</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>3</td>
+                            <td>LULU</td>
+                            <td>28</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>4</td>
+                            <td>NVDA</td>
+                            <td>22</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>5</td>
+                            <td>MSFT</td>
+                            <td>18</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>6</td>
+                            <td>GOOG</td>
+                            <td>15</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>7</td>
+                            <td>META</td>
+                            <td>12</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>8</td>
+                            <td>AAPL</td>
+                            <td>10</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>9</td>
+                            <td>NFLX</td>
+                            <td>8</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>10</td>
+                            <td>TSLA</td>
+                            <td>8</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>11</td>
+                            <td>AMZN</td>
+                            <td>7</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>12</td>
+                            <td>MRVL</td>
+                            <td>7</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>13</td>
+                            <td>PYPL</td>
+                            <td>7</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>14</td>
+                            <td>HOOD</td>
+                            <td>6</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>15</td>
+                            <td>RDDT</td>
+                            <td>6</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>16</td>
+                            <td>CRM</td>
+                            <td>5</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>17</td>
+                            <td>UNH</td>
+                            <td>5</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>18</td>
+                            <td>TSM</td>
+                            <td>5</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>19</td>
+                            <td>QNT</td>
+                            <td>4</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>20</td>
+                            <td>BTU</td>
+                            <td>4</td>
+                            <td></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Market Outlook</h2>
+            <div class="analysis">
+                <p><h1>Market Outlook: Next 1-2 Trading Days</h1>
+<h2>Market Direction</h2>
+<p>The market presents a <strong>mixed but cautiously optimistic</strong> picture heading into the next trading session. The Dow Jones surged +1.73% and the S&amp;P 500 posted modest gains (+0.41%), suggesting broad-based buying interest, while the NASDAQ dipped slightly (-0.09%) as the AI rally showed signs of pausing. Jim Cramer's observation about investors' "huge appetite" for stocks reinforces the underlying bullish sentiment, though the divergence between tech-heavy NASDAQ and blue-chip Dow warrants attention.</p>
+<h2>Key Points to Watch</h2>
+<ul>
+<li><strong>AI Sector Rotation</strong>: The pause in the AI rally could trigger short-term profit-taking in mega-cap tech names. Investors should monitor whether capital rotates into defensive or value sectors, as the Dow's outperformance hints at this shift already underway.</li>
+<li><strong>Geopolitical Risk</strong>: Stalled US-Iran peace talks remain a critical overhang. The EU Commission's warning of 1.3 million potential job losses from energy price surges linked to the Iran conflict underscores the macroeconomic stakes. Any escalation could spike volatility.</li>
+<li><strong>Oil Price Dynamics</strong>: Oman's reassurance that Mina al Fahal operations are normal should provide some relief to energy markets, but the situation remains fragile. Watch crude oil futures closely — a spike above key resistance levels could dampen equity sentiment broadly.</li>
+</ul>
+<h2>Risk Factors</h2>
+<p>| Risk | Impact Level | Likelihood |
+|------|-------------|------------|
+| Iran conflict escalation | High | Medium |
+| AI sector correction | Medium | Medium-High |
+| Energy price spike | High | Medium |
+| Fed policy uncertainty | Medium | Low |</p>
+<h2>Investor Recommendations</h2>
+<ul>
+<li><strong>Short-term traders</strong> should consider trimming overextended AI/tech positions and watching for rotation into industrials and energy names.</li>
+<li><strong>Long-term investors</strong> may view any pullback as a buying opportunity, given the strong appetite Cramer highlighted.</li>
+<li><strong>Key technical levels</strong>: Watch S&amp;P 500 support near 7,500 and NASDAQ resistance around 27,000 for directional cues.</li>
+</ul>
+<p><strong>Bottom line</strong>: Expect a <strong>consolidation day</strong> with selective strength in non-tech sectors, tempered by geopolitical headline risk. Stay nimble and keep position sizes disciplined.</p></p>
+            </div>
+        </div>
+        
+        <div class="section qrcode-section">
+            <h2>Follow Us</h2>
+            <div class="qrcode-container">
+                <img src="qrcode.jpg" alt="StockGate WeChat Official Account QR Code" class="qrcode-image">
+                <p class="qrcode-text">Scan to follow StockGate<br>For more US stock market insights</p>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Daily Market Briefing - June 05, 2026</p>
+            <p>StockGate 美股通 - This report is for reference only and does not constitute investment advice</p>
+            <p>Data sources: Yahoo Finance, Finnhub, Alpha Vantage</p>
+        </footer>
+    </div>
+</body>
+</html>

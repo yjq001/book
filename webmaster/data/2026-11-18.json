@@ -1,0 +1,899 @@
+{
+ "date": "2026-11-18",
+ "generated_at": "2026-11-18T07:17:08+08:00",
+ "cloudflare": {
+  "window": [
+   "2026-11-16T23:17:09+00:00",
+   "2026-11-17T23:17:09+00:00"
+  ],
+  "requests": 5028,
+  "visits": 4866,
+  "bytes": 31304864,
+  "human_requests_est": 84,
+  "bots": [
+   [
+    "crawler",
+    2742
+   ],
+   [
+    "ExaSearchBot",
+    1819
+   ],
+   [
+    "bingbot",
+    170
+   ],
+   [
+    "Googlebot",
+    85
+   ],
+   [
+    "YandexBot",
+    60
+   ],
+   [
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_",
+    40
+   ],
+   [
+    "python-requests",
+    11
+   ],
+   [
+    "Amazonbot",
+    6
+   ],
+   [
+    "bot",
+    4
+   ],
+   [
+    "curl",
+    3
+   ],
+   [
+    "PerplexityBot",
+    2
+   ],
+   [
+    "GPTBot",
+    1
+   ]
+  ],
+  "ai_crawlers": {
+   "meta-externalagent": 2736,
+   "bingbot": 170,
+   "Amazonbot": 6,
+   "PerplexityBot": 2,
+   "GPTBot": 1,
+   "OAI-SearchBot": 1
+  },
+  "top_paths": [
+   {
+    "key": "/",
+    "count": 54
+   },
+   {
+    "key": "/robots.txt",
+    "count": 52
+   },
+   {
+    "key": "/funds",
+    "count": 21
+   },
+   {
+    "key": "/insider",
+    "count": 13
+   },
+   {
+    "key": "/fund/himalaya-capital",
+    "count": 12
+   },
+   {
+    "key": "/ticker/rdn",
+    "count": 12
+   },
+   {
+    "key": "/ticker/dch",
+    "count": 11
+   },
+   {
+    "key": "/ticker/blk",
+    "count": 11
+   },
+   {
+    "key": "/ticker/xyf",
+    "count": 10
+   },
+   {
+    "key": "/favicon.ico",
+    "count": 8
+   },
+   {
+    "key": "/fund/hhlr-advisors",
+    "count": 7
+   },
+   {
+    "key": "/fund/hh-international",
+    "count": 7
+   },
+   {
+    "key": "/fu%C2%ADnd/hi%C2%ADm%C2%ADa%C2%ADl%C2%ADa%C2%ADya-ca%C2%ADp%C2%ADi%C2%ADt%C2%ADal",
+    "count": 6
+   },
+   {
+    "key": "/fund/daily-journal",
+    "count": 6
+   },
+   {
+    "key": "/fund/berkshire-hathaway",
+    "count": 6
+   },
+   {
+    "key": "/fund/tiger-global",
+    "count": 6
+   },
+   {
+    "key": "/fund/oaktree",
+    "count": 5
+   },
+   {
+    "key": "/ticker/amzn",
+    "count": 5
+   },
+   {
+    "key": "/fund/icahn",
+    "count": 5
+   },
+   {
+    "key": "/sitemap.xml",
+    "count": 5
+   },
+   {
+    "key": "/ticker/bah",
+    "count": 4
+   },
+   {
+    "key": "/ticker/arqt",
+    "count": 4
+   },
+   {
+    "key": "/fund/viking-global/2026-06-30",
+    "count": 4
+   },
+   {
+    "key": "/ticker/ndaq",
+    "count": 4
+   },
+   {
+    "key": "/fund/baupost-group",
+    "count": 4
+   }
+  ],
+  "countries": [
+   {
+    "key": "US",
+    "count": 4885
+   },
+   {
+    "key": "RU",
+    "count": 61
+   },
+   {
+    "key": "CN",
+    "count": 54
+   },
+   {
+    "key": "BR",
+    "count": 6
+   },
+   {
+    "key": "DE",
+    "count": 6
+   },
+   {
+    "key": "SG",
+    "count": 5
+   },
+   {
+    "key": "PH",
+    "count": 3
+   },
+   {
+    "key": "CA",
+    "count": 2
+   },
+   {
+    "key": "KR",
+    "count": 2
+   },
+   {
+    "key": "HK",
+    "count": 2
+   },
+   {
+    "key": "TW",
+    "count": 1
+   },
+   {
+    "key": "ID",
+    "count": 1
+   }
+  ],
+  "cache": [
+   {
+    "key": "miss",
+    "count": 4756
+   },
+   {
+    "key": "expired",
+    "count": 208
+   },
+   {
+    "key": "hit",
+    "count": 52
+   },
+   {
+    "key": "none",
+    "count": 9
+   },
+   {
+    "key": "revalidated",
+    "count": 2
+   },
+   {
+    "key": "dynamic",
+    "count": 1
+   }
+  ],
+  "status": [
+   {
+    "key": 200,
+    "count": 4967
+   },
+   {
+    "key": 404,
+    "count": 28
+   },
+   {
+    "key": 304,
+    "count": 22
+   },
+   {
+    "key": 301,
+    "count": 8
+   },
+   {
+    "key": 499,
+    "count": 1
+   },
+   {
+    "key": 206,
+    "count": 1
+   },
+   {
+    "key": 523,
+    "count": 1
+   }
+  ]
+ },
+ "gsc": {
+  "sitemap_resubmitted": null,
+  "range": [
+   "2026-11-09",
+   "2026-11-15"
+  ],
+  "clicks": 0,
+  "impressions": 83,
+  "ctr": 0,
+  "position": 6.7,
+  "daily": [
+   {
+    "date": "2026-11-09",
+    "clicks": 0,
+    "impressions": 6
+   },
+   {
+    "date": "2026-11-10",
+    "clicks": 0,
+    "impressions": 10
+   },
+   {
+    "date": "2026-11-11",
+    "clicks": 0,
+    "impressions": 9
+   },
+   {
+    "date": "2026-11-12",
+    "clicks": 0,
+    "impressions": 9
+   },
+   {
+    "date": "2026-11-13",
+    "clicks": 0,
+    "impressions": 19
+   },
+   {
+    "date": "2026-11-14",
+    "clicks": 0,
+    "impressions": 20
+   },
+   {
+    "date": "2026-11-15",
+    "clicks": 0,
+    "impressions": 10
+   }
+  ],
+  "top_queries": [
+   {
+    "q": "多佛赛车财报",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 8
+   },
+   {
+    "q": "多佛赛车财报 filetype:pdf",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 9
+   },
+   {
+    "q": "多克美",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 50
+   },
+   {
+    "q": "木头姐最新持仓",
+    "clicks": 0,
+    "impr": 2,
+    "pos": 34.5
+   },
+   {
+    "q": "木頭姐最新持倉",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 10
+   }
+  ],
+  "top_pages": [
+   {
+    "page": "/",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/congress/lisa-c-mcclain",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/ark-invest",
+    "clicks": 0,
+    "impr": 7
+   },
+   {
+    "page": "/fund/ark-invest/2024-12-31",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "clicks": 0,
+    "impr": 12
+   },
+   {
+    "page": "/fund/bridgewater",
+    "clicks": 0,
+    "impr": 5
+   },
+   {
+    "page": "/fund/soros-fund-management",
+    "clicks": 0,
+    "impr": 3
+   },
+   {
+    "page": "/fund/soros-fund-management/2025-12-31",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/soros-fund-management/2026-06-30",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/third-point",
+    "clicks": 0,
+    "impr": 3
+   },
+   {
+    "page": "/ticker/alab",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/asx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/cvs",
+    "clicks": 0,
+    "impr": 18
+   },
+   {
+    "page": "/ticker/dov",
+    "clicks": 0,
+    "impr": 3
+   },
+   {
+    "page": "/ticker/duk",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/ew",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/ticker/five",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/fnb",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/gff",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/kdk",
+    "clicks": 0,
+    "impr": 2
+   }
+  ],
+  "inspected": [
+   {
+    "page": "/",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-15T16:21:55Z",
+    "error": null
+   },
+   {
+    "page": "/congress/nancy-pelosi",
+    "verdict": "NEUTRAL",
+    "coverage": "Discovered - currently not indexed",
+    "last_crawl": null,
+    "error": null
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-14T14:09:20Z",
+    "error": null
+   },
+   {
+    "page": "/ticker/nvda",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-12T02:58:45Z",
+    "error": null
+   },
+   {
+    "page": "/insider",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-12T23:13:02Z",
+    "error": null
+   }
+  ],
+  "sitemaps": [
+   {
+    "path": "https://stock.easyllms.com/sitemap.xml",
+    "last_downloaded": "2026-11-16T23:31:25.151Z",
+    "pending": false,
+    "errors": "0",
+    "warnings": "0",
+    "submitted": 2624,
+    "indexed": 0
+   }
+  ]
+ },
+ "github": {
+  "美股大佬持仓-高管买卖(Form4)": {
+   "runs": 64,
+   "success": 64,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-机构13F": {
+   "runs": 11,
+   "success": 11,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-国会议员交易": {
+   "runs": 6,
+   "success": 6,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "Generate Market Report": {
+   "runs": 1,
+   "success": 1,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "_last_schedule": {
+   "disclosure_form4.yml": "2026-11-17T23:15:01Z",
+   "disclosure_congress.yml": "2026-11-17T21:45:51Z",
+   "disclosure_13f.yml": "2026-11-17T23:13:01Z"
+  }
+ },
+ "mongo": {
+  "insider_trades": {
+   "total": 22019,
+   "new_24h": 147,
+   "latest": "2026-11-17"
+  },
+  "fund_filings": {
+   "total": 218,
+   "new_24h": 0,
+   "latest": "2026-11-16"
+  },
+  "fund_holdings": {
+   "total": 23719,
+   "new_24h": 0,
+   "latest": "2026-09-30"
+  },
+  "congress_trades": {
+   "total": 14016,
+   "new_24h": 8,
+   "latest": "2026-11-16"
+  },
+  "tickers": {
+   "total": 1545,
+   "new_24h": 0
+  },
+  "infos": {
+   "total": 9088,
+   "new_24h": 132
+  },
+  "_quality": {
+   "insider_filed_last_workday": 184,
+   "big_buys_24h": 17,
+   "big_buys_24h_with_note": 17,
+   "tickers_without_cn": 29,
+   "checked_for": "2026-11-16"
+  },
+  "_size_mb": 29.2,
+  "_limit_mb": 512,
+  "_notes_24h": 17,
+  "_last_write": {
+   "insider_trades": "2026-11-17T23:16:35.047000+00:00",
+   "congress_trades": "2026-11-17T21:46:10.072000+00:00"
+  }
+ },
+ "server": {
+  "container": "money-backend Up 2 days",
+  "disk": "/dev/sda1        45G   13G   32G  28% /",
+  "requests": 22044,
+  "status": {
+   "2xx": 20687,
+   "4xx": 1200,
+   "5xx": 63,
+   "3xx": 94
+  },
+  "scanner_5xx": 77,
+  "top_paths": [
+   [
+    "/relay/mcp",
+    1331
+   ],
+   [
+    "/",
+    424
+   ],
+   [
+    "/wp-login.php",
+    247
+   ],
+   [
+    "/wp-admin/index.php",
+    244
+   ],
+   [
+    "/api/ingest/fund_holdings",
+    192
+   ],
+   [
+    "/api/ingest/fund_filings",
+    170
+   ],
+   [
+    "/robots.txt",
+    135
+   ],
+   [
+    "/.env",
+    134
+   ],
+   [
+    "/userfiles",
+    96
+   ],
+   [
+    "/graphql",
+    77
+   ],
+   [
+    "/console",
+    71
+   ],
+   [
+    "/api/.env",
+    70
+   ],
+   [
+    "/api/config",
+    69
+   ],
+   [
+    "/sitemap.xml",
+    63
+   ],
+   [
+    "/admin/",
+    63
+   ]
+  ],
+  "slow": [
+   {
+    "path": "/api/ingest/fund_holdings",
+    "ms": 3104
+   },
+   {
+    "path": "/ticker/pg",
+    "ms": 4054
+   },
+   {
+    "path": "/sitemap.xml",
+    "ms": 7492
+   },
+   {
+    "path": "/favicon.ico",
+    "ms": 5012
+   },
+   {
+    "path": "/",
+    "ms": 4329
+   },
+   {
+    "path": "/api/ingest/fund_holdings",
+    "ms": 3230
+   },
+   {
+    "path": "/api/info",
+    "ms": 15691
+   },
+   {
+    "path": "/api/info",
+    "ms": 14595
+   },
+   {
+    "path": "/api/info",
+    "ms": 6093
+   },
+   {
+    "path": "/api/chat/recommend",
+    "ms": 4911
+   }
+  ],
+  "errors": [
+   [
+    "http: proxy error: context canceled",
+    83
+   ],
+   [
+    "http2 h2c 升级头（扫描器）",
+    51
+   ],
+   [
+    "502 /",
+    4
+   ],
+   [
+    "502 /build../.env",
+    2
+   ],
+   [
+    "502 /api",
+    2
+   ],
+   [
+    "502 /firebase-admin.json",
+    2
+   ],
+   [
+    "502 /php-cgi/php-cgi.exe?%ADd+allow_url_include%3d1+%ADd+auto_pr",
+    2
+   ],
+   [
+    "502 /application/.env.sample",
+    1
+   ],
+   [
+    "502 /application/.env",
+    1
+   ],
+   [
+    "502 /key.pem",
+    1
+   ],
+   [
+    "502 /server.key",
+    1
+   ],
+   [
+    "502 /dev/.env",
+    1
+   ],
+   [
+    "502 /services/.env",
+    1
+   ],
+   [
+    "502 /favicon.ico",
+    1
+   ],
+   [
+    "502 /ses.env",
+    1
+   ]
+  ],
+  "indexnow_submits": 25,
+  "tg_push_ok": 23,
+  "tg_push_fail": 0,
+  "ai_referrals": {}
+ },
+ "health": {
+  "checks": [
+   {
+    "url": "https://stock.easyllms.com/",
+    "status": 200,
+    "ms": 814,
+    "bytes": 28286
+   },
+   {
+    "url": "https://stock.easyllms.com/funds",
+    "status": 200,
+    "ms": 468,
+    "bytes": 13083
+   },
+   {
+    "url": "https://stock.easyllms.com/insider",
+    "status": 200,
+    "ms": 716,
+    "bytes": 20838
+   },
+   {
+    "url": "https://stock.easyllms.com/congress",
+    "status": 200,
+    "ms": 988,
+    "bytes": 57074
+   },
+   {
+    "url": "https://stock.easyllms.com/congress/nancy-pelosi",
+    "status": 200,
+    "ms": 703,
+    "bytes": 33251
+   },
+   {
+    "url": "https://stock.easyllms.com/ticker/nvda",
+    "status": 200,
+    "ms": 943,
+    "bytes": 44543
+   },
+   {
+    "url": "https://stock.easyllms.com/fund/berkshire-hathaway",
+    "status": 200,
+    "ms": 686,
+    "bytes": 19286
+   },
+   {
+    "url": "https://stock.easyllms.com/sitemap.xml",
+    "status": 200,
+    "ms": 694,
+    "bytes": 164442
+   },
+   {
+    "url": "https://stock.easyllms.com/robots.txt",
+    "status": 200,
+    "ms": 465,
+    "bytes": 150
+   },
+   {
+    "url": "https://easyllms.com/",
+    "status": 200,
+    "ms": 204,
+    "bytes": 26959
+   },
+   {
+    "url": "https://api.easyllms.com/hc",
+    "status": 200,
+    "ms": 493,
+    "bytes": 725
+   },
+   {
+    "url": "https://chat.easyllms.com/",
+    "status": 200,
+    "ms": 235,
+    "bytes": 40898
+   },
+   {
+    "url": "https://im.easyllms.com/",
+    "status": 200,
+    "ms": 469,
+    "bytes": 5909
+   }
+  ],
+  "sensitive_leaks": [],
+  "sitemap_urls": 2625
+ },
+ "telegram": {
+  "channel": "@godstar001",
+  "members": 8
+ },
+ "monetization": {
+  "affiliates": [
+   "盈透证券开户",
+   "moomoo 开户"
+  ],
+  "donations": [
+   "微信打赏",
+   "PayPal 打赏"
+  ],
+  "tg_paid": false,
+  "adsense": false,
+  "affiliate_clicks": 0,
+  "affiliate_clicks_24h": 0,
+  "affiliate_clicks_detail": []
+ },
+ "costs": {
+  "openrouter_usage_usd": 0.897595835,
+  "openrouter_usage_daily": 0.001301151,
+  "openrouter_usage_monthly": 0.897595835,
+  "openrouter_limit": 5,
+  "note": "Cloudflare / Actions（公开仓库）/ Mongo M0 / GitHub Pages 均为免费档"
+ },
+ "security": {
+  "public_repo_private_keys": [],
+  "ssh_key_in_use_is_leaked": true
+ },
+ "alerts": [
+  {
+   "level": "red",
+   "msg": "服务器 24h 出现 63 个 5xx（已排除扫描器探测）"
+  },
+  {
+   "level": "yellow",
+   "msg": "生产服务器 SSH 私钥已从 book 的分支和历史里清除，但 GitHub 上旧提交仍可按提交号下载、服务器也仍授权，视为已泄露，需要轮换"
+  }
+ ]
+}

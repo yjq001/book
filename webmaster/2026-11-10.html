@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>站长日报 2026-11-10</title><style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1f2329;--muted:#6b7280;--line:#e5e7eb;--brand:#1d4ed8;--up:#d92d20;--down:#079455}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 60px}h1{font-size:24px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 10px;border-left:4px solid var(--brand);padding-left:8px}
+.sub{color:var(--muted);font-size:13px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.kpi .v{font-size:22px;font-weight:700}.kpi .d{font-size:12px}
+.up{color:var(--up)}.down{color:var(--down)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:500;background:#f9fafb}.num{text-align:right}.ok{color:var(--down)}.bad{color:var(--up);font-weight:600}
+.analysis h2{border:0;padding:0}.analysis{background:#eff6ff;border-color:#bfdbfe}a{color:var(--brand)}code{background:#f3f4f6;padding:0 4px;border-radius:4px}.post{border-top:1px solid var(--line,#e5e7eb);padding:10px 0}.post-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.post pre{white-space:pre-wrap;word-break:break-word;background:#f9fafb;padding:10px;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.6}.post button{padding:4px 12px;border:1px solid #2563eb;background:#2563eb;color:#fff;border-radius:6px;cursor:pointer}
+.tbl{overflow-x:auto}
+</style></head><body><div class="wrap"><h1>美股大佬持仓 · 站长日报 2026-11-10</h1>
+<p class="sub">生成于 2026-11-10T04:50:50+08:00（北京时间）· <a href="https://stock.easyllms.com">stock.easyllms.com</a> · <a href="index.html">历史日报</a></p>
+<div class="card" style="border-color:#fecaca;background:#fef2f2"><b>告警</b><ul><li>🟡 GitHub Actions「美股大佬持仓-高管买卖(Form4)」24h 失败 1 次，之后已成功</li><li>🟡 生产服务器 SSH 私钥已从 book 的分支和历史里清除，但 GitHub 上旧提交仍可按提交号下载、服务器也仍授权，视为已泄露，需要轮换</li></ul></div>
+<div class="card analysis"><h2>今日三问</h2>
+<ol>
+<li><strong>今天赚钱了吗？流量多了吗？</strong> 没赚钱：返佣点击累计 0（/go/ 统计上线至今），收入台账 0，打赏 0。流量：Cloudflare 24h 请求 369（昨天 4038，前天 2477），主要是前两天的机器扫描退潮，估算真人请求仅 6，没有可信的真人数据；Google 近 7 天（截至 11-07）曝光 16、点击 0（上期 8），TG 仍 8 人。</li>
+<li><strong>为什么？</strong> 卡在漏斗最上层：Googlebot 抓取明显增多（24h 215 次，上期 4 次）、首页 11-09 又被抓，但 sitemap 2551 个网址仍报告收录 0、佩洛西页仍"URL 未知"，曝光只有长尾页（平均位置 6.8，没点击）；站外只有用户手动发帖才有真人，而日报没有记录最近发过帖，没有真人自然没有开户点击。</li>
+<li><strong>怎么改？</strong> 今天最值的动作仍是发帖：已写好 TTMI 三位高管下跌后加仓（雪球）、CVS 集团总裁买入（雪球）、国会议员交易滞后怎么看（知乎）；同时 11-16（周一）13F 是第一个流量节点，下周起每天发新一季解读。</li>
+</ol>
+<h2>需要你决定或支持</h2>
+<ul>
+<li><strong>发帖并告诉我发在哪</strong>：今天 3 条帖子在页面底部，复制即可发布。发完告诉我平台和选题，我第二天对比承接页（ticker/ttmi、ticker/cvs、/congress）的访问，这是目前唯一能带来真人的动作。</li>
+<li><strong>口径修正（站长自己改脚本，无需批准，仅告知）</strong>：日报"估算真人请求"被美国/香港的扫描器严重污染（11-09 曾显示 2016，今天又变 6），我会在脚本里排除 404 扫描路径后再汇报，避免被误导。</li>
+<li>SSH 私钥轮换（先放一放，仅提醒）。</li>
+</ul>
+<h2>分析</h2>
+<h3>赚钱</h3>
+<ul>
+<li>返佣：盈透、moomoo 的 /go/ 点击累计 0，24h 0；打赏、AdSense、TG 付费均未开；收入台账只有 11-05 一行 0。</li>
+<li>结论：没有真人流量，谈不上转化率，实验表仍为空。</li>
+</ul>
+<h3>流量（漏斗逐层）</h3>
+<ul>
+<li>爬虫抓取：24h 请求 369，Googlebot 215 次（11-09 的日报是 4 次），Yandex 27，Perplexity 3、GPTBot 2、OAI-SearchBot 1、Bing 1。抓取突然变多是好信号，说明 Google 在大面积读站，收录通常随后几天到几周开始出现。</li>
+<li>发现与收录：抽检 5 页中 4 页 PASS（首页最近抓取 11-09 09:43Z）；佩洛西议员页仍"URL 未知"；sitemap 11-08 00:50Z 下载过，2551 个网址、0 错误、收录 0（Search Console 口径通常滞后）。</li>
+<li>曝光与点击：近 7 天（11-01 至 11-07）曝光 16、点击 0，平均位置 6.8；曝光页面是 berkshire-hathaway 5 次、议员页和各种长尾股票页，没有关键词数据。11-07 单日曝光 8，在涨。</li>
+<li>站内：24h 请求里 /insider 76、/ 25、/robots.txt 47；国家 US 324（含机房爬虫）、RU 27（Yandex）、HK 5、CN 1。404 只有 4 个，没有扫描器洪峰。</li>
+<li>渠道：TG @godstar001 仍 8 人；24h 推送 1 条成功 0 失败；IndexNow 24h 提交 0（周一新申报已入库 21 笔，未触发提交需关注）。</li>
+</ul>
+<h3>内容与数据</h3>
+<ul>
+<li>高管买卖：11-09 申报日目前入库 21 笔（11-04 为 131、11-05 为 108、11-06 为 111）。周一当天实时轮询只抓到一部分，次日 12:23Z 的补全任务会补齐；明天我会复查 11-09 的申报是否补到 100 笔以上，没有就按故障处理。</li>
+<li>11-09 申报的新买入中值得写的是 TTMI（Philip Franklin 11-05 买 5000 股，约 31 万美元）。近 3 天大额买入：MDGL 约 3502 万、KOD 约 2434 万（均为 Baker Bros，已发帖）、KMI 约 1499 万（已发帖）、CVS 约 200 万；AI 解读 4/4 都有。</li>
+<li>国会最新交易日 11-06，24h 新增 2 笔；13F 最新季度 2026-09-30（198 份申报，24h 无新增，11-14 周六、实际截止 11-16 周一）。</li>
+<li>股票池 1516 只全部有中文名；names.py 新增 5 个高管中文名。</li>
+</ul>
+<h3>运维与成本</h3>
+<ul>
+<li>🟡 Form4 采集任务 24h 运行 40 次、失败 1 次（11-09 18:15Z），之后已成功，最近一次定时触发 20:45Z；无需处理。</li>
+<li>服务器 24h 无 5xx 错误；/api/info 仍有 5–16 秒慢请求 6 次（属 api 服务，不影响本站页面，列入后面排查）；stock 站 13 个健康检查页全部 200，延迟 72–1204ms，无敏感路径泄露；磁盘 27%，Mongo 29MB/512MB。</li>
+<li>成本：OpenRouter 本月 0.86 美元 / 限额 5 美元，其余免费档。</li>
+<li>🟡 SSH 私钥仍视为已泄露，待轮换（用户说先放一放）。</li>
+</ul>
+<h3>上期建议与实验跟进</h3>
+<ul>
+<li>上期建议：发 Baker Bros 买入和 13F 倒计时帖——没有收到发帖记录，今天换新选题继续。</li>
+<li>13F 每小时采集：已确认 13F 定时任务 11-09 11:13Z 触发、最近 3 次全部成功；季度窗口（11-10 至 11-16 每小时）今天开始，明天复查。</li>
+<li>日报真人口径修正：本周已识别污染，今天已写进"需要你决定或支持"，我会直接改脚本。</li>
+<li>实验：暂无。</li>
+</ul>
+<h2>下一步建议</h2>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>事项</th>
+<th>预期效果</th>
+<th>谁来做</th>
+<th>需要的批准/支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>发今天的 TTMI、CVS 雪球帖和国会议员知乎回答</td>
+<td>每条带来几个到十来个国内真人；看 /go/ 有没有第一次点击</td>
+<td>用户发，站长跟踪</td>
+<td>复制发布并告知平台</td>
+</tr>
+<tr>
+<td>2</td>
+<td>11-10 至 11-16 13F 密集披露期，每天复查采集、推送并准备新一季解读帖</td>
+<td>抓住唯一的流量节点</td>
+<td>站长</td>
+<td>无</td>
+</tr>
+<tr>
+<td>3</td>
+<td>复查 11-09 高管申报补全情况；修正日报真人口径</td>
+<td>避免数据缺口和被虚高流量误导</td>
+<td>站长</td>
+<td>脚本属本 skill，可直接改；改网站需你同意部署</td>
+</tr>
+</tbody>
+</table></div>
+<div class="card"><h2 style="margin-top:0">今日推广帖子（3 条，点"复制"直接粘贴发布）</h2><p class="sub">数据来自网站数据库。</p><div class="post"><div class="post-h"><b>1. 雪球｜TTM科技三位高管下跌后又买：股价从 88 美元跌到 62 美元，4 笔合计约 228 万美元</b> <button onclick="navigator.clipboard.writeText(document.getElementById('p1').innerText);this.innerText='已复制'">复制</button></div><pre id="p1">$TTM科技(TTMI)$ 过去两周，三位内部人在公开市场陆续买入，一共 4 笔：
+
+· 10月28日：总裁兼 CEO Edwin Roks 买 5000 股，均价 88.07 美元，约 44 万美元
+· 10月28日：Wajid Ali 买 1 万股，均价 90.25 美元，约 90 万美元
+· 11月5日：Wajid Ali 再买 1 万股，均价 63.15 美元，约 63 万美元
+· 11月5日（11月9日申报）：Philip Franklin 买 5000 股，均价 61.92 美元，约 31 万美元
+
+有意思的是价格：10 月底还在 88-90 美元买，11 月初跌到 62-63 美元，Ali 又加了一次。这类&quot;下跌后继续买&quot;的内部人，比一次性买入更值得追踪，但也要小心——内部人也会买错，不代表股价马上反弹。
+
+你会怎么看&quot;跌了 30% 还在加仓&quot;？
+
+明细（含每笔申报日期）：
+stock.easyllms.com/ticker/ttmi
+
+数据来自 SEC 公开披露，不构成投资建议。
+
+（提醒：如果雪球把外链折叠，删掉链接，改成&quot;网站在评论区&quot;，再在评论里贴。）</pre></div><div class="post"><div class="post-h"><b>2. 雪球｜CVS 一位集团总裁自掏约 200 万美元买入 2.4 万股</b> <button onclick="navigator.clipboard.writeText(document.getElementById('p2').innerText);this.innerText='已复制'">复制</button></div><pre id="p2">$CVS健康(CVS)$ 的 EVP 兼集团总裁 Prem Shah，11 月 6 日在公开市场买入 23,855 股，均价 83.89 美元，约 200 万美元，交易后持股约 8.85 万股。
+
+我的看法，三点：
+1. 金额不算特别大，但对高管个人来说是真金白银，而且是公开市场买入，不是公司授予的股权。
+2. 按买入后的持股算，这笔相当于把原有持仓加了约四成，说明买得不算&quot;意思一下&quot;。
+3. 单个高管的买入信号有限，我更关心接下来几周还有没有其他高管跟进。
+
+如果后面出现多位 CVS 高管同时买入，我会再整理出来。你持有 CVS 吗？
+
+买入明细：
+stock.easyllms.com/ticker/cvs
+
+数据来自 SEC 公开披露，不构成投资建议。</pre></div><div class="post"><div class="post-h"><b>3. 知乎回答｜建议挂在：佩洛西等美国国会议员的股票交易能跟吗？披露有多滞后？</b> <button onclick="navigator.clipboard.writeText(document.getElementById('p3').innerText);this.innerText='已复制'">复制</button></div><pre id="p3">先说结论：国会议员的交易披露有参考价值，但滞后和金额区间都很大，不适合当&quot;实时信号&quot;。
+
+1. 滞后：议员依法要在交易后 45 天内申报，所以你今天看到的，往往是一两个月前的操作。等你看到时，股价可能早就走完一段。
+2. 金额是区间：不是具体数字，而是&quot;1,001–15,000 美元&quot;&quot;50,001–100,000 美元&quot;这种档位，没办法准确算出对方仓位。
+3. 配偶和家人的交易也要申报，所以有些交易其实不是议员本人决定的，申报里会标注是本人、配偶（SP）还是联名（JT）。
+4. 真正有用的看法：不要盯单笔，看一位议员长期的偏好（比如科技、能源）和多位议员同时买同一只股票的情况。
+
+我把众议院议员 2024 年以来的公开申报（162 位议员、1.39 万笔）整理成了按人查询的页面，可以直接看佩洛西等人的交易和年度汇总：
+stock.easyllms.com/congress
+
+数据来自众议院公开披露，不构成投资建议。</pre></div></div>
+<h2>近 7 天趋势</h2><div class="tbl"><table><tr><th>日期</th><th>访问</th><th>真人请求</th><th>Google 曝光(7天)</th><th>Google 点击(7天)</th><th>已收录</th><th>TG 订阅</th><th>告警数</th></tr><tr><td>2026-11-05</td><td>300</td><td>216</td><td>0</td><td>0</td><td>0</td><td>8</td><td>2</td></tr><tr><td>2026-11-06</td><td>827</td><td>441</td><td>0</td><td>0</td><td>0</td><td>8</td><td>2</td></tr><tr><td>2026-11-07</td><td>1032</td><td>315</td><td>0</td><td>0</td><td>0</td><td>8</td><td>1</td></tr><tr><td>2026-11-08</td><td>2410</td><td>1948</td><td>4</td><td>0</td><td>0</td><td>8</td><td>2</td></tr><tr><td>2026-11-09</td><td>2272</td><td>2016</td><td>8</td><td>0</td><td>0</td><td>8</td><td>2</td></tr><tr><td>2026-11-10</td><td>299</td><td>6</td><td>16</td><td>0</td><td>0</td><td>8</td><td>2</td></tr></table></div>
+<h2>核心指标</h2><div class='grid'><div class="card kpi"><div class="sub">24h 请求（不含 Cloudflare 内部）</div><div class="v">369</div><div class="d down">-3,669 较昨日</div></div><div class="card kpi"><div class="sub">24h 访问（visits）</div><div class="v">299</div><div class="d down">-1,973 较昨日</div></div><div class="card kpi"><div class="sub">估算真人请求</div><div class="v">6</div><div class="d down">-2,010 较昨日</div></div><div class="card kpi"><div class="sub">Google 曝光（7 天）</div><div class="v">16</div><div class="d up">+8 较昨日</div></div><div class="card kpi"><div class="sub">Google 点击（7 天）</div><div class="v">0</div><div class="d sub">持平</div></div><div class="card kpi"><div class="sub">TG 频道订阅</div><div class="v">8</div><div class="d sub">持平</div></div><div class="card kpi"><div class="sub">sitemap 网址数</div><div class="v">2,551</div></div><div class="card kpi"><div class="sub">数据库占用 MB</div><div class="v">29.0</div><div class="d sub">持平</div></div></div>
+<h2>流量（Cloudflare，近 24 小时）</h2>
+<div class="tbl"><table><tr><th>页面</th><th>请求</th></tr><tr><td>/insider</td><td>76</td></tr><tr><td>/robots.txt</td><td>47</td></tr><tr><td>/</td><td>25</td></tr><tr><td>/sitemap.xml</td><td>5</td></tr><tr><td>/ticker/crwv</td><td>2</td></tr><tr><td>/favicon.ico</td><td>2</td></tr><tr><td>/fund/berkshire-hathaway</td><td>2</td></tr><tr><td>/ticker/rbrk</td><td>2</td></tr><tr><td>/ticker/wdc</td><td>2</td></tr><tr><td>/ticker/iart</td><td>2</td></tr><tr><td>/ticker/omc</td><td>2</td></tr><tr><td>/funds</td><td>2</td></tr><tr><td>/ticker/rmd</td><td>2</td></tr><tr><td>/ticker/mog-a</td><td>1</td></tr><tr><td>/ticker/tem</td><td>1</td></tr></table></div>
+<div class='grid'><div class='card'><div class='sub'>国家/地区</div><div class="tbl"><table><tr><th></th><th>请求</th></tr><tr><td>US</td><td>324</td></tr><tr><td>RU</td><td>27</td></tr><tr><td>HK</td><td>5</td></tr><tr><td>SG</td><td>4</td></tr><tr><td>DE</td><td>2</td></tr><tr><td>JP</td><td>2</td></tr><tr><td>NL</td><td>1</td></tr><tr><td>CN</td><td>1</td></tr></table></div></div><div class='card'><div class='sub'>爬虫与脚本</div><div class="tbl"><table><tr><th></th><th>请求</th></tr><tr><td>Googlebot</td><td>215</td></tr><tr><td>bot</td><td>72</td></tr><tr><td>YandexBot</td><td>27</td></tr><tr><td>Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_</td><td>21</td></tr><tr><td>python-requests</td><td>11</td></tr><tr><td>curl</td><td>6</td></tr><tr><td>SEOJuice-SearchBot</td><td>4</td></tr><tr><td>PerplexityBot</td><td>3</td></tr></table></div></div><div class='card'><div class='sub'>AI 爬虫（Bing 也算：ChatGPT 搜索靠它）</div><div class="tbl"><table><tr><th></th><th>请求</th></tr><tr><td>PerplexityBot</td><td>3</td></tr><tr><td>GPTBot</td><td>2</td></tr><tr><td>OAI-SearchBot</td><td>1</td></tr><tr><td>bingbot</td><td>1</td></tr></table></div><div class='sub'>AI 搜索点进来的访客（服务器日志 utm_source）：0</div></div><div class='card'><div class='sub'>缓存状态</div><div class="tbl"><table><tr><th></th><th>请求</th></tr><tr><td>miss</td><td>280</td></tr><tr><td>expired</td><td>69</td></tr><tr><td>hit</td><td>15</td></tr><tr><td>none</td><td>5</td></tr></table></div></div><div class='card'><div class='sub'>状态码</div><div class="tbl"><table><tr><th></th><th>请求</th></tr><tr><td>200</td><td>360</td></tr><tr><td>301</td><td>5</td></tr><tr><td>404</td><td>4</td></tr></table></div></div></div>
+<h2>搜索（Google Search Console，2026-11-01 ~ 2026-11-07）</h2>
+<p>点击 0 · 曝光 16 · 点击率 0% · 平均排名 6.8</p>
+<div class="tbl"><table><tr><th>sitemap</th><th>已提交</th><th>已收录</th><th>Google 最近抓取</th><th>错误</th></tr><tr><td>/sitemap.xml</td><td>2551</td><td>0</td><td>2026-11-08T00:50:39.116Z</td><td>0</td></tr></table></div>
+<div class='card'><div class='sub'>关键页面收录状态（URL Inspection）</div><div class="tbl"><table><tr><th>页面</th><th>结论</th><th>状态</th><th>最近抓取</th></tr><tr><td>/</td><td>PASS</td><td>Submitted and indexed</td><td>2026-11-09T09:43:02Z</td></tr><tr><td>/congress/nancy-pelosi</td><td>NEUTRAL</td><td>URL is unknown to Google</td><td>-</td></tr><tr><td>/fund/berkshire-hathaway</td><td>PASS</td><td>Submitted and indexed</td><td>2026-11-05T13:29:25Z</td></tr><tr><td>/ticker/nvda</td><td>PASS</td><td>Submitted and indexed</td><td>2026-11-05T13:03:38Z</td></tr><tr><td>/insider</td><td>PASS</td><td>Submitted and indexed</td><td>2026-11-05T09:54:51Z</td></tr></table></div></div>
+<div class='grid'><div class='card'><div class='sub'>热门搜索词</div><div class="tbl"><table><tr><th>搜索词</th><th>点击</th><th>曝光</th><th>排名</th></tr><tr><td colspan="4" class="sub">无</td></tr></table></div></div><div class='card'><div class='sub'>热门页面</div><div class="tbl"><table><tr><th>页面</th><th>点击</th><th>曝光</th></tr><tr><td>/</td><td>0</td><td>1</td></tr><tr><td>/congress</td><td>0</td><td>1</td></tr><tr><td>/congress/lisa-c-mcclain</td><td>0</td><td>2</td></tr><tr><td>/congress/marjorie-taylor-greene</td><td>0</td><td>1</td></tr><tr><td>/fund/berkshire-hathaway</td><td>0</td><td>5</td></tr><tr><td>/fund/bridgewater</td><td>0</td><td>1</td></tr><tr><td>/fund/bridgewater/2024-12-31</td><td>0</td><td>2</td></tr><tr><td>/funds</td><td>0</td><td>1</td></tr><tr><td>/insider</td><td>0</td><td>1</td></tr><tr><td>/ticker/amcr</td><td>0</td><td>1</td></tr></table></div></div></div>
+<h2>内容与数据</h2>
+<div class="tbl"><table><tr><th>数据</th><th>总量</th><th>近 24h 新增</th><th>最新日期</th></tr><tr><td>高管买卖</td><td>21,341</td><td>21</td><td>2026-11-09</td></tr><tr><td>13F 申报</td><td>198</td><td>0</td><td>2026-11-02</td></tr><tr><td>13F 持仓</td><td>21,237</td><td>0</td><td>2026-09-30</td></tr><tr><td>国会交易</td><td>13,897</td><td>2</td><td>2026-11-06</td></tr><tr><td>股票池</td><td>1,516</td><td>0</td><td>-</td></tr><tr><td>资讯</td><td>9,436</td><td>71</td><td>-</td></tr></table></div>
+<p class='sub'>近 24h 生成 AI 解读 4 条；数据库 29.0 / 512 MB</p>
+<div class="tbl"><table><tr><th>数据质量</th><th>结果</th></tr><tr><td>上一个美股交易日（2026-11-08）后披露的高管交易</td><td>132</td></tr><tr><td>近 3 天披露的新增大额买入 / 有 AI 解读</td><td>4 / 4</td></tr><tr><td>股票池中缺中文名</td><td>0</td></tr></table></div>
+<h2>变现</h2>
+<div class="tbl"><table><tr><th>项目</th><th>状态</th></tr><tr><td>券商返佣</td><td>盈透证券开户、moomoo 开户</td></tr><tr><td>返佣点击（排除爬虫和自测）</td><td>24h 0 次，累计 0 次</td></tr><tr><td>打赏</td><td>微信打赏、PayPal 打赏</td></tr><tr><td>TG 付费群</td><td>未开</td></tr><tr><td>AdSense</td><td>未接入</td></tr></table></div>
+<p class='sub'>成本：OpenRouter 累计 $0.863（今日 $0.001，本月 $0.863，key 上限 $5）；Cloudflare / Actions（公开仓库）/ Mongo M0 / GitHub Pages 均为免费档</p>
+<h2>运维巡检</h2>
+<div class="tbl"><table><tr><th>地址</th><th>状态</th><th>耗时 ms</th></tr><tr><td>https://stock.easyllms.com/</td><td>200</td><td>1204</td></tr><tr><td>https://stock.easyllms.com/funds</td><td>200</td><td>106</td></tr><tr><td>https://stock.easyllms.com/insider</td><td>200</td><td>207</td></tr><tr><td>https://stock.easyllms.com/congress</td><td>200</td><td>301</td></tr><tr><td>https://stock.easyllms.com/congress/nancy-pelosi</td><td>200</td><td>183</td></tr><tr><td>https://stock.easyllms.com/ticker/nvda</td><td>200</td><td>344</td></tr><tr><td>https://stock.easyllms.com/fund/berkshire-hathaway</td><td>200</td><td>259</td></tr><tr><td>https://stock.easyllms.com/sitemap.xml</td><td>200</td><td>114</td></tr><tr><td>https://stock.easyllms.com/robots.txt</td><td>200</td><td>72</td></tr><tr><td>https://easyllms.com/</td><td>200</td><td>117</td></tr><tr><td>https://api.easyllms.com/hc</td><td>200</td><td>102</td></tr><tr><td>https://chat.easyllms.com/</td><td>200</td><td>106</td></tr><tr><td>https://im.easyllms.com/</td><td>200</td><td>206</td></tr></table></div>
+<p class='ok'>敏感文件泄露检查：正常</p>
+<div class='card'><div class='sub'>GitHub Actions（近 24 小时）</div><div class="tbl"><table><tr><th>任务</th><th>运行</th><th>成功</th><th>失败</th><th>进行中</th></tr><tr><td>美股大佬持仓-高管买卖(Form4)</td><td>40</td><td>39</td><td>1</td><td>0</td></tr><tr><td>美股大佬持仓-国会议员交易</td><td>6</td><td>6</td><td>0</td><td>0</td></tr><tr><td>美股大佬持仓-机构13F</td><td>3</td><td>3</td><td>0</td><td>0</td></tr></table></div></div>
+<div class="tbl"><table><tr><th>失败任务</th><th>时间</th><th>链接</th></tr><tr><td>美股大佬持仓-高管买卖(Form4)</td><td>2026-11-09T18:15:02Z</td><td>https://github.com/yjq001/book/actions/runs/42672367113</td></tr></table></div>
+<div class='card'><div class='sub'>生产服务器（近 24 小时日志）</div>
+<p>======= 企业微信消息 ========== · 磁盘 /dev/sda1        45G   12G   33G  27% /</p><p>请求 1973 · 状态 {'2xx': 1935, '3xx': 11, '4xx': 27} · IndexNow 提交 0 次 · TG 推送成功 1 / 失败 0</p>
+<div class="tbl"><table><tr><th>错误</th><th>次数</th></tr><tr><td colspan="2" class="sub">无</td></tr></table></div>
+<div class="tbl"><table><tr><th>慢请求</th><th>ms</th></tr><tr><td>/api/info</td><td>15893</td></tr><tr><td>/api/info</td><td>14982</td></tr><tr><td>/api/info</td><td>4905</td></tr><tr><td>/api/info</td><td>15747</td></tr><tr><td>/api/info</td><td>14530</td></tr><tr><td>/api/info</td><td>4866</td></tr></table></div>
+</div></div></body></html>

@@ -1,0 +1,774 @@
+{
+ "date": "2026-11-08",
+ "generated_at": "2026-11-08T04:51:29+08:00",
+ "cloudflare": {
+  "window": [
+   "2026-11-06T20:51:31+00:00",
+   "2026-11-07T20:51:31+00:00"
+  ],
+  "requests": 2477,
+  "visits": 2410,
+  "bytes": 16275956,
+  "human_requests_est": 1948,
+  "bots": [
+   [
+    "bot",
+    388
+   ],
+   [
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_",
+    84
+   ],
+   [
+    "python-requests",
+    22
+   ],
+   [
+    "curl",
+    10
+   ],
+   [
+    "Go-http-client",
+    10
+   ],
+   [
+    "Googlebot",
+    8
+   ],
+   [
+    "trendictionbot",
+    4
+   ],
+   [
+    "GPTBot",
+    1
+   ],
+   [
+    "Python/3.11 aiohttp/3.14.3",
+    1
+   ],
+   [
+    "OAI-SearchBot",
+    1
+   ]
+  ],
+  "ai_crawlers": {
+   "GPTBot": 1,
+   "OAI-SearchBot": 1
+  },
+  "top_paths": [
+   {
+    "key": "/",
+    "count": 28
+   },
+   {
+    "key": "/fund/berkshire-hathaway",
+    "count": 27
+   },
+   {
+    "key": "/robots.txt",
+    "count": 16
+   },
+   {
+    "key": "/ticker/uaa",
+    "count": 10
+   },
+   {
+    "key": "/ticker/smmt",
+    "count": 10
+   },
+   {
+    "key": "/congress/ruben-gallego",
+    "count": 10
+   },
+   {
+    "key": "/sitemap.xml",
+    "count": 9
+   },
+   {
+    "key": "/insider",
+    "count": 7
+   },
+   {
+    "key": "/fund",
+    "count": 5
+   },
+   {
+    "key": "/ticker/nvda",
+    "count": 5
+   },
+   {
+    "key": "/favicon.ico",
+    "count": 4
+   },
+   {
+    "key": "/ticker/mdgl",
+    "count": 4
+   },
+   {
+    "key": "/ticker/orcl",
+    "count": 3
+   },
+   {
+    "key": "/ticker/crcl",
+    "count": 3
+   },
+   {
+    "key": "/ticker/jnj",
+    "count": 3
+   },
+   {
+    "key": "/ticker/axp",
+    "count": 3
+   },
+   {
+    "key": "/congress/nancy-pelosi",
+    "count": 3
+   },
+   {
+    "key": "/ticker/mufg",
+    "count": 3
+   },
+   {
+    "key": "/funds",
+    "count": 3
+   },
+   {
+    "key": "/ticker/shel",
+    "count": 3
+   },
+   {
+    "key": "/ticker/car",
+    "count": 3
+   },
+   {
+    "key": "/ticker/exr",
+    "count": 3
+   },
+   {
+    "key": "/ticker/cvs",
+    "count": 3
+   },
+   {
+    "key": "/congress",
+    "count": 3
+   },
+   {
+    "key": "/ticker/ero",
+    "count": 2
+   }
+  ],
+  "countries": [
+   {
+    "key": "US",
+    "count": 530
+   },
+   {
+    "key": "BR",
+    "count": 459
+   },
+   {
+    "key": "MX",
+    "count": 342
+   },
+   {
+    "key": "UA",
+    "count": 237
+   },
+   {
+    "key": "IN",
+    "count": 191
+   },
+   {
+    "key": "TR",
+    "count": 172
+   },
+   {
+    "key": "ID",
+    "count": 154
+   },
+   {
+    "key": "PH",
+    "count": 114
+   },
+   {
+    "key": "BY",
+    "count": 43
+   },
+   {
+    "key": "KZ",
+    "count": 38
+   },
+   {
+    "key": "CN",
+    "count": 25
+   },
+   {
+    "key": "DE",
+    "count": 19
+   },
+   {
+    "key": "SG",
+    "count": 18
+   },
+   {
+    "key": "PT",
+    "count": 16
+   },
+   {
+    "key": "MD",
+    "count": 13
+   }
+  ],
+  "cache": [
+   {
+    "key": "miss",
+    "count": 2417
+   },
+   {
+    "key": "none",
+    "count": 25
+   },
+   {
+    "key": "hit",
+    "count": 19
+   },
+   {
+    "key": "expired",
+    "count": 16
+   }
+  ],
+  "status": [
+   {
+    "key": 200,
+    "count": 2449
+   },
+   {
+    "key": 301,
+    "count": 24
+   },
+   {
+    "key": 404,
+    "count": 2
+   },
+   {
+    "key": 499,
+    "count": 1
+   },
+   {
+    "key": 304,
+    "count": 1
+   }
+  ]
+ },
+ "gsc": {
+  "sitemap_resubmitted": null,
+  "range": [
+   "2026-10-30",
+   "2026-11-05"
+  ],
+  "clicks": 0,
+  "impressions": 4,
+  "ctr": 0,
+  "position": 6,
+  "daily": [
+   {
+    "date": "2026-11-04",
+    "clicks": 0,
+    "impressions": 0
+   },
+   {
+    "date": "2026-11-05",
+    "clicks": 0,
+    "impressions": 4
+   }
+  ],
+  "top_queries": [],
+  "top_pages": [
+   {
+    "page": "/",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/congress",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/congress/lisa-c-mcclain",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/funds",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/insider",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/amcr",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/beta",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/bsx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/cvx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/kex",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/mdb",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/sgi",
+    "clicks": 0,
+    "impr": 1
+   }
+  ],
+  "inspected": [
+   {
+    "page": "/",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-06T03:08:49Z",
+    "error": null
+   },
+   {
+    "page": "/congress/nancy-pelosi",
+    "verdict": "NEUTRAL",
+    "coverage": "URL is unknown to Google",
+    "last_crawl": null,
+    "error": null
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T13:29:25Z",
+    "error": null
+   },
+   {
+    "page": "/ticker/nvda",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T13:03:38Z",
+    "error": null
+   },
+   {
+    "page": "/insider",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T09:54:51Z",
+    "error": null
+   }
+  ],
+  "sitemaps": [
+   {
+    "path": "https://stock.easyllms.com/sitemap.xml",
+    "last_downloaded": "2026-11-05T23:21:06.211Z",
+    "pending": false,
+    "errors": "0",
+    "warnings": "0",
+    "submitted": 2551,
+    "indexed": 0
+   }
+  ]
+ },
+ "github": {
+  "美股大佬持仓-国会议员交易": {
+   "runs": 6,
+   "success": 6,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-高管买卖(Form4)": {
+   "runs": 24,
+   "success": 24,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-机构13F": {
+   "runs": 4,
+   "success": 4,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "Docker Build and Push": {
+   "runs": 2,
+   "success": 2,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "Generate Market Report": {
+   "runs": 1,
+   "success": 1,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "_last_schedule": {
+   "disclosure_form4.yml": "2026-11-07T17:47:23Z",
+   "disclosure_congress.yml": "2026-11-07T19:17:01Z",
+   "disclosure_13f.yml": "2026-11-07T16:49:21Z"
+  }
+ },
+ "mongo": {
+  "insider_trades": {
+   "total": 21320,
+   "new_24h": 87,
+   "latest": "2026-11-06"
+  },
+  "fund_filings": {
+   "total": 198,
+   "new_24h": 0,
+   "latest": "2026-11-02"
+  },
+  "fund_holdings": {
+   "total": 21237,
+   "new_24h": 0,
+   "latest": "2026-09-30"
+  },
+  "congress_trades": {
+   "total": 13895,
+   "new_24h": 3,
+   "latest": "2026-11-05"
+  },
+  "tickers": {
+   "total": 1516,
+   "new_24h": 0
+  },
+  "infos": {
+   "total": 9635,
+   "new_24h": 56
+  },
+  "_quality": {
+   "insider_filed_last_workday": 111,
+   "big_buys_24h": 4,
+   "big_buys_24h_with_note": 4,
+   "tickers_without_cn": 0,
+   "checked_for": "2026-11-06"
+  },
+  "_size_mb": 29.0,
+  "_limit_mb": 512,
+  "_notes_24h": 4,
+  "_last_write": {
+   "insider_trades": "2026-11-07T17:48:53.413000+00:00",
+   "congress_trades": "2026-11-07T19:17:18.978000+00:00"
+  }
+ },
+ "server": {
+  "container": "money-backend Up 19 hours",
+  "disk": "/dev/sda1        45G   12G   33G  27% /",
+  "requests": 5988,
+  "status": {
+   "2xx": 5796,
+   "4xx": 172,
+   "3xx": 11,
+   "5xx": 9
+  },
+  "top_paths": [
+   [
+    "/relay/mcp",
+    796
+   ],
+   [
+    "/",
+    283
+   ],
+   [
+    "/robots.txt",
+    47
+   ],
+   [
+    "/favicon.ico",
+    40
+   ],
+   [
+    "/.env",
+    33
+   ],
+   [
+    "/login",
+    21
+   ],
+   [
+    "/_next",
+    18
+   ],
+   [
+    "/api",
+    18
+   ],
+   [
+    "/SDK/webLanguage",
+    14
+   ],
+   [
+    "/js/analytics.js",
+    12
+   ],
+   [
+    "/api/info",
+    12
+   ],
+   [
+    "/login.html",
+    10
+   ],
+   [
+    "/sitemap.xml",
+    10
+   ],
+   [
+    "/landing.html",
+    10
+   ],
+   [
+    "/api/upload",
+    10
+   ]
+  ],
+  "slow": [
+   {
+    "path": "/api/upload?prefix=temp",
+    "ms": 3436
+   },
+   {
+    "path": "/api/upload?prefix=temp",
+    "ms": 5946
+   },
+   {
+    "path": "/api/upload?prefix=temp",
+    "ms": 9928
+   },
+   {
+    "path": "/",
+    "ms": 8517
+   },
+   {
+    "path": "/login",
+    "ms": 8637
+   },
+   {
+    "path": "/_next",
+    "ms": 10816
+   },
+   {
+    "path": "/api",
+    "ms": 4838
+   },
+   {
+    "path": "/api/info",
+    "ms": 15605
+   },
+   {
+    "path": "/api/info",
+    "ms": 14658
+   },
+   {
+    "path": "/api/info",
+    "ms": 4670
+   }
+  ],
+  "errors": [
+   [
+    "http: proxy error: context canceled",
+    8
+   ],
+   [
+    "502 /.env.production",
+    1
+   ],
+   [
+    "502 /phpinfo.php~",
+    1
+   ],
+   [
+    "502 /uat/phpinfo.php",
+    1
+   ],
+   [
+    "502 /gcp-key.json",
+    1
+   ],
+   [
+    "502 /preview/phpinfo.php",
+    1
+   ],
+   [
+    "501 /",
+    1
+   ],
+   [
+    "502 /wp-admin/install.php?step=1",
+    1
+   ],
+   [
+    "502 /_next",
+    1
+   ],
+   [
+    "502 /api",
+    1
+   ]
+  ],
+  "indexnow_submits": 2,
+  "tg_push_ok": 0,
+  "tg_push_fail": 0,
+  "ai_referrals": {}
+ },
+ "health": {
+  "checks": [
+   {
+    "url": "https://stock.easyllms.com/",
+    "status": 200,
+    "ms": 1175,
+    "bytes": 27901
+   },
+   {
+    "url": "https://stock.easyllms.com/funds",
+    "status": 200,
+    "ms": 64,
+    "bytes": 13082
+   },
+   {
+    "url": "https://stock.easyllms.com/insider",
+    "status": 200,
+    "ms": 141,
+    "bytes": 21520
+   },
+   {
+    "url": "https://stock.easyllms.com/congress",
+    "status": 200,
+    "ms": 286,
+    "bytes": 55969
+   },
+   {
+    "url": "https://stock.easyllms.com/congress/nancy-pelosi",
+    "status": 200,
+    "ms": 154,
+    "bytes": 32863
+   },
+   {
+    "url": "https://stock.easyllms.com/ticker/nvda",
+    "status": 200,
+    "ms": 318,
+    "bytes": 44832
+   },
+   {
+    "url": "https://stock.easyllms.com/fund/berkshire-hathaway",
+    "status": 200,
+    "ms": 232,
+    "bytes": 19771
+   },
+   {
+    "url": "https://stock.easyllms.com/sitemap.xml",
+    "status": 200,
+    "ms": 86,
+    "bytes": 159588
+   },
+   {
+    "url": "https://stock.easyllms.com/robots.txt",
+    "status": 200,
+    "ms": 97,
+    "bytes": 150
+   },
+   {
+    "url": "https://easyllms.com/",
+    "status": 200,
+    "ms": 87,
+    "bytes": 26959
+   },
+   {
+    "url": "https://api.easyllms.com/hc",
+    "status": 200,
+    "ms": 72,
+    "bytes": 725
+   },
+   {
+    "url": "https://chat.easyllms.com/",
+    "status": 200,
+    "ms": 77,
+    "bytes": 40898
+   },
+   {
+    "url": "https://im.easyllms.com/",
+    "status": 200,
+    "ms": 100,
+    "bytes": 5909
+   }
+  ],
+  "sensitive_leaks": [],
+  "sitemap_urls": 2551
+ },
+ "telegram": {
+  "channel": "@godstar001",
+  "members": 8
+ },
+ "monetization": {
+  "affiliates": [
+   "盈透证券开户",
+   "moomoo 开户"
+  ],
+  "donations": [
+   "微信打赏",
+   "PayPal 打赏"
+  ],
+  "tg_paid": false,
+  "adsense": false,
+  "affiliate_clicks": 0,
+  "affiliate_clicks_24h": 0,
+  "affiliate_clicks_detail": []
+ },
+ "costs": {
+  "openrouter_usage_usd": 0.849505551,
+  "openrouter_usage_daily": 0,
+  "openrouter_usage_monthly": 0.849505551,
+  "openrouter_limit": 5,
+  "note": "Cloudflare / Actions（公开仓库）/ Mongo M0 / GitHub Pages 均为免费档"
+ },
+ "security": {
+  "public_repo_private_keys": [],
+  "ssh_key_in_use_is_leaked": true
+ },
+ "alerts": [
+  {
+   "level": "red",
+   "msg": "服务器 24h 出现 9 个 5xx"
+  },
+  {
+   "level": "yellow",
+   "msg": "生产服务器 SSH 私钥已从 book 的分支和历史里清除，但 GitHub 上旧提交仍可按提交号下载、服务器也仍授权，视为已泄露，需要轮换"
+  }
+ ]
+}
