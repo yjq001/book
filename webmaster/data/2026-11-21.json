@@ -1,0 +1,893 @@
+{
+ "date": "2026-11-21",
+ "generated_at": "2026-11-21T08:04:42+08:00",
+ "cloudflare": {
+  "window": [
+   "2026-11-20T00:04:43+00:00",
+   "2026-11-21T00:04:43+00:00"
+  ],
+  "requests": 5592,
+  "visits": 5327,
+  "bytes": 33679409,
+  "human_requests_est": 779,
+  "bots": [
+   [
+    "ClaudeBot",
+    3152
+   ],
+   [
+    "RiverBot",
+    1012
+   ],
+   [
+    "YandexBot",
+    149
+   ],
+   [
+    "bingbot",
+    143
+   ],
+   [
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_",
+    97
+   ],
+   [
+    "crawler",
+    80
+   ],
+   [
+    "ExaSearchBot",
+    54
+   ],
+   [
+    "Googlebot",
+    47
+   ],
+   [
+    "OAI-SearchBot",
+    25
+   ],
+   [
+    "ShapBot",
+    23
+   ],
+   [
+    "GPTBot",
+    13
+   ],
+   [
+    "YisouSpider",
+    4
+   ]
+  ],
+  "ai_crawlers": {
+   "ClaudeBot": 3152,
+   "bingbot": 143,
+   "meta-externalagent": 80,
+   "OAI-SearchBot": 25,
+   "GPTBot": 13,
+   "ChatGPT-User": 3,
+   "PerplexityBot": 2,
+   "Amazonbot": 2
+  },
+  "top_paths": [
+   {
+    "key": "/insider",
+    "count": 119
+   },
+   {
+    "key": "/robots.txt",
+    "count": 94
+   },
+   {
+    "key": "/",
+    "count": 63
+   },
+   {
+    "key": "/sitemap.xml",
+    "count": 19
+   },
+   {
+    "key": "/funds",
+    "count": 17
+   },
+   {
+    "key": "/fund/berkshire-hathaway",
+    "count": 17
+   },
+   {
+    "key": "/fund/hh-international",
+    "count": 16
+   },
+   {
+    "key": "/fund/himalaya-capital",
+    "count": 15
+   },
+   {
+    "key": "/ticker/wbd",
+    "count": 13
+   },
+   {
+    "key": "/ticker/bmy",
+    "count": 12
+   },
+   {
+    "key": "/fund/duquesne-family-office/2025-09-30",
+    "count": 12
+   },
+   {
+    "key": "/ticker/flnc",
+    "count": 12
+   },
+   {
+    "key": "/ticker/dar",
+    "count": 11
+   },
+   {
+    "key": "/favicon.ico",
+    "count": 7
+   },
+   {
+    "key": "/congress/terri-a-sewell",
+    "count": 6
+   },
+   {
+    "key": "/ticker/bbio",
+    "count": 6
+   },
+   {
+    "key": "/fund/oaktree",
+    "count": 6
+   },
+   {
+    "key": "/ticker/novt",
+    "count": 5
+   },
+   {
+    "key": "/ticker/mgy",
+    "count": 5
+   },
+   {
+    "key": "/fund/hhlr-advisors",
+    "count": 5
+   },
+   {
+    "key": "/congress",
+    "count": 5
+   },
+   {
+    "key": "/congress/cleo-fields",
+    "count": 5
+   },
+   {
+    "key": "/ticker/vsnt",
+    "count": 5
+   },
+   {
+    "key": "/ticker/etn",
+    "count": 5
+   },
+   {
+    "key": "/ticker/ttd",
+    "count": 5
+   }
+  ],
+  "countries": [
+   {
+    "key": "US",
+    "count": 4630
+   },
+   {
+    "key": "BR",
+    "count": 228
+   },
+   {
+    "key": "RU",
+    "count": 152
+   },
+   {
+    "key": "IN",
+    "count": 88
+   },
+   {
+    "key": "SG",
+    "count": 80
+   },
+   {
+    "key": "TR",
+    "count": 71
+   },
+   {
+    "key": "UA",
+    "count": 67
+   },
+   {
+    "key": "MX",
+    "count": 52
+   },
+   {
+    "key": "ID",
+    "count": 49
+   },
+   {
+    "key": "PH",
+    "count": 35
+   },
+   {
+    "key": "CN",
+    "count": 27
+   },
+   {
+    "key": "DE",
+    "count": 19
+   },
+   {
+    "key": "KZ",
+    "count": 19
+   },
+   {
+    "key": "KR",
+    "count": 12
+   },
+   {
+    "key": "HK",
+    "count": 12
+   }
+  ],
+  "cache": [
+   {
+    "key": "miss",
+    "count": 5227
+   },
+   {
+    "key": "expired",
+    "count": 300
+   },
+   {
+    "key": "hit",
+    "count": 50
+   },
+   {
+    "key": "none",
+    "count": 11
+   },
+   {
+    "key": "revalidated",
+    "count": 3
+   },
+   {
+    "key": "bypass",
+    "count": 1
+   }
+  ],
+  "status": [
+   {
+    "key": 200,
+    "count": 5486
+   },
+   {
+    "key": 404,
+    "count": 83
+   },
+   {
+    "key": 301,
+    "count": 10
+   },
+   {
+    "key": 304,
+    "count": 9
+   },
+   {
+    "key": 206,
+    "count": 2
+   },
+   {
+    "key": 499,
+    "count": 1
+   },
+   {
+    "key": 302,
+    "count": 1
+   }
+  ]
+ },
+ "gsc": {
+  "sitemap_resubmitted": null,
+  "range": [
+   "2026-11-13",
+   "2026-11-19"
+  ],
+  "clicks": 1,
+  "impressions": 135,
+  "ctr": 0.74,
+  "position": 4.1,
+  "daily": [
+   {
+    "date": "2026-11-13",
+    "clicks": 0,
+    "impressions": 19
+   },
+   {
+    "date": "2026-11-14",
+    "clicks": 0,
+    "impressions": 20
+   },
+   {
+    "date": "2026-11-15",
+    "clicks": 0,
+    "impressions": 10
+   },
+   {
+    "date": "2026-11-16",
+    "clicks": 0,
+    "impressions": 39
+   },
+   {
+    "date": "2026-11-17",
+    "clicks": 1,
+    "impressions": 35
+   },
+   {
+    "date": "2026-11-18",
+    "clicks": 0,
+    "impressions": 12
+   }
+  ],
+  "top_queries": [
+   {
+    "q": "多佛唐斯娱乐财报",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 5
+   },
+   {
+    "q": "多佛赛车财报",
+    "clicks": 0,
+    "impr": 1,
+    "pos": 8
+   },
+   {
+    "q": "多佛赛车财报 filetype:pdf",
+    "clicks": 0,
+    "impr": 3,
+    "pos": 6.7
+   },
+   {
+    "q": "多佛赛车财报pdf",
+    "clicks": 0,
+    "impr": 2,
+    "pos": 4.5
+   }
+  ],
+  "top_pages": [
+   {
+    "page": "/fund/himalaya-capital/2026-06-30",
+    "clicks": 1,
+    "impr": 2
+   },
+   {
+    "page": "/",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/congress",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/ark-invest",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "clicks": 0,
+    "impr": 5
+   },
+   {
+    "page": "/fund/bridgewater",
+    "clicks": 0,
+    "impr": 4
+   },
+   {
+    "page": "/fund/bridgewater/2024-12-31",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/fund/duquesne-family-office",
+    "clicks": 0,
+    "impr": 3
+   },
+   {
+    "page": "/fund/hhlr-advisors/2025-09-30",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/soros-fund-management",
+    "clicks": 0,
+    "impr": 5
+   },
+   {
+    "page": "/fund/soros-fund-management/2025-12-31",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/soros-fund-management/2026-06-30",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/third-point",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/funds",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/alab",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/asx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/beke",
+    "clicks": 0,
+    "impr": 5
+   },
+   {
+    "page": "/ticker/beta",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/cah",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/chtr",
+    "clicks": 0,
+    "impr": 1
+   }
+  ],
+  "inspected": [
+   {
+    "page": "/",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-19T23:53:20Z",
+    "error": null
+   },
+   {
+    "page": "/congress/nancy-pelosi",
+    "verdict": "NEUTRAL",
+    "coverage": "Discovered - currently not indexed",
+    "last_crawl": null,
+    "error": null
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-14T14:09:20Z",
+    "error": null
+   },
+   {
+    "page": "/ticker/nvda",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-12T02:58:45Z",
+    "error": null
+   },
+   {
+    "page": "/insider",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-12T23:13:02Z",
+    "error": null
+   }
+  ],
+  "sitemaps": [
+   {
+    "path": "https://stock.easyllms.com/sitemap.xml",
+    "last_downloaded": "2026-11-19T02:57:39.029Z",
+    "pending": false,
+    "errors": "0",
+    "warnings": "0",
+    "submitted": 2625,
+    "indexed": 0
+   }
+  ]
+ },
+ "github": {
+  "美股大佬持仓-高管买卖(Form4)": {
+   "runs": 64,
+   "success": 64,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-机构13F": {
+   "runs": 4,
+   "success": 4,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "Generate Market Report": {
+   "runs": 1,
+   "success": 1,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-国会议员交易": {
+   "runs": 6,
+   "success": 6,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "_last_schedule": {
+   "disclosure_form4.yml": "2026-11-21T00:00:01Z",
+   "disclosure_congress.yml": "2026-11-20T21:04:58Z",
+   "disclosure_13f.yml": "2026-11-20T23:13:01Z"
+  }
+ },
+ "mongo": {
+  "insider_trades": {
+   "total": 22370,
+   "new_24h": 94,
+   "latest": "2026-11-20"
+  },
+  "fund_filings": {
+   "total": 218,
+   "new_24h": 0,
+   "latest": "2026-11-16"
+  },
+  "fund_holdings": {
+   "total": 23719,
+   "new_24h": 0,
+   "latest": "2026-09-30"
+  },
+  "congress_trades": {
+   "total": 14030,
+   "new_24h": 0,
+   "latest": "2026-11-19"
+  },
+  "tickers": {
+   "total": 1545,
+   "new_24h": 0
+  },
+  "infos": {
+   "total": 9125,
+   "new_24h": 108
+  },
+  "_quality": {
+   "insider_filed_last_workday": 170,
+   "big_buys_24h": 10,
+   "big_buys_24h_with_note": 10,
+   "tickers_without_cn": 29,
+   "checked_for": "2026-11-20"
+  },
+  "_size_mb": 29.2,
+  "_limit_mb": 512,
+  "_notes_24h": 10,
+  "_last_write": {
+   "insider_trades": "2026-11-21T00:01:17.759000+00:00",
+   "congress_trades": "2026-11-20T21:05:18.967000+00:00"
+  }
+ },
+ "server": {
+  "container": "money-backend Up 6 days",
+  "disk": "/dev/sda1        45G   13G   32G  28% /",
+  "requests": 9921,
+  "status": {
+   "2xx": 9591,
+   "4xx": 244,
+   "3xx": 80,
+   "5xx": 6
+  },
+  "scanner_5xx": 1,
+  "top_paths": [
+   [
+    "/relay/mcp",
+    1545
+   ],
+   [
+    "/",
+    478
+   ],
+   [
+    "/robots.txt",
+    172
+   ],
+   [
+    "/insider",
+    117
+   ],
+   [
+    "/.env",
+    108
+   ],
+   [
+    "/.env.local",
+    73
+   ],
+   [
+    "/.env.prod",
+    70
+   ],
+   [
+    "/.env.dev",
+    70
+   ],
+   [
+    "/api/ingest/insider",
+    61
+   ],
+   [
+    "/favicon.ico",
+    51
+   ],
+   [
+    "/sitemap.xml",
+    35
+   ],
+   [
+    "/js/analytics.js",
+    31
+   ],
+   [
+    "/js/main.js",
+    30
+   ],
+   [
+    "/login.html",
+    29
+   ],
+   [
+    "/register.html",
+    25
+   ]
+  ],
+  "slow": [
+   {
+    "path": "/api/info",
+    "ms": 15641
+   },
+   {
+    "path": "/api/info",
+    "ms": 13769
+   },
+   {
+    "path": "/api/info",
+    "ms": 3573
+   },
+   {
+    "path": "/",
+    "ms": 6005
+   },
+   {
+    "path": "/api/info",
+    "ms": 15252
+   },
+   {
+    "path": "/api/info",
+    "ms": 13951
+   },
+   {
+    "path": "/api/info",
+    "ms": 4122
+   },
+   {
+    "path": "/api/info",
+    "ms": 15476
+   },
+   {
+    "path": "/api/info",
+    "ms": 13782
+   },
+   {
+    "path": "/api/info",
+    "ms": 3717
+   }
+  ],
+  "errors": [
+   [
+    "http: proxy error: context canceled",
+    3
+   ],
+   [
+    "502 /",
+    1
+   ],
+   [
+    "http: proxy error: read tcp <ip>:55196-><ip>:443: read: connection reset by peer",
+    1
+   ],
+   [
+    "502 /robots.txt",
+    1
+   ],
+   [
+    "502 /api/session/properties",
+    1
+   ],
+   [
+    "502 /phpinfo.php",
+    1
+   ],
+   [
+    "http: proxy error: read tcp <ip>:52296-><ip>:443: read: connection reset by peer",
+    1
+   ],
+   [
+    "502 /favicon.ico",
+    1
+   ],
+   [
+    "http: proxy error: read tcp <ip>:43192-><ip>:443: read: connection reset by peer",
+    1
+   ],
+   [
+    "502 //images/images/images/images/images/images/images/cache.php",
+    1
+   ],
+   [
+    "http: proxy error: read tcp <ip>:39680-><ip>:443: read: connection reset by peer",
+    1
+   ]
+  ],
+  "indexnow_submits": 26,
+  "tg_push_ok": 15,
+  "tg_push_fail": 0,
+  "ai_referrals": {}
+ },
+ "health": {
+  "checks": [
+   {
+    "url": "https://stock.easyllms.com/",
+    "status": 200,
+    "ms": 473,
+    "bytes": 27603
+   },
+   {
+    "url": "https://stock.easyllms.com/funds",
+    "status": 200,
+    "ms": 74,
+    "bytes": 13083
+   },
+   {
+    "url": "https://stock.easyllms.com/insider",
+    "status": 200,
+    "ms": 236,
+    "bytes": 21140
+   },
+   {
+    "url": "https://stock.easyllms.com/congress",
+    "status": 200,
+    "ms": 447,
+    "bytes": 56990
+   },
+   {
+    "url": "https://stock.easyllms.com/congress/nancy-pelosi",
+    "status": 200,
+    "ms": 158,
+    "bytes": 33241
+   },
+   {
+    "url": "https://stock.easyllms.com/ticker/nvda",
+    "status": 200,
+    "ms": 383,
+    "bytes": 44553
+   },
+   {
+    "url": "https://stock.easyllms.com/fund/berkshire-hathaway",
+    "status": 200,
+    "ms": 217,
+    "bytes": 19286
+   },
+   {
+    "url": "https://stock.easyllms.com/sitemap.xml",
+    "status": 200,
+    "ms": 147,
+    "bytes": 164442
+   },
+   {
+    "url": "https://stock.easyllms.com/robots.txt",
+    "status": 200,
+    "ms": 80,
+    "bytes": 150
+   },
+   {
+    "url": "https://easyllms.com/",
+    "status": 200,
+    "ms": 138,
+    "bytes": 26959
+   },
+   {
+    "url": "https://api.easyllms.com/hc",
+    "status": 200,
+    "ms": 74,
+    "bytes": 725
+   },
+   {
+    "url": "https://chat.easyllms.com/",
+    "status": 200,
+    "ms": 166,
+    "bytes": 40898
+   },
+   {
+    "url": "https://im.easyllms.com/",
+    "status": 200,
+    "ms": 88,
+    "bytes": 5909
+   }
+  ],
+  "sensitive_leaks": [],
+  "sitemap_urls": 2625
+ },
+ "telegram": {
+  "channel": "@godstar001",
+  "members": 8
+ },
+ "monetization": {
+  "affiliates": [
+   "盈透证券开户",
+   "moomoo 开户"
+  ],
+  "donations": [
+   "微信打赏",
+   "PayPal 打赏"
+  ],
+  "tg_paid": false,
+  "adsense": false,
+  "affiliate_clicks": 3,
+  "affiliate_clicks_24h": 1,
+  "affiliate_clicks_detail": [
+   {
+    "key": "ibkr",
+    "from": "",
+    "country": "CN",
+    "n": 1
+   }
+  ]
+ },
+ "costs": {
+  "openrouter_usage_usd": 0.9100024,
+  "openrouter_usage_daily": 0,
+  "openrouter_usage_monthly": 0.9100024,
+  "openrouter_limit": 5,
+  "note": "Cloudflare / Actions（公开仓库）/ Mongo M0 / GitHub Pages 均为免费档"
+ },
+ "security": {
+  "public_repo_private_keys": [],
+  "ssh_key_in_use_is_leaked": true
+ },
+ "alerts": [
+  {
+   "level": "red",
+   "msg": "服务器 24h 出现 6 个 5xx（已排除扫描器探测）"
+  },
+  {
+   "level": "yellow",
+   "msg": "生产服务器 SSH 私钥已从 book 的分支和历史里清除，但 GitHub 上旧提交仍可按提交号下载、服务器也仍授权，视为已泄露，需要轮换"
+  }
+ ]
+}
