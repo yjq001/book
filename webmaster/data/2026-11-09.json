@@ -1,0 +1,806 @@
+{
+ "date": "2026-11-09",
+ "generated_at": "2026-11-09T04:51:00+08:00",
+ "cloudflare": {
+  "window": [
+   "2026-11-07T20:51:02+00:00",
+   "2026-11-08T20:51:02+00:00"
+  ],
+  "requests": 4038,
+  "visits": 2272,
+  "bytes": 20562596,
+  "human_requests_est": 2016,
+  "bots": [
+   [
+    "bot",
+    1846
+   ],
+   [
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_",
+    135
+   ],
+   [
+    "Go-http-client",
+    14
+   ],
+   [
+    "python-requests",
+    11
+   ],
+   [
+    "curl",
+    10
+   ],
+   [
+    "Googlebot",
+    4
+   ],
+   [
+    "GPTBot",
+    1
+   ],
+   [
+    "OAI-SearchBot",
+    1
+   ]
+  ],
+  "ai_crawlers": {
+   "GPTBot": 1,
+   "OAI-SearchBot": 1
+  },
+  "top_paths": [
+   {
+    "key": "/",
+    "count": 56
+   },
+   {
+    "key": "/insider",
+    "count": 32
+   },
+   {
+    "key": "/funds",
+    "count": 22
+   },
+   {
+    "key": "/favicon.ico",
+    "count": 16
+   },
+   {
+    "key": "/robots.txt",
+    "count": 14
+   },
+   {
+    "key": "/api/user/ismustmobile",
+    "count": 13
+   },
+   {
+    "key": "/api/",
+    "count": 12
+   },
+   {
+    "key": "/api/init",
+    "count": 11
+   },
+   {
+    "key": "/h5/",
+    "count": 10
+   },
+   {
+    "key": "/main/config/getkefuData",
+    "count": 9
+   },
+   {
+    "key": "/skin/main/onload.js",
+    "count": 9
+   },
+   {
+    "key": "/sitemap.xml",
+    "count": 9
+   },
+   {
+    "key": "/cx_platform/conf.json",
+    "count": 8
+   },
+   {
+    "key": "/html/",
+    "count": 8
+   },
+   {
+    "key": "/getConfig/getArticle.do",
+    "count": 8
+   },
+   {
+    "key": "/assets/layui/resuser/room.js",
+    "count": 8
+   },
+   {
+    "key": "/3/favicon.ico",
+    "count": 8
+   },
+   {
+    "key": "/kefu/css/style.css",
+    "count": 8
+   },
+   {
+    "key": "/apix/tongchengyue/tags",
+    "count": 8
+   },
+   {
+    "key": "/public/api/index/config",
+    "count": 7
+   },
+   {
+    "key": "/api/pay/info",
+    "count": 7
+   },
+   {
+    "key": "/instatll",
+    "count": 7
+   },
+   {
+    "key": "/api/site-visits",
+    "count": 7
+   },
+   {
+    "key": "/api/link-submit",
+    "count": 7
+   },
+   {
+    "key": "/kuwo/kuwo.html",
+    "count": 7
+   }
+  ],
+  "countries": [
+   {
+    "key": "US",
+    "count": 1898
+   },
+   {
+    "key": "HK",
+    "count": 1737
+   },
+   {
+    "key": "BR",
+    "count": 69
+   },
+   {
+    "key": "ID",
+    "count": 41
+   },
+   {
+    "key": "SG",
+    "count": 40
+   },
+   {
+    "key": "MX",
+    "count": 38
+   },
+   {
+    "key": "PH",
+    "count": 30
+   },
+   {
+    "key": "TR",
+    "count": 25
+   },
+   {
+    "key": "CN",
+    "count": 24
+   },
+   {
+    "key": "ES",
+    "count": 22
+   },
+   {
+    "key": "IN",
+    "count": 21
+   },
+   {
+    "key": "DE",
+    "count": 18
+   },
+   {
+    "key": "UA",
+    "count": 18
+   },
+   {
+    "key": "KR",
+    "count": 13
+   },
+   {
+    "key": "JP",
+    "count": 8
+   }
+  ],
+  "cache": [
+   {
+    "key": "miss",
+    "count": 2502
+   },
+   {
+    "key": "hit",
+    "count": 565
+   },
+   {
+    "key": "none",
+    "count": 406
+   },
+   {
+    "key": "dynamic",
+    "count": 370
+   },
+   {
+    "key": "expired",
+    "count": 193
+   },
+   {
+    "key": "bypass",
+    "count": 2
+   }
+  ],
+  "status": [
+   {
+    "key": 200,
+    "count": 2396
+   },
+   {
+    "key": 404,
+    "count": 1187
+   },
+   {
+    "key": 301,
+    "count": 408
+   },
+   {
+    "key": 405,
+    "count": 21
+   },
+   {
+    "key": 400,
+    "count": 19
+   },
+   {
+    "key": 403,
+    "count": 5
+   },
+   {
+    "key": 401,
+    "count": 2
+   }
+  ]
+ },
+ "gsc": {
+  "sitemap_resubmitted": null,
+  "range": [
+   "2026-10-31",
+   "2026-11-06"
+  ],
+  "clicks": 0,
+  "impressions": 8,
+  "ctr": 0,
+  "position": 6.2,
+  "daily": [
+   {
+    "date": "2026-11-04",
+    "clicks": 0,
+    "impressions": 0
+   },
+   {
+    "date": "2026-11-05",
+    "clicks": 0,
+    "impressions": 4
+   },
+   {
+    "date": "2026-11-06",
+    "clicks": 0,
+    "impressions": 4
+   }
+  ],
+  "top_queries": [],
+  "top_pages": [
+   {
+    "page": "/",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/congress",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/congress/lisa-c-mcclain",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/bridgewater",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/fund/bridgewater/2024-12-31",
+    "clicks": 0,
+    "impr": 2
+   },
+   {
+    "page": "/funds",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/insider",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/amcr",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/beta",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/bsx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/cvx",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/kex",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/mdb",
+    "clicks": 0,
+    "impr": 1
+   },
+   {
+    "page": "/ticker/sgi",
+    "clicks": 0,
+    "impr": 1
+   }
+  ],
+  "inspected": [
+   {
+    "page": "/",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-06T03:08:49Z",
+    "error": null
+   },
+   {
+    "page": "/congress/nancy-pelosi",
+    "verdict": "NEUTRAL",
+    "coverage": "Discovered - currently not indexed",
+    "last_crawl": null,
+    "error": null
+   },
+   {
+    "page": "/fund/berkshire-hathaway",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T13:29:25Z",
+    "error": null
+   },
+   {
+    "page": "/ticker/nvda",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T13:03:38Z",
+    "error": null
+   },
+   {
+    "page": "/insider",
+    "verdict": "PASS",
+    "coverage": "Submitted and indexed",
+    "last_crawl": "2026-11-05T09:54:51Z",
+    "error": null
+   }
+  ],
+  "sitemaps": [
+   {
+    "path": "https://stock.easyllms.com/sitemap.xml",
+    "last_downloaded": "2026-11-08T00:50:39.116Z",
+    "pending": false,
+    "errors": "0",
+    "warnings": "0",
+    "submitted": 2551,
+    "indexed": 0
+   }
+  ]
+ },
+ "github": {
+  "美股大佬持仓-国会议员交易": {
+   "runs": 7,
+   "success": 7,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-机构13F": {
+   "runs": 4,
+   "success": 4,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "美股大佬持仓-股票池": {
+   "runs": 2,
+   "success": 2,
+   "failure": 0,
+   "in_progress": 0,
+   "failures": [],
+   "last_conclusion": "success"
+  },
+  "_last_schedule": {
+   "disclosure_form4.yml": "2026-11-07T17:47:23Z",
+   "disclosure_congress.yml": "2026-11-08T19:17:01Z",
+   "disclosure_13f.yml": "2026-11-08T17:01:13Z"
+  }
+ },
+ "mongo": {
+  "insider_trades": {
+   "total": 21320,
+   "new_24h": 0,
+   "latest": "2026-11-06"
+  },
+  "fund_filings": {
+   "total": 198,
+   "new_24h": 0,
+   "latest": "2026-11-02"
+  },
+  "fund_holdings": {
+   "total": 21237,
+   "new_24h": 0,
+   "latest": "2026-09-30"
+  },
+  "congress_trades": {
+   "total": 13895,
+   "new_24h": 0,
+   "latest": "2026-11-05"
+  },
+  "tickers": {
+   "total": 1516,
+   "new_24h": 0
+  },
+  "infos": {
+   "total": 9538,
+   "new_24h": 24
+  },
+  "_quality": {
+   "insider_filed_last_workday": 111,
+   "big_buys_24h": 0,
+   "big_buys_24h_with_note": 0,
+   "tickers_without_cn": 0,
+   "checked_for": "2026-11-07"
+  },
+  "_size_mb": 29.0,
+  "_limit_mb": 512,
+  "_notes_24h": 0,
+  "_last_write": {
+   "insider_trades": "2026-11-07T17:48:53.413000+00:00",
+   "congress_trades": "2026-11-08T19:17:21.754000+00:00"
+  }
+ },
+ "server": {
+  "container": "money-backend Up 21 hours",
+  "disk": "/dev/sda1        45G   12G   33G  27% /",
+  "requests": 8830,
+  "status": {
+   "2xx": 8481,
+   "4xx": 285,
+   "3xx": 38,
+   "5xx": 26
+  },
+  "top_paths": [
+   [
+    "/relay/mcp",
+    881
+   ],
+   [
+    "/",
+    340
+   ],
+   [
+    "/robots.txt",
+    70
+   ],
+   [
+    "/.env",
+    44
+   ],
+   [
+    "/insider",
+    32
+   ],
+   [
+    "/login.html",
+    30
+   ],
+   [
+    "/favicon.ico",
+    28
+   ],
+   [
+    "/userfiles",
+    27
+   ],
+   [
+    "/.git/config",
+    24
+   ],
+   [
+    "/sitemap.xml",
+    22
+   ],
+   [
+    "/index-en.html",
+    21
+   ],
+   [
+    "/register.html",
+    18
+   ],
+   [
+    "/api/.env",
+    18
+   ],
+   [
+    "/admin/",
+    17
+   ],
+   [
+    "/js/analytics.js",
+    15
+   ]
+  ],
+  "slow": [
+   {
+    "path": "/api/info",
+    "ms": 15774
+   },
+   {
+    "path": "/api/info",
+    "ms": 14771
+   },
+   {
+    "path": "/api/info",
+    "ms": 4728
+   },
+   {
+    "path": "/api/upload?prefix=temp",
+    "ms": 6679
+   },
+   {
+    "path": "/api/upload?prefix=temp",
+    "ms": 8962
+   },
+   {
+    "path": "/api/info",
+    "ms": 15810
+   },
+   {
+    "path": "/api/info",
+    "ms": 14938
+   },
+   {
+    "path": "/api/info",
+    "ms": 4770
+   },
+   {
+    "path": "/HNAP1/",
+    "ms": 14239
+   },
+   {
+    "path": "/assets/news-f6ff1a44.js",
+    "ms": 9081
+   }
+  ],
+  "errors": [
+   [
+    "http: proxy error: context canceled",
+    26
+   ],
+   [
+    "502 /",
+    10
+   ],
+   [
+    "502 /wp-admin/install.php?step=1",
+    1
+   ],
+   [
+    "502 /.git-credentials",
+    1
+   ],
+   [
+    "502 /HNAP1/",
+    1
+   ],
+   [
+    "502 /wp-content/plugins/hellopress/wp_filemanager.php",
+    1
+   ],
+   [
+    "502 /google-services.json",
+    1
+   ],
+   [
+    "502 /proc/self/environ?.js",
+    1
+   ],
+   [
+    "502 /.env",
+    1
+   ],
+   [
+    "502 /push_config.json",
+    1
+   ],
+   [
+    "502 /model/.env",
+    1
+   ],
+   [
+    "502 /host.key",
+    1
+   ],
+   [
+    "502 /api/",
+    1
+   ],
+   [
+    "502 /supabase/.env",
+    1
+   ],
+   [
+    "502 /api/.env",
+    1
+   ]
+  ],
+  "indexnow_submits": 0,
+  "tg_push_ok": 3,
+  "tg_push_fail": 0,
+  "ai_referrals": {}
+ },
+ "health": {
+  "checks": [
+   {
+    "url": "https://stock.easyllms.com/",
+    "status": 200,
+    "ms": 760,
+    "bytes": 28165
+   },
+   {
+    "url": "https://stock.easyllms.com/funds",
+    "status": 200,
+    "ms": 72,
+    "bytes": 13082
+   },
+   {
+    "url": "https://stock.easyllms.com/insider",
+    "status": 200,
+    "ms": 165,
+    "bytes": 21844
+   },
+   {
+    "url": "https://stock.easyllms.com/congress",
+    "status": 200,
+    "ms": 288,
+    "bytes": 55989
+   },
+   {
+    "url": "https://stock.easyllms.com/congress/nancy-pelosi",
+    "status": 200,
+    "ms": 168,
+    "bytes": 32837
+   },
+   {
+    "url": "https://stock.easyllms.com/ticker/nvda",
+    "status": 200,
+    "ms": 314,
+    "bytes": 44832
+   },
+   {
+    "url": "https://stock.easyllms.com/fund/berkshire-hathaway",
+    "status": 200,
+    "ms": 234,
+    "bytes": 19771
+   },
+   {
+    "url": "https://stock.easyllms.com/sitemap.xml",
+    "status": 200,
+    "ms": 72,
+    "bytes": 159588
+   },
+   {
+    "url": "https://stock.easyllms.com/robots.txt",
+    "status": 200,
+    "ms": 102,
+    "bytes": 150
+   },
+   {
+    "url": "https://easyllms.com/",
+    "status": 200,
+    "ms": 74,
+    "bytes": 26959
+   },
+   {
+    "url": "https://api.easyllms.com/hc",
+    "status": 200,
+    "ms": 76,
+    "bytes": 725
+   },
+   {
+    "url": "https://chat.easyllms.com/",
+    "status": 200,
+    "ms": 99,
+    "bytes": 40898
+   },
+   {
+    "url": "https://im.easyllms.com/",
+    "status": 200,
+    "ms": 79,
+    "bytes": 5909
+   }
+  ],
+  "sensitive_leaks": [],
+  "sitemap_urls": 2551
+ },
+ "telegram": {
+  "channel": "@godstar001",
+  "members": 8
+ },
+ "monetization": {
+  "affiliates": [
+   "盈透证券开户",
+   "moomoo 开户"
+  ],
+  "donations": [
+   "微信打赏",
+   "PayPal 打赏"
+  ],
+  "tg_paid": false,
+  "adsense": false,
+  "affiliate_clicks": 0,
+  "affiliate_clicks_24h": 0,
+  "affiliate_clicks_detail": []
+ },
+ "costs": {
+  "openrouter_usage_usd": 0.862044118,
+  "openrouter_usage_daily": 0,
+  "openrouter_usage_monthly": 0.862044118,
+  "openrouter_limit": 5,
+  "note": "Cloudflare / Actions（公开仓库）/ Mongo M0 / GitHub Pages 均为免费档"
+ },
+ "security": {
+  "public_repo_private_keys": [],
+  "ssh_key_in_use_is_leaked": true
+ },
+ "alerts": [
+  {
+   "level": "red",
+   "msg": "服务器 24h 出现 26 个 5xx"
+  },
+  {
+   "level": "yellow",
+   "msg": "生产服务器 SSH 私钥已从 book 的分支和历史里清除，但 GitHub 上旧提交仍可按提交号下载、服务器也仍授权，视为已泄露，需要轮换"
+  }
+ ]
+}
